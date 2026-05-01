@@ -4,7 +4,8 @@ gsap.registerPlugin(ScrollTrigger);
 const brandText = document.getElementById("brandText");
 const introBox = document.getElementById("introBox");
 const contentWrapper = document.querySelector(".content-wrapper");
-const navLogo = document.querySelector(".navbar .logo");
+const navLogo = document.querySelector(".navbar-brand");
+const leaf = document.querySelector(".leaf");
 
 // Pecah teks brand agar bisa dianimasikan huruf per huruf
 const text = brandText.textContent;
@@ -18,7 +19,6 @@ letters.forEach(letter => {
 });
 
 const spans = document.querySelectorAll(".brand-intro span");
-
 // Animasi Cinematic Light-up
 let currentIndex = 0;
 let loops = 0;
@@ -27,9 +27,10 @@ const maxLoops = 1; // Berapa kali putaran gradient sebelum terbuka
 function cinematicEffect() {
     // Reset huruf (redup)
     gsap.to(spans, {
-        opacity: 0.5,
+        opacity: 0.4,
         backgroundPosition: "200% 0%",
-        duration: 1.0
+        duration: 0.4,
+        ease: "power2.out"
     });
 
     // Hidupkan huruf yang aktif (menyala & gradient berjalan)
@@ -38,7 +39,7 @@ function cinematicEffect() {
             opacity: 1,
             backgroundPosition: "0% 0%",
             duration: 0.3,
-            ease: "power2.out"
+            ease: "power3.out"
         });
     }
 
@@ -52,14 +53,18 @@ function cinematicEffect() {
 
     // Jika putaran sudah selesai, eksekusi transisi keluar intro
     if (loops >= maxLoops && currentIndex === spans.length - 1) {
-        setTimeout(finishIntro, 100); // Dipercepat
+        setTimeout(finishIntro, 300); // Dipercepat
         return;
     }
 
-    setTimeout(cinematicEffect, 70); // Jeda 70ms tiap huruf (sangat cepat)
+    setTimeout(cinematicEffect, 100); // Jeda 100ms tiap huruf (sangat cepat)
 }
 
+let isFinished = false;
+
 function finishIntro() {
+    if(isFinished) return;
+    isFinished = true;
     const tl = gsap.timeline();
 
     // 1. Semua huruf menjadi menyala terang
@@ -72,12 +77,20 @@ function finishIntro() {
     })
     
     // 2. Transisi: Huruf mengecil, pindah ke posisi Navbar
+    .to("#introLogo", { opacity: 0, duration: 0.4 })
     .to(brandText, {
+        x: () => {
+            const navImg = document.querySelector(".navbar-brand img");
+            return navImg ? navImg.getBoundingClientRect().left - brandText.getBoundingClientRect().left + 40 : -window.innerWidth / 2 + 100;
+        },
+        y: () => {
+            const navImg = document.querySelector(".navbar-brand img");
+            return navImg ? navImg.getBoundingClientRect().top - brandText.getBoundingClientRect().top : -window.innerHeight / 2 + 50;
+        },
         scale: 0.4,
-        y: -window.innerHeight / 2 + 50,
-        x: -window.innerWidth / 2 + 100,
+        transformOrigin: "top left",
         opacity: 0,
-        duration: 0.6,
+        duration: 0.8,
         ease: "power3.inOut"
     }, "+=0.1")
     
@@ -94,6 +107,10 @@ function finishIntro() {
         onComplete: () => {
             introBox.style.display = "none";
             document.body.style.overflowY = "auto"; // Kembalikan fungsi scroll
+
+            // Tampilkan popup info
+            var infoModal = new bootstrap.Modal(document.getElementById('infoModal'));
+            infoModal.show();
         }
     })
     .to(contentWrapper, {
@@ -106,7 +123,7 @@ function finishIntro() {
         opacity: 1,
         duration: 0.3
     }, "-=0.3")
-    .fromTo(".nav-links li", {
+    .fromTo(".nav-item", {
         opacity: 0,
         y: -10
     }, {
@@ -128,10 +145,54 @@ function finishIntro() {
         stagger: 0.1,
         ease: "power3.out"
     }, "-=0.3");
+
+    
 }
 
-// Mulai efek cinematic sangat cepat setelah halaman dimuat
-setTimeout(cinematicEffect, 100);
+// Animasi angin (garis lurus bergerak)
+const windLines = document.querySelectorAll(".wind-line");
+
+// ANIMASI DAUN (Besar & Bergoyang Natural)
+// Set posisi awal daun tersembunyi di luar layar (kiri)
+gsap.set(leaf, { 
+    x: -300, 
+    y: window.innerHeight / 3, 
+    rotation: -45, 
+    opacity: 0 
+});
+
+const leafTL = gsap.timeline();
+
+// Animasi hembusan angin (garis lurus melintas cepat)
+leafTL.to(windLines, {
+    x: "200vw", // Bergerak menembus ke luar layar kanan
+    duration: 2.5,
+    ease: "power1.inOut",
+    stagger: 0.15 // Muncul bergantian dengan jeda cepat
+}, 0); // Mulai pada detik ke-0 (bersamaan dengan daun masuk)
+
+// Fase 1: Daun masuk ke tengah layar dengan gerakan mengayun perlahan
+leafTL.to(leaf, {
+    x: window.innerWidth / 2 - 125, // Bergerak ke tengah layar
+    y: window.innerHeight / 2 + 50, // Mengayun sedikit ke bawah
+    rotation: 30, // Daun berputar pelan secara natural
+    opacity: 0.9, // Daun memudar masuk (fade in)
+    duration: 2.5,
+    ease: "sine.inOut"
+}, 0) // Mulai pada detik ke-0
+// Fase 2: Daun keluar dari layar ke arah kanan atas sambil memicu efek teks
+.to(leaf, {
+    x: window.innerWidth + 300, // Terbang menjauh ke luar layar kanan
+    y: window.innerHeight / 3 - 100, // Mengayun naik ke atas
+    rotation: 120, // Berputar lebih jauh seiring tertiup angin
+    opacity: 0, // Memudar keluar (fade out)
+    duration: 2.5,
+    ease: "sine.inOut",
+    onStart: () => {
+        // Memicu animasi teks bercahaya tepat saat daun mulai meninggalkan tengah layar
+        cinematicEffect(); 
+    }
+}, 2.5); // Mulai di detik ke-2.5 (melanjutkan fase 1)
 
 // Animasi Scroll (GSAP ScrollTrigger) untuk Card Menu
 gsap.utils.toArray('.menu-card').forEach((card, i) => {
@@ -149,5 +210,74 @@ gsap.utils.toArray('.menu-card').forEach((card, i) => {
         duration: 0.8,
         delay: i * 0.1, // Beri jarak delay antar card (Staggered effect)
         ease: "power3.out"
+    });
+});
+
+introBox.addEventListener("click", (e) => {
+    if(isFinished) return;
+
+    if(e.target.id === "skipIntro") return;
+
+    finishIntro();
+});
+
+// Navbar & TopBar Scroll Effect
+window.addEventListener("scroll", function () {
+  const headerWrapper = document.getElementById("headerWrapper");
+  const navbar = document.querySelector(".navbar");
+  const topBar = document.getElementById("topBar");
+  
+  if (window.scrollY > 50) {
+    if(navbar) navbar.classList.add("scrolled");
+    if (topBar && topBar.style.display !== "none" && headerWrapper) {
+      headerWrapper.style.transform = `translateY(-${topBar.offsetHeight}px)`;
+    }
+  } else {
+    if(navbar) navbar.classList.remove("scrolled");
+    if(headerWrapper) headerWrapper.style.transform = "translateY(0)";
+  }
+});
+
+// Scroll Reveal Animation
+function reveal() {
+  var reveals = document.querySelectorAll(".reveal");
+  for (var i = 0; i < reveals.length; i++) {
+    var windowHeight = window.innerHeight;
+    var elementTop = reveals[i].getBoundingClientRect().top;
+    var elementVisible = 150;
+    if (elementTop < windowHeight - elementVisible) {
+      reveals[i].classList.add("active");
+    }
+  }
+}
+window.addEventListener("scroll", reveal);
+reveal();
+// SPA Logic
+function switchPage(pageId) {
+    if (pageId === 'contact') {
+        const contactSection = document.getElementById('contact');
+        if (contactSection) {
+            contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
+        return;
+    }
+    document.querySelectorAll('.page-section').forEach(section => {
+        section.classList.remove('active');
+    });
+    const target = document.getElementById(pageId);
+    if(target) {
+        target.classList.add('active');
+        window.scrollTo(0, 0); // Scroll to top when switching pages
+        setTimeout(reveal, 100); // Trigger scroll reveal
+    }
+}
+
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if(href && href.startsWith('#')) {
+            e.preventDefault();
+            switchPage(href.substring(1));
+        }
     });
 });

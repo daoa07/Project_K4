@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="De Café - Nikmati kopi pilihan terbaik dalam suasana premium dan modern."
+    />
+    <title>De Café</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap 5 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  </head>
+  <body>
+    <!-- INTRO FROM PROJECT -->
+    <div class="intro" id="introBox">
+      <!-- Garis Angin -->
+      <div class="wind-line line-1"></div>
+      <div class="wind-line line-2"></div>
+      <div class="wind-line line-3"></div>
+      <div class="leaf"></div>
+      <div
+        class="brand-intro-wrapper"
+        id="brandWrapper"
+        style="display: flex; align-items: center; gap: 20px"
+      >
+        <img
+          src="assets/brand/navbar.png"
+          id="introLogo"
+          alt="De Café"
+          onerror="
+            this.src = 'https://cdn-icons-png.flaticon.com/512/924/924514.png'
+          "
+          style="
+            width: 80px;
+            height: 64px;
+            opacity: 1;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+          "
+        />
+        <h1 class="brand-intro" id="brandText" style="margin: 0">DE CAFÉ</h1>
+      </div>
+      <p class="skip-hint">Klik di mana saja untuk skip</p>
+    </div>
+
+    <div class="content-wrapper" style="opacity: 0">
+      <!-- Header Wrapper -->
+      <div class="header-wrapper fixed-top" id="headerWrapper">
+        <!-- Top Announcement Bar -->
+        <div class="top-bar" id="topBar">
+          <div class="marquee-container">
+            <div class="marquee-content">
+              <span class="marquee-text"
+                >✨ <span class="fw-bold">PROMO SPESIAL HARI INI:</span> Beli 1
+                Classic Latte Gratis 1 Butter Croissant! Tunjukkan website ini
+                di kasir. ✨</span
+              >
+              <span class="marquee-text"
+                >✨ <span class="fw-bold">PROMO SPESIAL HARI INI:</span> Beli 1
+                Classic Latte Gratis 1 Butter Croissant! Tunjukkan website ini
+                di kasir. ✨</span
+              >
+            </div>
+          </div>
+          <button
+            class="close-topbar"
+            onclick="
+              document.getElementById('topBar').style.display = 'none';
+              document.querySelector('.navbar').style.top = '0';
+            "
+          >
+            &times;
+          </button>
+        </div>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg">
+          <div class="container">
+            <a class="navbar-brand" href="#">
+              <img
+                src="assets/brand/navbar.png"
+                alt="De Café"
+                width="40"
+                height="32"
+                class="d-inline-block align-text-top"
+                onerror="
+                  this.src =
+                    'https://cdn-icons-png.flaticon.com/512/924/924514.png'
+                "
+              />
+              DE CAFÉ
+            </a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="#home">Beranda</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#menu">Menu</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#contact">Kontak</a>
+                </li>
+                <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
+                  <a class="btn-custom btn-promo pulse-btn" href="#promo">
+                    <span class="pulse-icon">🔥</span> Promo Hari Ini
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <!-- End Header Wrapper -->
+
+      <!-- Info Popup Modal -->
+      <div
+        class="modal fade"
+        id="infoModal"
+        tabindex="-1"
+        aria-labelledby="infoModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div
+            class="modal-content"
+            style="
+              background-color: #f9f7f1;
+              border: none;
+              border-radius: 0;
+              box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.8);
+            "
+          >
+            <div class="modal-header border-0 pb-0 position-relative">
+              <button
+                type="button"
+                class="btn-close position-absolute"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                style="top: 15px; right: 15px; z-index: 10"
+              ></button>
+            </div>
+            <div
+              class="modal-body text-center px-4 pt-2 pb-5"
+              style="border: 2px solid #111; margin: 15px"
+            >
+              <div
+                style="
+                  border-bottom: 3px double #111;
+                  margin-bottom: 20px;
+                  padding-bottom: 10px;
+                "
+              >
+                <h5
+                  style="
+                    font-family: &quot;Times New Roman&quot;, serif;
+                    text-transform: uppercase;
+                    letter-spacing: 2px;
+                    color: #111;
+                    margin: 0;
+                    font-size: 14px;
+                  "
+                >
+                  The Daily Coffee
+                </h5>
+              </div>
+
+              <h2
+                class="mb-1"
+                style="
+                  font-family: &quot;Playfair Display&quot;, serif;
+                  font-weight: 800;
+                  color: #111;
+                  font-size: 28px;
+                "
+              >
+                Artisan Espresso
+              </h2>
+              <p
+                style="
+                  font-family: &quot;Courier New&quot;, Courier, monospace;
+                  font-weight: 600;
+                  font-size: 18px;
+                  margin-bottom: 20px;
+                "
+              >
+                Rp 25.000
+              </p>
+
+              <div
+                class="menu-popup-img mb-4"
+                style="
+                  max-width: 250px;
+                  margin: 0 auto;
+                  border: 1px solid #111;
+                  padding: 4px;
+                  background: #fff;
+                "
+              >
+                <img
+                  src="assets/menu/exp.png"
+                  alt="Espresso"
+                  class="img-fluid"
+                  style="
+                    filter: grayscale(100%) contrast(120%) sepia(20%);
+                    width: 100%;
+                    height: auto;
+                  "
+                  onerror="
+                    this.src =
+                      'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&q=80&w=400'
+                  "
+                />
+              </div>
+
+              <p
+                class="mb-4"
+                style="
+                  color: #222;
+                  font-family: &quot;Times New Roman&quot;, serif;
+                  font-size: 16px;
+                  font-style: italic;
+                  max-width: 90%;
+                  margin: 0 auto;
+                  line-height: 1.6;
+                "
+              >
+                "Ekstraksi murni dengan rasa yang kuat dan berkarakter. Pilihan
+                sempurna para penikmat kopi sejati hari ini."
+              </p>
+
+              <button
+                class="btn mt-2"
+                style="
+                  background-color: #111;
+                  color: #f9f7f1;
+                  border-radius: 0;
+                  padding: 10px 35px;
+                  text-transform: uppercase;
+                  letter-spacing: 2px;
+                  font-size: 13px;
+                  font-family: &quot;Times New Roman&quot;, serif;
+                  font-weight: bold;
+                  border: 1px solid #111;
+                "
+                data-bs-dismiss="modal"
+                onclick="switchPage('menu')"
+              >
+                Pesan Sekarang
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Section -->
+      <section id="home" class="hero-section page-section active p-0">
+        <div
+          id="heroCarousel"
+          class="carousel slide carousel-fade"
+          data-bs-ride="carousel"
+        >
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img
+                src="assets/carousel/onee.png"
+                alt="onee"
+                onerror="
+                  this.src =
+                    'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=1920'
+                "
+              />
+            </div>
+            <div class="carousel-item">
+              <img
+                src="assets/carousel/twoo.png"
+                alt="twoo"
+                onerror="
+                  this.src =
+                    'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&q=80&w=1920'
+                "
+              />
+            </div>
+            <div class="carousel-item">
+              <img
+                src="assets/carousel/three.png"
+                alt="three"
+                onerror="
+                  this.src =
+                    'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&q=80&w=1920'
+                "
+              />
+            </div>
+          </div>
+          <div class="hero-overlay">
+            <div class="container">
+              <h4 class="hero-subtitle reveal-text">Est. 2026</h4>
+              <h1 class="hero-title reveal-text">DE CAFÉ</h1>
+              <a
+                href="#menu"
+                class="btn btn-custom btn-primary-custom"
+                onclick="switchPage('menu')"
+                >Lihat Menu</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Menu Section -->
+      <section id="menu" class="page-section" style="background-color: #fdf7f2">
+        <div class="container">
+          <div class="section-title reveal">
+            <span>Pilihan Utama</span>
+            <h2>Menu Terlaris Kami</h2>
+          </div>
+          <div class="row g-4 justify-content-center">
+            <!-- Espresso -->
+            <div class="col-lg-4 col-md-6 reveal">
+              <div class="menu-card">
+                <div class="menu-img-wrapper">
+                  <img
+                    src="assets/menu/exp.png"
+                    alt="Espresso"
+                    onerror="
+                      this.src =
+                        'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&q=80&w=600'
+                    "
+                  />
+                </div>
+                <div class="menu-content">
+                  <h3>Artisan Espresso</h3>
+                  <p>Ekstraksi murni dengan rasa yang kuat dan berkarakter.</p>
+                  <div class="menu-price">Rp 25.000</div>
+                </div>
+              </div>
+            </div>
+            <!-- Latte -->
+            <div class="col-lg-4 col-md-6 reveal">
+              <div class="menu-card">
+                <div class="menu-img-wrapper">
+                  <img
+                    src="assets/menu/latte.png"
+                    alt="Latte"
+                    onerror="
+                      this.src =
+                        'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&q=80&w=600'
+                    "
+                  />
+                </div>
+                <div class="menu-content">
+                  <h3>Velvet Latte</h3>
+                  <p>Paduan susu lembut dengan double shot espresso pilihan.</p>
+                  <div class="menu-price">Rp 35.000</div>
+                </div>
+              </div>
+            </div>
+            <!-- Cappuccino -->
+            <div class="col-lg-4 col-md-6 reveal">
+              <div class="menu-card">
+                <div class="menu-img-wrapper">
+                  <img
+                    src="assets/menu/cappu.png"
+                    alt="Cappuccino"
+                    onerror="
+                      this.src =
+                        'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&q=80&w=600'
+                    "
+                  />
+                </div>
+                <div class="menu-content">
+                  <h3>Signature Cappuccino</h3>
+                  <p>Keseimbangan sempurna antara foam tebal dan kopi kuat.</p>
+                  <div class="menu-price">Rp 32.000</div>
+                </div>
+              </div>
+            </div>
+            <!-- Caramel Frap -->
+            <div class="col-lg-4 col-md-6 reveal">
+              <div class="menu-card">
+                <div class="menu-img-wrapper">
+                  <img
+                    src="assets/menu/carfrap.png"
+                    alt="Caramel Frappuccino"
+                    onerror="
+                      this.src =
+                        'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&q=80&w=600'
+                    "
+                  />
+                </div>
+                <div class="menu-content">
+                  <h3>Caramel Frappuccino</h3>
+                  <p>
+                    Kopi dingin dengan saus karamel premium dan whipped cream.
+                  </p>
+                  <div class="menu-price">Rp 45.000</div>
+                </div>
+              </div>
+            </div>
+            <!-- Affogato -->
+            <div class="col-lg-4 col-md-6 reveal">
+              <div class="menu-card">
+                <div class="menu-img-wrapper">
+                  <img
+                    src="assets/menu/affo.png"
+                    alt="Affogato"
+                    onerror="
+                      this.src =
+                        'https://images.unsplash.com/photo-1594631252845-29fc4586c552?auto=format&fit=crop&q=80&w=600'
+                    "
+                  />
+                </div>
+                <div class="menu-content">
+                  <h3>Classic Affogato</h3>
+                  <p>Es krim vanilla lembut disiram dengan espresso panas.</p>
+                  <div class="menu-price">Rp 38.000</div>
+                </div>
+              </div>
+            </div>
+            <!-- Espresso Con Panna -->
+            <div class="col-lg-4 col-md-6 reveal">
+              <div class="menu-card">
+                <div class="menu-img-wrapper">
+                  <img
+                    src="assets/menu/conp.png"
+                    alt="Espresso Con Panna"
+                    onerror="
+                      this.src =
+                        'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&q=80&w=600'
+                    "
+                  />
+                </div>
+                <div class="menu-content">
+                  <h3>Espresso Con Panna</h3>
+                  <p>
+                    Double shot espresso dengan topping whipped cream manis.
+                  </p>
+                  <div class="menu-price">Rp 30.000</div>
+                </div>
+              </div>
+            </div>
+            <!-- Dalgona Coffee -->
+            <div class="col-lg-4 col-md-6 reveal">
+              <div class="menu-card">
+                <div class="menu-img-wrapper">
+                  <img
+                    src="assets/menu/dalgona.png"
+                    alt="Dalgona Coffee"
+                    onerror="
+                      this.src =
+                        'https://images.unsplash.com/photo-1591261730799-ee4e6c2d16d7?auto=format&fit=crop&q=80&w=600'
+                    "
+                  />
+                </div>
+                <div class="menu-content">
+                  <h3>Cloudy Dalgona</h3>
+                  <p>Kopi kocok lembut di atas susu dingin yang menyegarkan.</p>
+                  <div class="menu-price">Rp 33.000</div>
+                </div>
+              </div>
+            </div>
+            <!-- Dark Cocoa -->
+            <div class="col-lg-4 col-md-6 reveal">
+              <div class="menu-card">
+                <div class="menu-img-wrapper">
+                  <img
+                    src="assets/menu/darkco.png"
+                    alt="Dark Cocoa"
+                    onerror="
+                      this.src =
+                        'https://images.unsplash.com/photo-1544787210-2213d44ad53e?auto=format&fit=crop&q=80&w=600'
+                    "
+                  />
+                </div>
+                <div class="menu-content">
+                  <h3>Midnight Dark Cocoa</h3>
+                  <p>Cokelat hitam premium dengan tekstur creamy dan intens.</p>
+                  <div class="menu-price">Rp 38.000</div>
+                </div>
+              </div>
+            </div>
+            <!-- Mocca Oat -->
+            <div class="col-lg-4 col-md-6 reveal">
+              <div class="menu-card">
+                <div class="menu-img-wrapper">
+                  <img
+                    src="assets/menu/moccaoat.png"
+                    alt="Mocca Oat"
+                    onerror="
+                      this.src =
+                        'https://images.unsplash.com/photo-1606791405792-1004f1718d0c?auto=format&fit=crop&q=80&w=600'
+                    "
+                  />
+                </div>
+                <div class="menu-content">
+                  <h3>Oatmilk Mocca</h3>
+                  <p>Perpaduan espresso, cokelat, dan susu oat yang sehat.</p>
+                  <div class="menu-price">Rp 42.000</div>
+                </div>
+              </div>
+            </div>
+            <!-- Taro Latte -->
+            <div class="col-lg-4 col-md-6 reveal">
+              <div class="menu-card">
+                <div class="menu-img-wrapper">
+                  <img
+                    src="assets/menu/taro.png"
+                    alt="Taro Latte"
+                    onerror="
+                      this.src =
+                        'https://images.unsplash.com/photo-1578314675249-a6910f80cc4e?auto=format&fit=crop&q=80&w=600'
+                    "
+                  />
+                </div>
+                <div class="menu-content">
+                  <h3>Velvet Taro Latte</h3>
+                  <p>Minuman taro lembut dengan aroma khas yang menenangkan.</p>
+                  <div class="menu-price">Rp 35.000</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer
+        id="contact"
+        class="py-5"
+        style="
+          background-color: var(--espresso);
+          color: white;
+        "
+      >
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4 mb-4">
+              <h3 class="mb-4">DE CAFÉ</h3>
+              <p class="text-white-50">
+                Menyatukan orang-orang melalui kopi terbaik dunia sejak 2026.
+              </p>
+            </div>
+            <div class="col-md-4 mb-4">
+              <h5 class="mb-4">Jam Operasional</h5>
+              <p class="mb-1 text-white-50">Senin - Jumat: 08:00 - 22:00</p>
+              <p class="text-white-50">Sabtu - Minggu: 09:00 - 23:00</p>
+            </div>
+            <div class="col-md-4 mb-4">
+              <h5 class="mb-4">Ikuti Kami</h5>
+              <div class="d-flex gap-3">
+                <a href="#" class="text-white"
+                  ><i class="bi bi-instagram"></i
+                ></a>
+                <a href="#" class="text-white"
+                  ><i class="bi bi-facebook"></i
+                ></a>
+                <a href="#" class="text-white"
+                  ><i class="bi bi-twitter"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+          <hr class="mt-4 border-secondary" />
+          <p class="text-center text-white-50 mb-0">
+            &copy; 2026 De Café. All right reserved.
+          </p>
+        </div>
+      </footer>
+    </div>
+    <!-- END CONTENT WRAPPER -->
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+  </body>
+</html>
