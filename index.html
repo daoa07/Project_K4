@@ -37,26 +37,17 @@
       <div class="wind-line line-2"></div>
       <div class="wind-line line-3"></div>
       <div class="leaf"></div>
-      <div
-        class="brand-intro-wrapper"
-        id="brandWrapper"
-        style="display: flex; align-items: center; gap: 20px"
-      >
+      <div class="brand-intro-wrapper" id="brandWrapper">
         <img
           src="assets/brand/navbar.png"
           id="introLogo"
+          class="brand-intro-logo"
           alt="De Café"
           onerror="
             this.src = 'https://cdn-icons-png.flaticon.com/512/924/924514.png'
           "
-          style="
-            width: 80px;
-            height: 64px;
-            opacity: 1;
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
-          "
         />
-        <h1 class="brand-intro" id="brandText" style="margin: 0">DE CAFÉ</h1>
+        <h1 class="brand-intro" id="brandText">DE CAFÉ</h1>
       </div>
       <p class="skip-hint">Klik di mana saja untuk skip</p>
     </div>
@@ -469,9 +460,19 @@
         </div>
       </section>
 
+      <!-- Contact Section -->
+      <section id="contact" class="page-section" style="background-color: var(--silk); padding-top: 150px; min-height: 80vh;">
+        <div class="container text-center">
+          <div class="section-title reveal">
+            <span>Hubungi Kami</span>
+            <h2>Kontak Kami</h2>
+          </div>
+          <p class="lead" style="color: var(--espresso);">Halaman ini sedang dalam persiapan dan akan segera diisi dengan detail informasi kontak, lokasi kafe, serta formulir pesan.</p>
+        </div>
+      </section>
+
       <!-- Footer -->
       <footer
-        id="contact"
         class="py-5"
         style="
           background-color: var(--espresso);
