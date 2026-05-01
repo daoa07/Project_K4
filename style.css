@@ -282,9 +282,38 @@ footer h5 {
   }
   .hero-title {
     font-size: 2.8rem;
+    letter-spacing: 6px;
+  }
+  .hero-subtitle {
+    letter-spacing: 3px;
+    font-size: 0.9rem;
   }
   .menu-img-wrapper {
     height: 220px;
+  }
+  .brand-intro {
+    font-size: 3rem !important;
+    letter-spacing: 2px !important;
+  }
+  .brand-intro-logo {
+    width: 50px !important;
+    height: 40px !important;
+  }
+  .brand-intro-wrapper {
+    gap: 10px !important;
+  }
+  .top-bar {
+    padding: 8px 15px;
+    font-size: 0.75rem;
+  }
+  .close-topbar {
+    right: 5px;
+  }
+  footer h3 {
+    font-size: 1.5rem;
+  }
+  footer h5 {
+    font-size: 1.1rem;
   }
 }
 
@@ -302,7 +331,21 @@ footer h5 {
     z-index: 9999;
 }
 
+.brand-intro-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.brand-intro-logo {
+    width: 80px;
+    height: 64px;
+    opacity: 1;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+}
+
 .brand-intro {
+    margin: 0;
     display: flex;
     gap: 15px;
     font-size: 6rem;
