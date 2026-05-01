@@ -313,6 +313,25 @@ function switchPage(pageId) {
     window.scrollTo(0, 0); // Scroll to top when switching pages
     setTimeout(reveal, 100); // Trigger scroll reveal
   }
+//   baru
+  const footer = document.querySelector("footer");
+  const waBtn = document.getElementById("floatingWA");
+
+  if (pageId === "contact") {
+    if (footer) footer.style.display = "none";
+    // Tampilkan tombol WA dengan animasi slide dari kanan
+    if (waBtn) {
+      waBtn.classList.remove("wa-visible");
+      void waBtn.offsetWidth; // reset animasi
+      setTimeout(() => waBtn.classList.add("wa-visible"), 100);
+    }
+  } else {
+    if (footer) footer.style.display = "block";
+    // Sembunyikan tombol WA
+    if (waBtn) {
+      waBtn.classList.remove("wa-visible");
+    }
+  }
 }
 
 document.querySelectorAll(".nav-link").forEach((link) => {
@@ -399,3 +418,34 @@ setInterval(showNextToast, 7000);
 
 // Tampilkan toast pertama setelah intro selesai
 setTimeout(showNextToast, 4000);
+
+// ================= FLOATING WA POPUP LOGIC =================
+const waWrapper = document.getElementById("floatingWA");
+const waToggle  = document.getElementById("waToggle");
+const waPopup   = document.getElementById("waPopup");
+
+if (waToggle && waPopup) {
+  // Toggle popup saat tombol diklik
+  waToggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const isOpen = waPopup.classList.contains("open");
+    waPopup.classList.toggle("open");
+    waToggle.classList.toggle("active");
+  });
+
+  // Tutup popup saat klik di luar
+  document.addEventListener("click", (e) => {
+    if (waWrapper && !waWrapper.contains(e.target)) {
+      waPopup.classList.remove("open");
+      waToggle.classList.remove("active");
+    }
+  });
+
+  // Tutup popup setelah pilihan diklik
+  waPopup.querySelectorAll(".wa-option").forEach(opt => {
+    opt.addEventListener("click", () => {
+      waPopup.classList.remove("open");
+      waToggle.classList.remove("active");
+    });
+  });
+}
