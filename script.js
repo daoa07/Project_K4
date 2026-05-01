@@ -254,13 +254,6 @@ window.addEventListener("scroll", reveal);
 reveal();
 // SPA Logic
 function switchPage(pageId) {
-    if (pageId === 'contact') {
-        const contactSection = document.getElementById('contact');
-        if (contactSection) {
-            contactSection.scrollIntoView({ behavior: 'smooth' });
-        }
-        return;
-    }
     document.querySelectorAll('.page-section').forEach(section => {
         section.classList.remove('active');
     });
