@@ -118,7 +118,7 @@
                   <a class="nav-link" href="#contact">Kontak</a>
                 </li>
                 <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
-                  <a class="btn-custom btn-promo pulse-btn" href="#promo">
+                  <a class="btn-custom btn-promo pulse-btn" href="#promo" data-bs-toggle="modal" data-bs-target="#promoModal">
                     <span class="pulse-icon">🔥</span> Promo Hari Ini
                   </a>
                 </li>
@@ -169,7 +169,7 @@
               >
                 <h5
                   style="
-                    font-family: &quot;Times New Roman&quot;, serif;
+                    font-family: 'Times New Roman', serif;
                     text-transform: uppercase;
                     letter-spacing: 2px;
                     color: #111;
@@ -177,73 +177,128 @@
                     font-size: 14px;
                   "
                 >
-                  The Daily Coffee
+                  Rekomendasi Hari Ini
                 </h5>
               </div>
 
-              <h2
-                class="mb-1"
-                style="
-                  font-family: &quot;Playfair Display&quot;, serif;
-                  font-weight: 800;
-                  color: #111;
-                  font-size: 28px;
-                "
-              >
-                Artisan Espresso
-              </h2>
-              <p
-                style="
-                  font-family: &quot;Courier New&quot;, Courier, monospace;
-                  font-weight: 600;
-                  font-size: 18px;
-                  margin-bottom: 20px;
-                "
-              >
-                Rp 25.000
-              </p>
+              <div class="row text-center">
+                <!-- Kopi -->
+                <div class="col-md-6 mb-4">
+                  <h2
+                    class="mb-1"
+                    style="
+                      font-family: 'Playfair Display', serif;
+                      font-weight: 800;
+                      color: #111;
+                      font-size: 22px;
+                    "
+                  >
+                    Artisan Espresso
+                  </h2>
+                  <p
+                    style="
+                      font-family: 'Courier New', Courier, monospace;
+                      font-weight: 600;
+                      font-size: 16px;
+                      margin-bottom: 15px;
+                    "
+                  >
+                    Rp 25.000
+                  </p>
 
-              <div
-                class="menu-popup-img mb-4"
-                style="
-                  max-width: 250px;
-                  margin: 0 auto;
-                  border: 1px solid #111;
-                  padding: 4px;
-                  background: #fff;
-                "
-              >
-                <img
-                  src="assets/menu/exp.png"
-                  alt="Espresso"
-                  class="img-fluid"
-                  style="
-                    filter: grayscale(100%) contrast(120%) sepia(20%);
-                    width: 100%;
-                    height: auto;
-                  "
-                  onerror="
-                    this.src =
-                      'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&q=80&w=400'
-                  "
-                />
+                  <div
+                    class="menu-popup-img mb-3"
+                    style="
+                      max-width: 200px;
+                      margin: 0 auto;
+                      border: 1px solid #111;
+                      padding: 4px;
+                      background: #fff;
+                    "
+                  >
+                    <img
+                      src="assets/menu/exp.png"
+                      alt="Espresso"
+                      class="img-fluid"
+                      style="
+                        filter: grayscale(100%) contrast(120%) sepia(20%);
+                        width: 100%;
+                        height: 150px;
+                        object-fit: cover;
+                      "
+                      onerror="
+                        this.src =
+                          'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&q=80&w=400'
+                      "
+                    />
+                  </div>
+                  <p
+                    style="
+                      color: #222;
+                      font-family: 'Times New Roman', serif;
+                      font-size: 14px;
+                      font-style: italic;
+                      line-height: 1.5;
+                    "
+                  >
+                    "Ekstraksi murni dengan rasa yang kuat dan berkarakter."
+                  </p>
+                </div>
+
+                <!-- Makanan -->
+                <div class="col-md-6 mb-4">
+                  <h2
+                    class="mb-1"
+                    style="
+                      font-family: 'Playfair Display', serif;
+                      font-weight: 800;
+                      color: #111;
+                      font-size: 22px;
+                    "
+                  >
+                    Butter Croissant
+                  </h2>
+                  <p
+                    style="
+                      font-family: 'Courier New', Courier, monospace;
+                      font-weight: 600;
+                      font-size: 16px;
+                      margin-bottom: 15px;
+                    "
+                  >
+                    Rp 28.000
+                  </p>
+
+                  <div
+                    class="menu-popup-img mb-3"
+                    style="
+                      max-width: 200px;
+                      margin: 0 auto;
+                      border: 1px solid #111;
+                      padding: 4px;
+                      background: #fff;
+                    "
+                  >
+                    <img
+                      src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&q=80&w=400"
+                      alt="Butter Croissant"
+                      class="img-fluid"
+                      style="width: 100%; height: 150px; object-fit: cover"
+                    />
+                  </div>
+                  <p
+                    style="
+                      color: #222;
+                      font-family: 'Times New Roman', serif;
+                      font-size: 14px;
+                      font-style: italic;
+                      line-height: 1.5;
+                    "
+                  >
+                    "Renyah lapis mentega premium, hangat dan harum dari oven."
+                  </p>
+                </div>
               </div>
-
-              <p
-                class="mb-4"
-                style="
-                  color: #222;
-                  font-family: &quot;Times New Roman&quot;, serif;
-                  font-size: 16px;
-                  font-style: italic;
-                  max-width: 90%;
-                  margin: 0 auto;
-                  line-height: 1.6;
-                "
-              >
-                "Ekstraksi murni dengan rasa yang kuat dan berkarakter. Pilihan
-                sempurna para penikmat kopi sejati hari ini."
-              </p>
 
               <button
                 class="btn mt-2"
@@ -255,7 +310,7 @@
                   text-transform: uppercase;
                   letter-spacing: 2px;
                   font-size: 13px;
-                  font-family: &quot;Times New Roman&quot;, serif;
+                  font-family: 'Times New Roman', serif;
                   font-weight: bold;
                   border: 1px solid #111;
                 "
@@ -263,6 +318,137 @@
                 onclick="switchPage('menu')"
               >
                 Pesan Sekarang
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Promo Popup Modal -->
+      <div class="modal fade" id="promoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div
+            class="modal-content"
+            style="
+              background-color: #f9f7f1;
+              border: none;
+              border-radius: 0;
+              box-shadow: 8px 8px 0px rgba(188, 108, 37, 0.8);
+            "
+          >
+            <div class="modal-header border-0 pb-0 position-relative">
+              <button
+                type="button"
+                class="btn-close position-absolute"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                style="top: 15px; right: 15px; z-index: 10; font-size: 0.75rem"
+              ></button>
+            </div>
+            <div
+              class="modal-body text-center px-4 pt-2 pb-5"
+              style="border: 2px solid var(--gold); margin: 15px"
+            >
+              <div
+                style="
+                  border-bottom: 3px double var(--gold);
+                  margin-bottom: 20px;
+                  padding-bottom: 10px;
+                "
+              >
+                <h5
+                  style="
+                    font-family: 'Times New Roman', serif;
+                    text-transform: uppercase;
+                    letter-spacing: 2px;
+                    color: var(--gold);
+                    margin: 0;
+                    font-size: 13px;
+                  "
+                >
+                  🔥 Promo Spesial Hari Ini
+                </h5>
+              </div>
+              <div
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  justify-content: center;
+                  background: var(--gold);
+                  color: white;
+                  font-size: 2.5rem;
+                  font-weight: 900;
+                  width: 110px;
+                  height: 110px;
+                  border-radius: 50%;
+                  margin: 0 auto 20px;
+                  font-family: 'Playfair Display', serif;
+                  box-shadow: 0 4px 20px rgba(188, 108, 37, 0.4);
+                "
+              >
+                5%
+              </div>
+              <h2
+                class="mb-2"
+                style="
+                  font-family: 'Playfair Display', serif;
+                  font-weight: 800;
+                  color: #111;
+                  font-size: 22px;
+                "
+              >
+                Diskon 5% Paket Makanan &amp; Minuman!
+              </h2>
+              <p
+                style="
+                  color: #444;
+                  font-family: 'Times New Roman', serif;
+                  font-size: 15px;
+                  font-style: italic;
+                  max-width: 90%;
+                  margin: 0 auto 20px;
+                  line-height: 1.7;
+                "
+              >
+                Beli <strong>2 item atau lebih</strong> kombinasi
+                <strong>makanan &amp; minuman</strong>, dapatkan potongan
+                <strong style="color: var(--gold)">5%</strong> langsung di
+                kasir.
+              </p>
+              <div
+                style="
+                  background: #fdf7f2;
+                  border: 1px dashed var(--gold);
+                  padding: 14px 20px;
+                  text-align: left;
+                  margin-bottom: 20px;
+                  font-family: 'Courier New', monospace;
+                  font-size: 13px;
+                  color: #333;
+                "
+              >
+                <p style="margin: 0 0 6px">✅ Min. 1 makanan + 1 minuman</p>
+                <p style="margin: 0 0 6px">✅ Berlaku untuk semua item menu</p>
+                <p style="margin: 0">✅ Tidak dapat digabung promo lain</p>
+              </div>
+              <button
+                class="btn mt-2"
+                style="
+                  background-color: var(--gold);
+                  color: white;
+                  border-radius: 0;
+                  padding: 12px 40px;
+                  text-transform: uppercase;
+                  letter-spacing: 2px;
+                  font-size: 13px;
+                  font-family: 'Times New Roman', serif;
+                  font-weight: bold;
+                  border: 1px solid var(--gold);
+                "
+                data-bs-dismiss="modal"
+                onclick="switchPage('menu')"
+              >
+                Lihat Menu &rarr;
               </button>
             </div>
           </div>
@@ -318,6 +504,20 @@
                 onclick="switchPage('menu')"
                 >Lihat Menu</a
               >
+            </div>
+          </div>
+
+          <!-- Running Toast (Floating Popup Berjalan) -->
+          <div id="runningToast" class="running-toast">
+            <div class="toast-img-wrapper" id="toastImgWrapper" style="display: none;">
+              <img id="toastImage" src="" alt="Info" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            </div>
+            <div class="toast-icon" id="toastIcon">
+              <i class="bi bi-info-circle-fill"></i>
+            </div>
+            <div class="toast-content">
+              <h6 id="toastTitle">Info</h6>
+              <p id="toastMessage">Memuat info...</p>
             </div>
           </div>
         </div>
@@ -453,6 +653,97 @@
                   <h3>Velvet Taro Latte</h3>
                   <p>Minuman taro lembut dengan aroma khas yang menenangkan.</p>
                   <div class="menu-price">Rp 35.000</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ===== SNACK & MAKANAN ===== -->
+            <div class="col-12 mt-5 reveal">
+              <div class="text-center mb-4">
+                <span
+                  style="
+                    color: var(--gold);
+                    text-transform: uppercase;
+                    letter-spacing: 4px;
+                    font-weight: 600;
+                    font-size: 0.85rem;
+                  "
+                  >Pendamping Kopi</span
+                >
+                <h3
+                  style="
+                    font-family: 'Playfair Display', serif;
+                    font-size: 1.8rem;
+                    margin-top: 8px;
+                    color: var(--espresso);
+                  "
+                >
+                  Snack &amp; Makanan
+                </h3>
+                <div
+                  style="
+                    width: 60px;
+                    height: 3px;
+                    background: var(--gold);
+                    margin: 10px auto 0;
+                  "
+                ></div>
+              </div>
+            </div>
+            <!-- Butter Croissant -->
+            <div class="col-lg-4 col-md-6 reveal">
+              <div class="menu-card">
+                <div class="menu-img-wrapper">
+                  <img
+                    src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&q=80&w=600"
+                    alt="Butter Croissant"
+                  />
+                </div>
+                <div class="menu-content">
+                  <h3>Butter Croissant</h3>
+                  <p>
+                    Croissant renyah lapis mentega premium, hangat dan harum
+                    dari oven.
+                  </p>
+                  <div class="menu-price">Rp 28.000</div>
+                </div>
+              </div>
+            </div>
+            <!-- Club Sandwich -->
+            <div class="col-lg-4 col-md-6 reveal">
+              <div class="menu-card">
+                <div class="menu-img-wrapper">
+                  <img
+                    src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&q=80&w=600"
+                    alt="Club Sandwich"
+                  />
+                </div>
+                <div class="menu-content">
+                  <h3>Classic Club Sandwich</h3>
+                  <p>
+                    Roti panggang berlapis dengan isian smoked beef, telur,
+                    keju, dan sayuran segar.
+                  </p>
+                  <div class="menu-price">Rp 40.000</div>
+                </div>
+              </div>
+            </div>
+            <!-- Cinnamon Waffle -->
+            <div class="col-lg-4 col-md-6 reveal">
+              <div class="menu-card">
+                <div class="menu-img-wrapper">
+                  <img
+                    src="https://images.unsplash.com/photo-1521305916504-4a1121188589?auto=format&fit=crop&q=80&w=600"
+                    alt="Cinnamon Waffle"
+                  />
+                </div>
+                <div class="menu-content">
+                  <h3>Cinnamon Waffle</h3>
+                  <p>
+                    Waffle tebal dengan taburan kayu manis, madu, dan whipped
+                    cream.
+                  </p>
+                  <div class="menu-price">Rp 38.000</div>
                 </div>
               </div>
             </div>
