@@ -598,3 +598,389 @@ footer h5 {
         max-width: none;
     }
 }
+
+/* baru */
+.contact-fixed-box {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 999;
+}
+
+.contact-fixed-box a {
+  text-decoration: none;
+  color: var(--espresso);
+  font-weight: 500;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.contact-fixed-box a:hover {
+  color: var(--gold);
+}
+
+
+/* ================= CONTACT SECTION ================= */
+.contact-card {
+  background: white;
+  border-radius: 20px;
+  padding: 32px 28px;
+  height: 100%;
+  box-shadow: 0 8px 30px rgba(44, 24, 16, 0.07);
+  transition: var(--transition);
+  border-bottom: 4px solid transparent;
+  text-align: center;
+}
+
+.contact-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 50px rgba(44, 24, 16, 0.12);
+  border-bottom-color: var(--gold);
+}
+
+.contact-card-icon {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, var(--gold), var(--latte));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 1.8rem;
+  color: white;
+  box-shadow: 0 6px 20px rgba(188, 108, 37, 0.3);
+}
+
+.contact-card h5 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: var(--espresso);
+  margin-bottom: 10px;
+}
+
+.contact-card .text-muted {
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--gold);
+  font-weight: 600;
+  font-size: 0.88rem;
+  text-decoration: none;
+  margin-top: 10px;
+  transition: 0.3s;
+}
+
+.contact-link:hover {
+  color: var(--espresso);
+  gap: 10px;
+}
+
+/* Hours table */
+.contact-hours {
+  text-align: left;
+  margin-top: 8px;
+}
+
+.hours-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px dashed rgba(44,24,16,0.1);
+  font-size: 0.88rem;
+  color: var(--espresso);
+  gap: 10px;
+}
+
+.hours-row i {
+  color: var(--gold);
+  margin-right: 6px;
+}
+
+.hours-time {
+  font-weight: 600;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.hours-badge {
+  margin-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #e8fdf0;
+  color: #1a9e4a;
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+/* Social buttons */
+.contact-social-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.contact-social-btn i {
+  font-size: 1.2rem;
+  width: 20px;
+  text-align: center;
+}
+
+.contact-social-btn.wa {
+  background: #e8fdf0;
+  color: #1a9e4a;
+  border: 1px solid #c3f0d3;
+}
+
+.contact-social-btn.wa:hover {
+  background: #25d366;
+  color: white;
+  transform: translateX(4px);
+}
+
+.contact-social-btn.ig {
+  background: #fef0f8;
+  color: #c13584;
+  border: 1px solid #f5c6e8;
+}
+
+.contact-social-btn.ig:hover {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color: white;
+  transform: translateX(4px);
+}
+
+.contact-social-btn.mail {
+  background: #fdf5e8;
+  color: var(--gold);
+  border: 1px solid #f5ddb5;
+}
+
+.contact-social-btn.mail:hover {
+  background: var(--gold);
+  color: white;
+  transform: translateX(4px);
+}
+
+/* Decorative divider */
+.contact-divider {
+  text-align: center;
+  margin-top: 50px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: var(--latte);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.contact-divider i {
+  font-size: 1.4rem;
+  color: var(--gold);
+  animation: bounce-flame 2s infinite ease-in-out;
+}
+
+
+/* ================= FLOATING WHATSAPP ================= */
+@keyframes pulseWA {
+  0%   { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+  70%  { box-shadow: 0 0 0 12px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+@keyframes waSlideIn {
+  from { transform: translateX(120px); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+
+.floating-wa-wrapper {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  /* hidden by default (shown after intro) */
+  transform: translateX(120px);
+  opacity: 0;
+  pointer-events: none;
+  transition: none;
+}
+
+.floating-wa-wrapper.wa-visible {
+  animation: waSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  pointer-events: all;
+}
+
+/* Popup chat options */
+.wa-popup {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(10px) scale(0.95);
+  transform-origin: bottom right;
+  transition: max-height 0.35s ease, opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+  min-width: 240px;
+}
+
+.wa-popup.open {
+  max-height: 300px;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: all;
+}
+
+.wa-popup-header {
+  background: #25d366;
+  color: white;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.wa-popup-header i {
+  font-size: 1.2rem;
+}
+
+.wa-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 16px;
+  color: #333;
+  text-decoration: none;
+  font-size: 0.88rem;
+  transition: background 0.2s;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.wa-option:last-child {
+  border-bottom: none;
+}
+
+.wa-option:hover {
+  background: #f0fdf4;
+  color: #1a9e4a;
+}
+
+.wa-option i {
+  font-size: 1rem;
+  color: #25d366;
+  flex-shrink: 0;
+}
+
+/* Main WA direct-link button */
+.floating-wa-btn {
+  width: 60px;
+  height: 60px;
+  background-color: #25d366;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+  animation: pulseWA 2s infinite;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.floating-wa-btn:hover {
+  transform: scale(1.1);
+  background-color: #1ebe5d;
+  color: #fff;
+}
+
+/* Button row (direct link + chevron toggle) */
+.wa-btn-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+/* Small expand/chevron button */
+.wa-expand-btn {
+  width: 30px;
+  height: 30px;
+  background: white;
+  border: 2px solid #25d366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #25d366;
+  font-size: 13px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+  margin-bottom: 4px;
+}
+
+.wa-expand-btn:hover {
+  background: #25d366;
+  color: white;
+}
+
+.wa-expand-btn i {
+  transition: transform 0.3s ease;
+}
+
+.wa-expand-btn.active i {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+  .floating-wa-wrapper {
+    bottom: 20px;
+    right: 20px;
+  }
+  .floating-wa-btn {
+    width: 52px;
+    height: 52px;
+    font-size: 24px;
+  }
+  .wa-popup {
+    min-width: 210px;
+  }
+  .wa-expand-btn {
+    width: 26px;
+    height: 26px;
+    font-size: 11px;
+  }
+}
