@@ -291,16 +291,18 @@ footer h5 {
   .menu-img-wrapper {
     height: 220px;
   }
+  .brand-intro-wrapper {
+    flex-direction: column !important;
+    gap: 5px !important;
+  }
   .brand-intro {
-    font-size: 3rem !important;
-    letter-spacing: 2px !important;
+    font-size: 11vw !important;
+    letter-spacing: 1vw !important;
   }
   .brand-intro-logo {
-    width: 50px !important;
-    height: 40px !important;
-  }
-  .brand-intro-wrapper {
-    gap: 10px !important;
+    width: 15vw !important;
+    min-width: 50px !important;
+    height: auto !important;
   }
   .top-bar {
     padding: 8px 15px;
