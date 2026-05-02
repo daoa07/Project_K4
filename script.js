@@ -126,8 +126,15 @@ function finishIntro() {
       onComplete: () => {
         introBox.style.display = "none";
         document.body.style.overflowY = "auto";
-        var infoModal = new bootstrap.Modal(document.getElementById("infoModal"));
-        infoModal.show();
+
+        // Tampilkan modal hanya sekali per sesi (saat pertama masuk)
+        if (!sessionStorage.getItem("infoModalShown")) {
+          var infoModal = new bootstrap.Modal(
+            document.getElementById("infoModal"),
+          );
+          infoModal.show();
+          sessionStorage.setItem("infoModalShown", "true");
+        }
       },
     })
 
@@ -291,20 +298,14 @@ introBox.addEventListener("click", () => {
   finishIntro();
 });
 
-// Navbar & TopBar Scroll Effect
+// Navbar Scroll Effect
 window.addEventListener("scroll", function () {
-  const headerWrapper = document.getElementById("headerWrapper");
   const navbar = document.querySelector(".navbar");
-  const topBar = document.getElementById("topBar");
 
   if (window.scrollY > 50) {
     if (navbar) navbar.classList.add("scrolled");
-    if (topBar && topBar.style.display !== "none" && headerWrapper) {
-      headerWrapper.style.transform = `translateY(-${topBar.offsetHeight}px)`;
-    }
   } else {
     if (navbar) navbar.classList.remove("scrolled");
-    if (headerWrapper) headerWrapper.style.transform = "translateY(0)";
   }
 });
 
@@ -438,116 +439,3 @@ setInterval(showNextToast, 7000);
 // Tampilkan toast pertama setelah intro selesai
 setTimeout(showNextToast, 4000);
 
-// ================= ORDERING SYSTEM LOGIC =================
-let cart = {};
-
-function updateQty(btn, delta) {
-  const card = btn.closest('.menu-card');
-  const name = card.querySelector('h3').textContent;
-  const price = parseInt(card.querySelector('.menu-price').getAttribute('data-price'));
-  const input = card.querySelector('.qty-input');
-  
-  let val = parseInt(input.value) + delta;
-  if (val < 0) val = 0;
-  input.value = val;
-  
-  if (val > 0) {
-    cart[name] = { price, qty: val };
-  } else {
-    delete cart[name];
-  }
-  
-  updateCheckoutBar();
-}
-
-function updateCartQty(name, delta) {
-  if (cart[name]) {
-    cart[name].qty += delta;
-    if (cart[name].qty <= 0) {
-      delete cart[name];
-    }
-    
-    // Update input in menu section too
-    document.querySelectorAll('.menu-card').forEach(card => {
-      if (card.querySelector('h3').textContent === name) {
-        card.querySelector('.qty-input').value = cart[name] ? cart[name].qty : 0;
-      }
-    });
-    
-    updateCheckoutBar();
-    showCheckoutModal(true); // Refresh modal without creating new instance
-  }
-}
-
-function updateCheckoutBar() {
-  const bar = document.getElementById('checkoutBar');
-  const totalPriceEl = document.getElementById('barTotalPrice');
-  
-  let total = 0;
-  let hasItems = false;
-  
-  for (const item in cart) {
-    total += cart[item].price * cart[item].qty;
-    hasItems = true;
-  }
-  
-  if (hasItems) {
-    totalPriceEl.textContent = `Rp ${total.toLocaleString('id-ID')}`;
-    bar.classList.add('show');
-  } else {
-    bar.classList.remove('show');
-    // Also close modal if it's open and cart becomes empty
-    const modalEl = document.getElementById('checkoutModal');
-    const modal = bootstrap.Modal.getInstance(modalEl);
-    if (modal && !hasItems) modal.hide();
-  }
-}
-
-function showCheckoutModal(isRefresh = false) {
-  const listEl = document.getElementById('orderSummaryList');
-  const totalEl = document.getElementById('modalGrandTotal');
-  const waBtn = document.getElementById('waConfirmBtn');
-  
-  listEl.innerHTML = '';
-  let total = 0;
-  let waText = "Halo DE CAFÉ, saya ingin memesan:\n\n";
-  let hasItems = false;
-  
-  for (const name in cart) {
-    const item = cart[name];
-    const subtotal = item.price * item.qty;
-    total += subtotal;
-    hasItems = true;
-    
-    listEl.innerHTML += `
-      <div class="order-item">
-        <div class="order-item-info">
-          <h6>${name}</h6>
-          <span>Rp ${item.price.toLocaleString('id-ID')}</span>
-          <div class="modal-qty-control mt-2">
-             <button class="qty-btn-sm" onclick="updateCartQty('${name}', -1)"><i class="bi bi-dash"></i></button>
-             <span class="mx-2 fw-bold">${item.qty}</span>
-             <button class="qty-btn-sm" onclick="updateCartQty('${name}', 1)"><i class="bi bi-plus"></i></button>
-          </div>
-        </div>
-        <div class="order-item-price">Rp ${subtotal.toLocaleString('id-ID')}</div>
-      </div>
-    `;
-    
-    waText += `- ${name} (${item.qty}x)\n`;
-  }
-  
-  if (!hasItems) {
-    listEl.innerHTML = '<p class="text-center text-muted">Keranjang Anda kosong.</p>';
-  }
-  
-  waText += `\n*Total: Rp ${total.toLocaleString('id-ID')}*`;
-  
-  totalEl.textContent = `Rp ${total.toLocaleString('id-ID')}`;
-  waBtn.href = `https://wa.me/6285180785177?text=${encodeURIComponent(waText)}`;
-  
-  if (!isRefresh) {
-    const modal = new bootstrap.Modal(document.getElementById('checkoutModal'));
-    modal.show();
-  }
-}
