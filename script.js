@@ -19,45 +19,28 @@ letters.forEach((letter) => {
 });
 
 const spans = document.querySelectorAll(".brand-intro span");
-// Animasi Cinematic Light-up
-let currentIndex = 0;
-let loops = 0;
-const maxLoops = 1; // Berapa kali putaran gradient sebelum terbuka
+
 
 function cinematicEffect() {
-  // Reset huruf (redup)
-  gsap.to(spans, {
-    opacity: 0.4,
-    backgroundPosition: "200% 0%",
-    duration: 0.4,
-    ease: "power2.out",
-  });
+  // Fungsi ini sekarang dipanggil dari onUpdate untuk sinkronisasi posisi
+  // Tidak lagi menggunakan stagger otomatis
+}
 
-  // Hidupkan huruf yang aktif (menyala & gradient berjalan)
-  if (spans[currentIndex].textContent.trim() !== "") {
-    gsap.to(spans[currentIndex], {
-      opacity: 1,
-      backgroundPosition: "0% 0%",
-      duration: 0.3,
-      ease: "power3.out",
-    });
-  }
-
-  currentIndex++;
-
-  // Jika sudah di huruf terakhir, ulang ke huruf pertama
-  if (currentIndex >= spans.length) {
-    currentIndex = 0;
-    loops++;
-  }
-
-  // Jika putaran sudah selesai, eksekusi transisi keluar intro
-  if (loops >= maxLoops && currentIndex === spans.length - 1) {
-    setTimeout(finishIntro, 300); // Dipercepat
-    return;
-  }
-
-  setTimeout(cinematicEffect, 100); // Jeda 100ms tiap huruf (sangat cepat)
+// Fungsi pembantu untuk menerangi huruf berdasarkan posisi daun
+function revealLetter(index) {
+    const span = spans[index];
+    if (span && !span.classList.contains('revealed')) {
+        span.classList.add('revealed');
+        span.classList.add('shimmer');
+        gsap.to(span, {
+            opacity: 1,
+            scale: 1,
+            filter: "blur(0px)",
+            backgroundPosition: "0% 0%",
+            duration: 0.5,
+            ease: "back.out(1.7)"
+        });
+    }
 }
 
 let isFinished = false;
@@ -105,39 +88,48 @@ function finishIntro() {
       "+=0.1",
     )
 
-    // Background warna body berubah dari gelap ke warna terang (beige) secara halus
+    // Background intro pudar dari bawah (Reveal)
+    .to(
+      introBox,
+      {
+        clipPath: "inset(0 0 100% 0)",
+        duration: 1,
+        ease: "power2.inOut",
+      },
+      "<", // Mulai bersamaan dengan pergerakan teks
+    )
+
+    // Background warna body berubah
     .to(
       "body",
       {
-        backgroundColor: "#f5f1eb",
+        backgroundColor: "#fdf5e6",
         duration: 0.6,
       },
       "<",
     )
 
-    // 3. Matikan layar intro dan munculkan halaman utama
-    .to(introBox, {
-      opacity: 0,
-      duration: 0.3,
-      onComplete: () => {
-        introBox.style.display = "none";
-        document.body.style.overflowY = "auto"; // Kembalikan fungsi scroll
-
-        // Tampilkan popup info
-        var infoModal = new bootstrap.Modal(
-          document.getElementById("infoModal"),
-        );
-        infoModal.show();
-      },
-    })
+    // Pastikan konten utama muncul
     .to(
       contentWrapper,
       {
         opacity: 1,
         duration: 0.5,
       },
-      "-=0.3",
+      "<",
     )
+
+    // Selesaikan pembersihan
+    .to(introBox, {
+      opacity: 0,
+      duration: 0.2,
+      onComplete: () => {
+        introBox.style.display = "none";
+        document.body.style.overflowY = "auto";
+        var infoModal = new bootstrap.Modal(document.getElementById("infoModal"));
+        infoModal.show();
+      },
+    })
 
     // 4. Logo Navbar & Link Menu Fade-in
     .to(
@@ -157,12 +149,11 @@ function finishIntro() {
       {
         opacity: 1,
         y: 0,
-        duration: 0.4,
-        stagger: 0.05,
-        ease: "power2.out",
+        duration: 0.3,
       },
-      "<",
+      "-=0.3",
     )
+
 
     // 5. Animasi teks Hero muncul dari bawah
     .fromTo(
@@ -185,60 +176,92 @@ function finishIntro() {
 // Animasi angin (garis lurus bergerak)
 const windLines = document.querySelectorAll(".wind-line");
 
-// ANIMASI DAUN (Besar & Bergoyang Natural)
-// Set posisi awal daun tersembunyi di luar layar (kiri)
+// // ANIMASI DAUN (Premium 3-Point Wave: Tengah -> Atas (33%) -> Bawah (67%) -> Tengah)
 gsap.set(leaf, {
-  x: -300,
-  y: window.innerHeight / 3,
+  x: -350,
+  y: window.innerHeight / 2,
   rotation: -45,
   opacity: 0,
+  scale: 0.8
 });
 
 const leafTL = gsap.timeline();
 
-// Animasi hembusan angin (garis lurus melintas cepat)
-leafTL.to(
-  windLines,
-  {
-    x: "200vw", // Bergerak menembus ke luar layar kanan
-    duration: 2.5,
-    ease: "power1.inOut",
-    stagger: 0.15, // Muncul bergantian dengan jeda cepat
-  },
-  0,
-); // Mulai pada detik ke-0 (bersamaan dengan daun masuk)
+// 1. Animasi Angin (Muncul 2 kali dengan jeda sama)
+leafTL.fromTo(windLines, {
+  x: "-100vw"
+}, {
+  x: "200vw", // Lebih jauh agar tidak "nyangkut"
+  duration: 1.5,
+  ease: "power1.inOut",
+  stagger: 0.15,
+  repeat: 1, // Total 2 kali muncul
+  repeatDelay: 0.8
+}, 0);
 
-// Fase 1: Daun masuk ke tengah layar dengan gerakan mengayun perlahan
+// 2. Gerakan Horizontal (X) - Konstan agar smooth
+leafTL.to(leaf, {
+  x: window.innerWidth + 500,
+  duration: 5,
+  ease: "none",
+  opacity: 1,
+  onUpdate: function() {
+    const currentX = gsap.getProperty(leaf, "x");
+    const leafCenter = currentX + 90; // Titik tengah daun (setengah dari 180px)
+    
+    // Cek setiap huruf
+    spans.forEach((span, index) => {
+        const rect = span.getBoundingClientRect();
+        // Jika daun melewati posisi kiri huruf
+        if (leafCenter > rect.left) {
+            revealLetter(index);
+        }
+    });
+
+    // Cek jika semua huruf sudah muncul, beri jedah lalu selesai
+    const revealedCount = document.querySelectorAll('.brand-intro span.revealed').length;
+    if (revealedCount === spans.length && !leaf.dataset.finishedTriggered) {
+        leaf.dataset.finishedTriggered = "true";
+        setTimeout(finishIntro, 1500);
+    }
+  }
+}, 0);
+
+// 3. Gerakan Vertikal (Y) - SESUAI REQUEST (Tengah -> Tengah Atas -> Tengah Bawah -> Tengah)
 leafTL
-  .to(
-    leaf,
-    {
-      x: window.innerWidth / 2 - 125, // Bergerak ke tengah layar
-      y: window.innerHeight / 2 + 50, // Mengayun sedikit ke bawah
-      rotation: 30, // Daun berputar pelan secara natural
-      opacity: 0.9, // Daun memudar masuk (fade in)
-      duration: 2.5,
-      ease: "sine.inOut",
-    },
-    0,
-  ) // Mulai pada detik ke-0
-  // Fase 2: Daun keluar dari layar ke arah kanan atas sambil memicu efek teks
-  .to(
-    leaf,
-    {
-      x: window.innerWidth + 300, // Terbang menjauh ke luar layar kanan
-      y: window.innerHeight / 3 - 100, // Mengayun naik ke atas
-      rotation: 120, // Berputar lebih jauh seiring tertiup angin
-      opacity: 0, // Memudar keluar (fade out)
-      duration: 2.5,
-      ease: "sine.inOut",
-      onStart: () => {
-        // Memicu animasi teks bercahaya tepat saat daun mulai meninggalkan tengah layar
-        cinematicEffect();
-      },
-    },
-    2.5,
-  ); // Mulai di detik ke-2.5 (melanjutkan fase 1)
+  .to(leaf, {
+    y: window.innerHeight * 0.35, // Tengah Atas
+    duration: 1.65,
+    ease: "sine.inOut"
+  }, 0)
+  .to(leaf, {
+    y: window.innerHeight * 0.65, // Tengah Bawah
+    duration: 1.7,
+    ease: "sine.inOut"
+  }, 1.65)
+  .to(leaf, {
+    y: window.innerHeight / 2, // Kembali ke Tengah
+    duration: 1.65,
+    ease: "sine.inOut"
+  }, 3.35);
+
+// 4. Extra Juice: Polished 3D Motion
+leafTL.to(leaf, {
+  rotationY: 720,
+  rotation: 180,
+  scale: 1.2, // Sedikit membesar saat di tengah
+  duration: 2.5,
+  yoyo: true,
+  repeat: 1,
+  ease: "power1.inOut"
+}, 0);
+
+// Fade out halus di ujung layar
+leafTL.to(leaf, {
+  opacity: 0,
+  scale: 0.5,
+  duration: 0.8
+}, 4.2);
 
 // Animasi Scroll (GSAP ScrollTrigger) untuk Card Menu
 gsap.utils.toArray(".menu-card").forEach((card, i) => {
@@ -263,11 +286,8 @@ gsap.utils.toArray(".menu-card").forEach((card, i) => {
   );
 });
 
-introBox.addEventListener("click", (e) => {
+introBox.addEventListener("click", () => {
   if (isFinished) return;
-
-  if (e.target.id === "skipIntro") return;
-
   finishIntro();
 });
 
@@ -377,10 +397,9 @@ const toastImgWrapper = document.getElementById("toastImgWrapper");
 const toastIcon = document.getElementById("toastIcon");
 
 function showNextToast() {
-  if (!runningToast || document.getElementById("home").classList.contains("active") === false) {
-      if(runningToast) runningToast.classList.remove("show");
-      return;
-  }
+  if (!runningToast) return;
+  
+  // Sekarang toast fixed, bisa muncul di mana saja
   
   // Sembunyikan toast sebelumnya
   runningToast.classList.remove("show");
@@ -419,33 +438,116 @@ setInterval(showNextToast, 7000);
 // Tampilkan toast pertama setelah intro selesai
 setTimeout(showNextToast, 4000);
 
-// ================= FLOATING WA POPUP LOGIC =================
-const waWrapper = document.getElementById("floatingWA");
-const waToggle  = document.getElementById("waToggle");
-const waPopup   = document.getElementById("waPopup");
+// ================= ORDERING SYSTEM LOGIC =================
+let cart = {};
 
-if (waToggle && waPopup) {
-  // Toggle popup saat tombol diklik
-  waToggle.addEventListener("click", (e) => {
-    e.stopPropagation();
-    const isOpen = waPopup.classList.contains("open");
-    waPopup.classList.toggle("open");
-    waToggle.classList.toggle("active");
-  });
+function updateQty(btn, delta) {
+  const card = btn.closest('.menu-card');
+  const name = card.querySelector('h3').textContent;
+  const price = parseInt(card.querySelector('.menu-price').getAttribute('data-price'));
+  const input = card.querySelector('.qty-input');
+  
+  let val = parseInt(input.value) + delta;
+  if (val < 0) val = 0;
+  input.value = val;
+  
+  if (val > 0) {
+    cart[name] = { price, qty: val };
+  } else {
+    delete cart[name];
+  }
+  
+  updateCheckoutBar();
+}
 
-  // Tutup popup saat klik di luar
-  document.addEventListener("click", (e) => {
-    if (waWrapper && !waWrapper.contains(e.target)) {
-      waPopup.classList.remove("open");
-      waToggle.classList.remove("active");
+function updateCartQty(name, delta) {
+  if (cart[name]) {
+    cart[name].qty += delta;
+    if (cart[name].qty <= 0) {
+      delete cart[name];
     }
-  });
-
-  // Tutup popup setelah pilihan diklik
-  waPopup.querySelectorAll(".wa-option").forEach(opt => {
-    opt.addEventListener("click", () => {
-      waPopup.classList.remove("open");
-      waToggle.classList.remove("active");
+    
+    // Update input in menu section too
+    document.querySelectorAll('.menu-card').forEach(card => {
+      if (card.querySelector('h3').textContent === name) {
+        card.querySelector('.qty-input').value = cart[name] ? cart[name].qty : 0;
+      }
     });
-  });
+    
+    updateCheckoutBar();
+    showCheckoutModal(true); // Refresh modal without creating new instance
+  }
+}
+
+function updateCheckoutBar() {
+  const bar = document.getElementById('checkoutBar');
+  const totalPriceEl = document.getElementById('barTotalPrice');
+  
+  let total = 0;
+  let hasItems = false;
+  
+  for (const item in cart) {
+    total += cart[item].price * cart[item].qty;
+    hasItems = true;
+  }
+  
+  if (hasItems) {
+    totalPriceEl.textContent = `Rp ${total.toLocaleString('id-ID')}`;
+    bar.classList.add('show');
+  } else {
+    bar.classList.remove('show');
+    // Also close modal if it's open and cart becomes empty
+    const modalEl = document.getElementById('checkoutModal');
+    const modal = bootstrap.Modal.getInstance(modalEl);
+    if (modal && !hasItems) modal.hide();
+  }
+}
+
+function showCheckoutModal(isRefresh = false) {
+  const listEl = document.getElementById('orderSummaryList');
+  const totalEl = document.getElementById('modalGrandTotal');
+  const waBtn = document.getElementById('waConfirmBtn');
+  
+  listEl.innerHTML = '';
+  let total = 0;
+  let waText = "Halo DE CAFÉ, saya ingin memesan:\n\n";
+  let hasItems = false;
+  
+  for (const name in cart) {
+    const item = cart[name];
+    const subtotal = item.price * item.qty;
+    total += subtotal;
+    hasItems = true;
+    
+    listEl.innerHTML += `
+      <div class="order-item">
+        <div class="order-item-info">
+          <h6>${name}</h6>
+          <span>Rp ${item.price.toLocaleString('id-ID')}</span>
+          <div class="modal-qty-control mt-2">
+             <button class="qty-btn-sm" onclick="updateCartQty('${name}', -1)"><i class="bi bi-dash"></i></button>
+             <span class="mx-2 fw-bold">${item.qty}</span>
+             <button class="qty-btn-sm" onclick="updateCartQty('${name}', 1)"><i class="bi bi-plus"></i></button>
+          </div>
+        </div>
+        <div class="order-item-price">Rp ${subtotal.toLocaleString('id-ID')}</div>
+      </div>
+    `;
+    
+    waText += `- ${name} (${item.qty}x)\n`;
+  }
+  
+  if (!hasItems) {
+    listEl.innerHTML = '<p class="text-center text-muted">Keranjang Anda kosong.</p>';
+  }
+  
+  waText += `\n*Total: Rp ${total.toLocaleString('id-ID')}*`;
+  
+  totalEl.textContent = `Rp ${total.toLocaleString('id-ID')}`;
+  waBtn.href = `https://wa.me/6285180785177?text=${encodeURIComponent(waText)}`;
+  
+  if (!isRefresh) {
+    const modal = new bootstrap.Modal(document.getElementById('checkoutModal'));
+    modal.show();
+  }
 }
