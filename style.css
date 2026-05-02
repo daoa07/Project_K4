@@ -1,10 +1,10 @@
 :root {
   /* High Contrast Palette */
   --espresso: #1a0f0a; /* Slightly lighter than pure black for better texture */
-  --gold: #9d561a;     /* Deeper gold for better contrast on silk */
-  --latte: #8b5e34;    /* Darker brown for sub-headings */
-  --silk: #fdfaf5;     /* Pure, clean background */
-  --soft-bg: #f5ece0;  /* Subtle section background */
+  --gold: #9d561a; /* Deeper gold for better contrast on silk */
+  --latte: #8b5e34; /* Darker brown for sub-headings */
+  --silk: #fdfaf5; /* Pure, clean background */
+  --soft-bg: #f5ece0; /* Subtle section background */
   --text-main: #2e1a12; /* Deep readable text */
   --text-muted: #5d4037; /* Clear secondary text */
   --glass: rgba(255, 255, 255, 0.4);
@@ -13,7 +13,7 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background-color: var(--silk);
   color: var(--text-main);
   overflow-x: hidden;
@@ -52,12 +52,7 @@ h3,
 
 .navbar.scrolled {
   padding: 10px 0;
-  background: rgba(
-    255,
-    255,
-    255,
-    0.6
-  ) !important; /* Transparency on scroll */
+  background: rgba(255, 255, 255, 0.6) !important; /* Transparency on scroll */
   backdrop-filter: blur(15px);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid var(--glass-border);
@@ -170,6 +165,19 @@ h3,
   transform: translateY(-3px);
 }
 
+.btn-outline-dark-custom {
+  background: transparent;
+  border: 2px solid var(--espresso);
+  color: var(--espresso);
+  padding: 10px 25px; /* Sesuai request untuk tombol navbar */
+}
+
+.btn-outline-dark-custom:hover {
+  background: var(--espresso);
+  color: white;
+  transform: translateY(-3px);
+}
+
 /* Section Styling */
 section {
   padding: 120px 0;
@@ -186,7 +194,7 @@ section {
 }
 
 .section-title span {
-  font-family: 'Times New Roman', serif;
+  font-family: "Times New Roman", serif;
   text-transform: uppercase;
   letter-spacing: 4px;
   color: var(--latte);
@@ -270,7 +278,7 @@ section {
   background: var(--soft-bg);
   border-radius: 50px;
   padding: 5px;
-  border: 1px solid rgba(0,0,0,0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .qty-btn {
@@ -286,7 +294,7 @@ section {
   font-size: 1.2rem;
   cursor: pointer;
   transition: var(--transition);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .qty-btn:hover {
@@ -400,522 +408,371 @@ footer h5 {
 
 /* ================= INTRO ANIMATION (Adapted for TEST) ================= */
 .intro {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: #0a0504; /* Even darker black-espresso */
-    clip-path: inset(0 0 0 0); /* Prepared for reveal animation */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #0a0504; /* Even darker black-espresso */
+  clip-path: inset(0 0 0 0); /* Prepared for reveal animation */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
 .brand-intro-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.brand-intro-logo {
-    width: 80px;
-    height: 64px;
-    opacity: 1;
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
-}
-
-.brand-intro {
-    margin: 0;
-    display: flex;
-    gap: 15px;
-    font-size: 6rem;
-    font-weight: 700;
-    letter-spacing: 5px;
-    color: var(--espresso);
-    z-index: 20; /* Ensure text is above leaf for the "behind" effect */
-    position: relative;
-}
-
-.brand-intro span {
-    background: linear-gradient(90deg, var(--espresso), var(--silk), var(--espresso));
-    background-size: 200% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    opacity: 0;
-    transition: all 0.6s ease;
-}
-
-.brand-intro span.shimmer {
-    animation: glimmer 2s infinite alternate;
-}
-
-@keyframes glimmer {
-    0% { opacity: 0; filter: drop-shadow(0 0 0px rgba(255,255,255,0)); }
-    25% { opacity: 0.5; filter: drop-shadow(0 0 5px rgba(255,255,255,0.3)); }
-    50% { opacity: 0.2; }
-    75% { opacity: 0.8; filter: drop-shadow(0 0 15px rgba(255,255,255,0.6)); }
-    100% { opacity: 1; filter: drop-shadow(0 0 25px rgba(255,255,255,1)); }
-}
-
-.leaf {
-    position: absolute;
-    width: 180px;
-    height: 180px;
-    background: linear-gradient(135deg, var(--gold), var(--latte));
-    border-radius: 100% 0% 100% 0%;
-    left: 0;
-    top: 0;
-    opacity: 0;
-    box-shadow: inset 10px 10px 20px rgba(255, 255, 255, 0.4), 10px 10px 25px rgba(0,0,0,0.4);
-    z-index: 10;
-    pointer-events: none;
-    transform-style: preserve-3d;
-    overflow: hidden; /* Biar garis tidak keluar */
-}
-
-/* Garis-garis daun (Tulang Daun) */
-.leaf::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-        linear-gradient(45deg, transparent 49%, rgba(0,0,0,0.1) 50%, transparent 51%),
-        repeating-linear-gradient(135deg, transparent, transparent 20px, rgba(0,0,0,0.05) 20px, rgba(0,0,0,0.05) 21px);
-    opacity: 0.6;
-}
-
-/* Tambahkan tangkai daun */
-.leaf::after {
-    content: '';
-    position: absolute;
-    bottom: -15px;
-    right: -15px;
-    width: 30px;
-    height: 4px;
-    background: var(--gold);
-    transform: rotate(45deg);
-    border-radius: 2px;
-}
-
-.wind-line {
-    position: absolute;
-    height: 2px; /* Lebih tipis */
-    background: linear-gradient(90deg, transparent, rgba(250, 237, 205, 0.4), transparent);
-    border-radius: 50px;
-    left: -100vw;
-    z-index: 5;
-    pointer-events: none;
-    filter: blur(1px); /* Sedikit blur agar tidak terlalu tajam */
-}
-.line-1 { top: 35%; width: 350px; height: 2px; }
-.line-2 { top: 50%; width: 600px; background: rgba(250, 237, 205, 0.2); height: 4px; }
-.line-3 { top: 65%; width: 250px; background: rgba(250, 237, 205, 0.3); height: 1px; }
-
-.skip-hint {
-    position: absolute;
-    bottom: 40px;
-    width: 100%;
-    text-align: center;
-    font-size: 12px;
-    letter-spacing: 2px;
-    color: rgba(255,255,255,0.5);
-    opacity: 0;
-    transform: translateY(10px);
-    animation: fadeInUp 1.5s ease forwards;
-    animation-delay: 1.5s;
-}
-
-.skip-hint:hover {
-    color: rgba(255,255,255,0.9);
-    cursor: pointer;
-}
-
-@keyframes fadeInUp {
-    to {
-        opacity: 0.7;
-        transform: translateY(0);
-    }
-}
-
-/* ================= TOP ANNOUNCEMENT BAR & PROMO BTN ================= */
-.header-wrapper {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.top-bar {
-    background: var(--espresso);
-    color: var(--silk);
-    font-size: 0.85rem;
-    padding: 8px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    z-index: 1001;
-    overflow: hidden;
-}
-
-.marquee-container {
-    overflow: hidden;
-    white-space: nowrap;
-    width: 100%;
-    position: relative;
-    display: flex;
-}
-
-.marquee-content {
-    display: flex;
-    animation: marquee 25s linear infinite;
-}
-
-.marquee-text {
-    padding-right: 50px;
-    letter-spacing: 1px;
-}
-
-@keyframes marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-
-.close-topbar {
-    background: transparent;
-    border: none;
-    color: rgba(250, 237, 205, 0.6);
-    font-size: 1.2rem;
-    cursor: pointer;
-    line-height: 1;
-    position: absolute;
-    right: 15px;
-    transition: color 0.3s;
-}
-
-.close-topbar:hover {
-    color: var(--silk);
-}
-
-/* Override Navbar fixed positioning since it's now wrapped */
-.header-wrapper .navbar {
-    position: relative;
-    top: 0;
-}
-
-/* PROMO BUTTON */
-.btn-promo {
-    background: linear-gradient(45deg, var(--gold), #d4a373);
-    color: white !important;
-    padding: 10px 24px;
-    border-radius: 50px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 4px 15px rgba(188, 108, 37, 0.3);
-    transition: all 0.3s ease;
-    border: 1px solid rgba(255,255,255,0.2);
-}
-
-.btn-promo:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(188, 108, 37, 0.5);
-    background: linear-gradient(45deg, #d4a373, var(--gold));
-}
-
-.pulse-btn {
-    animation: pulse-glow 2s infinite;
-}
-
-@keyframes pulse-glow {
-    0% { box-shadow: 0 0 0 0 rgba(188, 108, 37, 0.6); }
-    70% { box-shadow: 0 0 0 10px rgba(188, 108, 37, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(188, 108, 37, 0); }
-}
-
-.pulse-icon {
-    animation: bounce-flame 1.5s infinite ease-in-out;
-    display: inline-block;
-}
-
-@keyframes bounce-flame {
-    0%, 100% { transform: scale(1) rotate(0deg); }
-    50% { transform: scale(1.2) rotate(10deg); }
-}
-
-/* ================= SPA Page Sections ================= */
-.page-section {
-    display: none;
-}
-.page-section.active {
-    display: block;
-    animation: fadeInPage 0.5s ease-in-out;
-}
-@keyframes fadeInPage {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* ================= RUNNING TOAST (Popup Berjalan) ================= */
-.running-toast {
-    position: fixed;
-    bottom: 30px;
-    left: 30px;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 16px;
-    padding: 18px 24px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    box-shadow: 0 15px 40px rgba(44, 24, 16, 0.15);
-    z-index: 50;
-    max-width: 340px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    border-left: 5px solid var(--gold);
-}
-
-.running-toast.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.toast-icon {
-    font-size: 1.5rem;
-    color: var(--gold);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.toast-content h6 {
-    margin: 0 0 5px 0;
-    font-size: 0.95rem;
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
-    color: var(--espresso);
-}
-
-.toast-content p {
-    margin: 0;
-    font-size: 0.85rem;
-    color: #555;
-    line-height: 1.3;
-}
-
-@media (max-width: 768px) {
-    .running-toast {
-        bottom: 100px; /* Di atas checkout bar */
-        left: 20px;
-        right: 20px;
-        max-width: none;
-    }
-}
-
-/* ================= CHECKOUT BAR ================= */
-.checkout-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: white;
-  padding: 15px 0;
-  box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
-  z-index: 999;
-  transform: translateY(100%);
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  border-top: 1px solid var(--soft-bg);
-}
-
-.checkout-bar.show {
-  transform: translateY(0);
-}
-
-.checkout-container {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   gap: 20px;
 }
 
-.checkout-info h6 {
-  margin: 0;
-  font-size: 0.9rem;
-  color: #888;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+.brand-intro-logo {
+  width: 80px;
+  height: 64px;
+  opacity: 1;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
 }
 
-.checkout-info .total-price {
+.brand-intro {
   margin: 0;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--espresso);
-  font-family: 'Playfair Display', serif;
-}
-
-.btn-checkout {
-  background: var(--gold);
-  color: white;
-  border: none;
-  padding: 12px 35px;
-  border-radius: 50px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  transition: var(--transition);
   display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.btn-checkout:hover {
-  background: var(--espresso);
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
-
-/* ================= CHECKOUT MODAL CUSTOM ================= */
-.checkout-modal .modal-content {
-  border-radius: 30px;
-  border: none;
-  overflow: hidden;
-  box-shadow: 0 25px 80px rgba(0,0,0,0.3);
-  background: #fdfaf5;
-}
-
-.checkout-modal-header {
-  background: var(--espresso);
-  color: white;
-  padding: 40px 30px;
-  text-align: center;
+  gap: 15px;
+  font-size: 6rem;
+  font-weight: 700;
+  letter-spacing: 5px;
+  color: var(--espresso);
+  z-index: 20; /* Ensure text is above leaf for the "behind" effect */
   position: relative;
 }
 
-.checkout-modal-header h4 {
-  margin: 0;
-  font-family: 'Playfair Display', serif;
-  font-size: 1.8rem;
+.brand-intro span {
+  background: linear-gradient(
+    90deg,
+    var(--espresso),
+    var(--silk),
+    var(--espresso)
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0;
+  transition: all 0.6s ease;
 }
 
-.order-summary-list {
-  padding: 20px 30px;
-  max-height: 300px;
-  overflow-y: auto;
+.brand-intro span.shimmer {
+  animation: glimmer 2s infinite alternate;
 }
 
-.order-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 12px 0;
-  border-bottom: 1px dashed rgba(0,0,0,0.1);
+@keyframes glimmer {
+  0% {
+    opacity: 0;
+    filter: drop-shadow(0 0 0px rgba(255, 255, 255, 0));
+  }
+  25% {
+    opacity: 0.5;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+  }
+  50% {
+    opacity: 0.2;
+  }
+  75% {
+    opacity: 0.8;
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6));
+  }
+  100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 25px rgba(255, 255, 255, 1));
+  }
 }
 
-.order-item:last-child {
-  border-bottom: none;
+.leaf {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  background: linear-gradient(135deg, var(--gold), var(--latte));
+  border-radius: 100% 0% 100% 0%;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  box-shadow:
+    inset 10px 10px 20px rgba(255, 255, 255, 0.4),
+    10px 10px 25px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  overflow: hidden; /* Biar garis tidak keluar */
 }
 
-.order-item-info h6 {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.order-item-info span {
-  font-size: 0.85rem;
-  color: #777;
-}
-
-.order-item-price {
-  font-weight: 700;
-  color: var(--gold);
-}
-
-.order-total-footer {
-  padding: 25px 30px;
-  background: var(--silk);
-  border-top: 1px solid rgba(0,0,0,0.05);
-}
-
-.total-row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.total-row h5 {
-  margin: 0;
-  font-weight: 700;
-}
-
-.total-row .grand-total {
-  font-size: 1.5rem;
-  color: var(--gold);
-}
-
-.btn-confirm-wa {
+/* Garis-garis daun (Tulang Daun) */
+.leaf::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  background: #25d366;
-  color: white;
-  border: none;
-  padding: 15px;
-  border-radius: 16px;
-  font-weight: 700;
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  transition: var(--transition);
-  text-decoration: none;
+  height: 100%;
+  background:
+    linear-gradient(
+      45deg,
+      transparent 49%,
+      rgba(0, 0, 0, 0.1) 50%,
+      transparent 51%
+    ),
+    repeating-linear-gradient(
+      135deg,
+      transparent,
+      transparent 20px,
+      rgba(0, 0, 0, 0.05) 20px,
+      rgba(0, 0, 0, 0.05) 21px
+    );
+  opacity: 0.6;
 }
 
-.btn-confirm-wa:hover {
-  background: #1ebc5a;
-  transform: translateY(-2px);
-  color: white;
-}
-
-/* Modal Quantity Controls */
-.modal-qty-control {
-  display: flex;
-  align-items: center;
-  background: #f8f9fa;
-  padding: 4px 8px;
-  border-radius: 8px;
-  width: fit-content;
-}
-
-.qty-btn-sm {
-  width: 24px;
-  height: 24px;
-  border-radius: 4px;
-  border: 1px solid #ddd;
-  background: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.qty-btn-sm:hover {
+/* Tambahkan tangkai daun */
+.leaf::after {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  right: -15px;
+  width: 30px;
+  height: 4px;
   background: var(--gold);
-  color: white;
-  border-color: var(--gold);
+  transform: rotate(45deg);
+  border-radius: 2px;
 }
+
+.wind-line {
+  position: absolute;
+  height: 2px; /* Lebih tipis */
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(250, 237, 205, 0.4),
+    transparent
+  );
+  border-radius: 50px;
+  left: -100vw;
+  z-index: 5;
+  pointer-events: none;
+  filter: blur(1px); /* Sedikit blur agar tidak terlalu tajam */
+}
+.line-1 {
+  top: 35%;
+  width: 350px;
+  height: 2px;
+}
+.line-2 {
+  top: 50%;
+  width: 600px;
+  background: rgba(250, 237, 205, 0.2);
+  height: 4px;
+}
+.line-3 {
+  top: 65%;
+  width: 250px;
+  background: rgba(250, 237, 205, 0.3);
+  height: 1px;
+}
+
+.skip-hint {
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 1.5s ease forwards;
+  animation-delay: 1.5s;
+}
+
+.skip-hint:hover {
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 0.7;
+    transform: translateY(0);
+  }
+}
+
+/* ================= TOP ANNOUNCEMENT BAR & PROMO BTN ================= */
+.header-wrapper {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+
+
+/* Override Navbar fixed positioning since it's now wrapped */
+.header-wrapper .navbar {
+  position: relative;
+  top: 0;
+}
+
+/* PROMO BUTTON */
+.btn-promo {
+  background: linear-gradient(45deg, var(--gold), #d4a373);
+  color: white !important;
+  padding: 10px 24px;
+  border-radius: 50px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(188, 108, 37, 0.3);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-promo:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(188, 108, 37, 0.5);
+  background: linear-gradient(45deg, #d4a373, var(--gold));
+}
+
+.pulse-btn {
+  animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(188, 108, 37, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(188, 108, 37, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(188, 108, 37, 0);
+  }
+}
+
+.pulse-icon {
+  animation: bounce-flame 1.5s infinite ease-in-out;
+  display: inline-block;
+}
+
+@keyframes bounce-flame {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(10deg);
+  }
+}
+
+/* ================= SPA Page Sections ================= */
+.page-section {
+  display: none;
+}
+.page-section.active {
+  display: block;
+  animation: fadeInPage 0.5s ease-in-out;
+}
+@keyframes fadeInPage {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.btn-outline-light-custom {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  color: white;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition);
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+}
+
+.btn-outline-light-custom:hover {
+  background: white;
+  color: var(--espresso);
+  border-color: white;
+  transform: translateY(-3px);
+}
+
+/* ================= RUNNING TOAST (Popup Berjalan) ================= */
+.running-toast {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 15px 25px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  border-left: 5px solid var(--gold);
+  min-width: 320px;
+  max-width: 450px;
+}
+
+.running-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.running-toast-footer .toast-icon {
+  font-size: 1.4rem;
+  color: var(--gold);
+}
+
+.running-toast-footer .toast-content h6 {
+  margin: 0 0 3px 0;
+  font-size: 0.9rem;
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  color: white;
+}
+
+.running-toast-footer .toast-content p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.4;
+}
+
+.running-toast-footer .toast-img-wrapper img {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+}
+
+@media (max-width: 768px) {
+  .footer-actions-wrapper {
+    gap: 20px !important;
+  }
+  .running-toast {
+    min-width: 100%;
+    max-width: 100%;
+  }
+}
+
+
 
 /* baru */
 .contact-fixed-box {
@@ -926,7 +783,7 @@ footer h5 {
   background: white;
   padding: 15px;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -945,7 +802,6 @@ footer h5 {
 .contact-fixed-box a:hover {
   color: var(--gold);
 }
-
 
 /* ================= CONTACT SECTION ================= */
 .contact-card {
@@ -981,7 +837,7 @@ footer h5 {
 }
 
 .contact-card h5 {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-size: 1.2rem;
   color: var(--espresso);
   margin-bottom: 10px;
@@ -1020,7 +876,7 @@ footer h5 {
   justify-content: space-between;
   align-items: center;
   padding: 8px 0;
-  border-bottom: 1px dashed rgba(44,24,16,0.1);
+  border-bottom: 1px dashed rgba(44, 24, 16, 0.1);
   font-size: 0.88rem;
   color: var(--espresso);
   gap: 10px;
@@ -1088,7 +944,14 @@ footer h5 {
 }
 
 .contact-social-btn.ig:hover {
-  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  background: linear-gradient(
+    45deg,
+    #f09433,
+    #e6683c,
+    #dc2743,
+    #cc2366,
+    #bc1888
+  );
   color: white;
   transform: translateX(4px);
 }
@@ -1125,17 +988,28 @@ footer h5 {
   animation: bounce-flame 2s infinite ease-in-out;
 }
 
-
 /* ================= FLOATING WHATSAPP ================= */
 @keyframes pulseWA {
-  0%   { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
-  70%  { box-shadow: 0 0 0 12px rgba(37, 211, 102, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(37, 211, 102, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+  }
 }
 
 @keyframes waSlideIn {
-  from { transform: translateX(120px); opacity: 0; }
-  to   { transform: translateX(0);     opacity: 1; }
+  from {
+    transform: translateX(120px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 .floating-wa-wrapper {
@@ -1163,13 +1037,16 @@ footer h5 {
 .wa-popup {
   background: white;
   border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
   overflow: hidden;
   max-height: 0;
   opacity: 0;
   transform: translateY(10px) scale(0.95);
   transform-origin: bottom right;
-  transition: max-height 0.35s ease, opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    max-height 0.35s ease,
+    opacity 0.3s ease,
+    transform 0.3s ease;
   pointer-events: none;
   min-width: 240px;
 }
@@ -1235,9 +1112,11 @@ footer h5 {
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
   animation: pulseWA 2s infinite;
-  transition: transform 0.3s ease, background-color 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease;
 }
 
 .floating-wa-btn:hover {
@@ -1266,7 +1145,7 @@ footer h5 {
   cursor: pointer;
   color: #25d366;
   font-size: 13px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
   margin-bottom: 4px;
 }
