@@ -285,6 +285,15 @@
                   </p>
                 </div>
               </div>
+              <div class="text-center mt-3">
+                <button
+                  class="btn btn-custom btn-primary-custom px-4 py-2"
+                  data-bs-dismiss="modal"
+                  onclick="switchPage('menu')"
+                >
+                  Lihat Menu <i class="bi bi-arrow-right ms-2"></i>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -336,6 +345,7 @@
                 </h5>
               </div>
               <div
+                id="promoDiscountCircle"
                 style="
                   display: inline-flex;
                   align-items: center;
@@ -355,6 +365,7 @@
                 5%
               </div>
               <h2
+                id="promoTitle"
                 class="mb-2"
                 style="
                   font-family: &quot;Playfair Display&quot;, serif;
@@ -366,6 +377,7 @@
                 Diskon 5% Paket Makanan &amp; Minuman!
               </h2>
               <p
+                id="promoDescription"
                 style="
                   color: #444;
                   font-family: &quot;Times New Roman&quot;, serif;
@@ -382,6 +394,7 @@
                 kasir.
               </p>
               <div
+                id="promoTerms"
                 style="
                   background: #fdf7f2;
                   border: 1px dashed var(--gold);
@@ -396,6 +409,15 @@
                 <p style="margin: 0 0 6px">Min. 1 makanan + 1 minuman</p>
                 <p style="margin: 0 0 6px">Berlaku untuk semua item menu</p>
                 <p style="margin: 0">Tidak dapat digabung promo lain</p>
+              </div>
+              <div class="text-center mt-3">
+                <button
+                  class="btn btn-custom btn-primary-custom px-4 py-2"
+                  data-bs-dismiss="modal"
+                  onclick="switchPage('menu')"
+                >
+                  Lihat Menu <i class="bi bi-arrow-right ms-2"></i>
+                </button>
               </div>
             </div>
           </div>
@@ -674,6 +696,112 @@
               </div>
             </div>
 
+            <!-- ===== NON-COFFEE DRINKS ===== -->
+            <div class="col-12 mt-5 reveal">
+              <div class="text-center mb-4">
+                <span
+                  style="
+                    color: var(--gold);
+                    text-transform: uppercase;
+                    letter-spacing: 4px;
+                    font-weight: 600;
+                    font-size: 0.85rem;
+                  "
+                  >Kesegaran Tanpa Kafein</span
+                >
+                <h3
+                  style="
+                    font-family: 'Playfair Display', serif;
+                    font-size: 1.8rem;
+                    margin-top: 8px;
+                    color: var(--espresso);
+                  "
+                >
+                  Minuman Non-Kopi
+                </h3>
+                <div
+                  style="
+                    width: 60px;
+                    height: 3px;
+                    background: var(--gold);
+                    margin: 10px auto 0;
+                  "
+                ></div>
+              </div>
+            </div>
+
+            <!-- Matcha Zen Latte -->
+            <div class="col-lg-4 col-md-6 reveal">
+              <div class="menu-card">
+                <div class="menu-img-wrapper">
+                  <img
+                    src="https://images.unsplash.com/photo-1515823064-d6e0c04616a7?auto=format&fit=crop&q=80&w=600"
+                    alt="Matcha Zen Latte"
+                  />
+                </div>
+                <div class="menu-content">
+                  <h3>Matcha Zen Latte</h3>
+                  <p>Teh hijau Jepang grade premium dengan susu lembut.</p>
+                  <div class="menu-price" data-price="38000">Rp 38.000</div>
+                  <div class="menu-order-control">
+                    <div class="qty-control">
+                      <button class="qty-btn minus" onclick="updateQty(this, -1)"><i class="bi bi-dash"></i></button>
+                      <input type="text" class="qty-input" value="0" readonly />
+                      <button class="qty-btn plus" onclick="updateQty(this, 1)"><i class="bi bi-plus"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Iced Lychee Tea -->
+            <div class="col-lg-4 col-md-6 reveal">
+              <div class="menu-card">
+                <div class="menu-img-wrapper">
+                  <img
+                    src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&q=80&w=600"
+                    alt="Iced Lychee Tea"
+                  />
+                </div>
+                <div class="menu-content">
+                  <h3>Iced Lychee Tea</h3>
+                  <p>Teh hitam segar dengan buah leci utuh dan aroma mawar.</p>
+                  <div class="menu-price" data-price="32000">Rp 32.000</div>
+                  <div class="menu-order-control">
+                    <div class="qty-control">
+                      <button class="qty-btn minus" onclick="updateQty(this, -1)"><i class="bi bi-dash"></i></button>
+                      <input type="text" class="qty-input" value="0" readonly />
+                      <button class="qty-btn plus" onclick="updateQty(this, 1)"><i class="bi bi-plus"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Classic Hot Chocolate -->
+            <div class="col-lg-4 col-md-6 reveal">
+              <div class="menu-card">
+                <div class="menu-img-wrapper">
+                  <img
+                    src="https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&q=80&w=600"
+                    alt="Classic Hot Chocolate"
+                  />
+                </div>
+                <div class="menu-content">
+                  <h3>Classic Hot Chocolate</h3>
+                  <p>Cokelat Belgia murni yang kental dan menghangatkan.</p>
+                  <div class="menu-price" data-price="40000">Rp 40.000</div>
+                  <div class="menu-order-control">
+                    <div class="qty-control">
+                      <button class="qty-btn minus" onclick="updateQty(this, -1)"><i class="bi bi-dash"></i></button>
+                      <input type="text" class="qty-input" value="0" readonly />
+                      <button class="qty-btn plus" onclick="updateQty(this, 1)"><i class="bi bi-plus"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <!-- ===== SNACK & MAKANAN ===== -->
             <div class="col-12 mt-5 reveal">
               <div class="text-center mb-4">
@@ -801,6 +929,114 @@
                       <button class="qty-btn plus" onclick="updateQty(this, 1)">
                         <i class="bi bi-plus"></i>
                       </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== HEAVY MEALS ===== -->
+          <div class="row g-4 justify-content-center mt-5">
+            <div class="col-12 reveal">
+              <div class="text-center mb-4">
+                <span
+                  style="
+                    color: var(--gold);
+                    text-transform: uppercase;
+                    letter-spacing: 4px;
+                    font-weight: 600;
+                    font-size: 0.85rem;
+                  "
+                  >Hidangan Utama</span
+                >
+                <h3
+                  style="
+                    font-family: 'Playfair Display', serif;
+                    font-size: 1.8rem;
+                    margin-top: 8px;
+                    color: var(--espresso);
+                  "
+                >
+                  Makanan Berat
+                </h3>
+                <div
+                  style="
+                    width: 60px;
+                    height: 3px;
+                    background: var(--gold);
+                    margin: 10px auto 0;
+                  "
+                ></div>
+              </div>
+            </div>
+
+            <!-- Nasi Goreng Signature -->
+            <div class="col-lg-4 col-md-6 reveal">
+              <div class="menu-card">
+                <div class="menu-img-wrapper">
+                  <img
+                    src="https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&q=80&w=600"
+                    alt="Nasi Goreng Signature"
+                  />
+                </div>
+                <div class="menu-content">
+                  <h3>Nasi Goreng Signature</h3>
+                  <p>Nasi goreng rempah khas De Café dengan telur dan sate ayam.</p>
+                  <div class="menu-price" data-price="45000">Rp 45.000</div>
+                  <div class="menu-order-control">
+                    <div class="qty-control">
+                      <button class="qty-btn minus" onclick="updateQty(this, -1)"><i class="bi bi-dash"></i></button>
+                      <input type="text" class="qty-input" value="0" readonly />
+                      <button class="qty-btn plus" onclick="updateQty(this, 1)"><i class="bi bi-plus"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Fettuccine Carbonara -->
+            <div class="col-lg-4 col-md-6 reveal">
+              <div class="menu-card">
+                <div class="menu-img-wrapper">
+                  <img
+                    src="https://images.unsplash.com/photo-1546549032-9571cd6b27df?auto=format&fit=crop&q=80&w=600"
+                    alt="Fettuccine Carbonara"
+                  />
+                </div>
+                <div class="menu-content">
+                  <h3>Fettuccine Carbonara</h3>
+                  <p>Pasta fettuccine dengan saus krim telur, parmesan, dan beef bacon.</p>
+                  <div class="menu-price" data-price="55000">Rp 55.000</div>
+                  <div class="menu-order-control">
+                    <div class="qty-control">
+                      <button class="qty-btn minus" onclick="updateQty(this, -1)"><i class="bi bi-dash"></i></button>
+                      <input type="text" class="qty-input" value="0" readonly />
+                      <button class="qty-btn plus" onclick="updateQty(this, 1)"><i class="bi bi-plus"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Beef Burger Deluxe -->
+            <div class="col-lg-4 col-md-6 reveal">
+              <div class="menu-card">
+                <div class="menu-img-wrapper">
+                  <img
+                    src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&q=80&w=600"
+                    alt="Beef Burger Deluxe"
+                  />
+                </div>
+                <div class="menu-content">
+                  <h3>Beef Burger Deluxe</h3>
+                  <p>Patty sapi pilihan dengan keju cheddar, sayur segar, dan fries.</p>
+                  <div class="menu-price" data-price="65000">Rp 65.000</div>
+                  <div class="menu-order-control">
+                    <div class="qty-control">
+                      <button class="qty-btn minus" onclick="updateQty(this, -1)"><i class="bi bi-dash"></i></button>
+                      <input type="text" class="qty-input" value="0" readonly />
+                      <button class="qty-btn plus" onclick="updateQty(this, 1)"><i class="bi bi-plus"></i></button>
                     </div>
                   </div>
                 </div>
