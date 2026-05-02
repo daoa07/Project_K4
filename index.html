@@ -60,7 +60,6 @@
     <div class="content-wrapper" style="opacity: 0">
       <!-- Header Wrapper -->
       <div class="header-wrapper fixed-top" id="headerWrapper">
-
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg">
           <div class="container">
@@ -106,7 +105,7 @@
                     data-bs-target="#promoModal"
                     style="padding: 10px 25px"
                   >
-                    <span class="pulse-icon">🔥</span> Promo Hari Ini
+                    <span class="pulse-icon"></span> Promo Hari Ini
                   </a>
                 </li>
               </ul>
@@ -333,7 +332,7 @@
                     font-size: 13px;
                   "
                 >
-                  🔥 Promo Spesial Hari Ini
+                  Promo Spesial Hari Ini
                 </h5>
               </div>
               <div
@@ -394,9 +393,9 @@
                   color: #333;
                 "
               >
-                <p style="margin: 0 0 6px">✅ Min. 1 makanan + 1 minuman</p>
-                <p style="margin: 0 0 6px">✅ Berlaku untuk semua item menu</p>
-                <p style="margin: 0">✅ Tidak dapat digabung promo lain</p>
+                <p style="margin: 0 0 6px">Min. 1 makanan + 1 minuman</p>
+                <p style="margin: 0 0 6px">Berlaku untuk semua item menu</p>
+                <p style="margin: 0">Tidak dapat digabung promo lain</p>
               </div>
             </div>
           </div>
@@ -454,8 +453,6 @@
               >
             </div>
           </div>
-
-
         </div>
       </section>
 
@@ -484,6 +481,20 @@
                   <h3>Artisan Espresso</h3>
                   <p>Ekstraksi murni dengan rasa yang kuat dan berkarakter.</p>
                   <div class="menu-price" data-price="25000">Rp 25.000</div>
+                  <div class="menu-order-control">
+                    <div class="qty-control">
+                      <button
+                        class="qty-btn minus"
+                        onclick="updateQty(this, -1)"
+                      >
+                        <i class="bi bi-dash"></i>
+                      </button>
+                      <input type="text" class="qty-input" value="0" readonly />
+                      <button class="qty-btn plus" onclick="updateQty(this, 1)">
+                        <i class="bi bi-plus"></i>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -504,6 +515,20 @@
                   <h3>Velvet Latte</h3>
                   <p>Paduan susu lembut dengan double shot espresso pilihan.</p>
                   <div class="menu-price" data-price="35000">Rp 35.000</div>
+                  <div class="menu-order-control">
+                    <div class="qty-control">
+                      <button
+                        class="qty-btn minus"
+                        onclick="updateQty(this, -1)"
+                      >
+                        <i class="bi bi-dash"></i>
+                      </button>
+                      <input type="text" class="qty-input" value="0" readonly />
+                      <button class="qty-btn plus" onclick="updateQty(this, 1)">
+                        <i class="bi bi-plus"></i>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -524,6 +549,20 @@
                   <h3>Signature Cappuccino</h3>
                   <p>Keseimbangan sempurna antara foam tebal dan kopi kuat.</p>
                   <div class="menu-price" data-price="32000">Rp 32.000</div>
+                  <div class="menu-order-control">
+                    <div class="qty-control">
+                      <button
+                        class="qty-btn minus"
+                        onclick="updateQty(this, -1)"
+                      >
+                        <i class="bi bi-dash"></i>
+                      </button>
+                      <input type="text" class="qty-input" value="0" readonly />
+                      <button class="qty-btn plus" onclick="updateQty(this, 1)">
+                        <i class="bi bi-plus"></i>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -546,6 +585,20 @@
                     Kopi dingin dengan saus karamel premium dan whipped cream.
                   </p>
                   <div class="menu-price" data-price="45000">Rp 45.000</div>
+                  <div class="menu-order-control">
+                    <div class="qty-control">
+                      <button
+                        class="qty-btn minus"
+                        onclick="updateQty(this, -1)"
+                      >
+                        <i class="bi bi-dash"></i>
+                      </button>
+                      <input type="text" class="qty-input" value="0" readonly />
+                      <button class="qty-btn plus" onclick="updateQty(this, 1)">
+                        <i class="bi bi-plus"></i>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -569,6 +622,20 @@
                     Double shot espresso dengan topping whipped cream manis.
                   </p>
                   <div class="menu-price" data-price="30000">Rp 30.000</div>
+                  <div class="menu-order-control">
+                    <div class="qty-control">
+                      <button
+                        class="qty-btn minus"
+                        onclick="updateQty(this, -1)"
+                      >
+                        <i class="bi bi-dash"></i>
+                      </button>
+                      <input type="text" class="qty-input" value="0" readonly />
+                      <button class="qty-btn plus" onclick="updateQty(this, 1)">
+                        <i class="bi bi-plus"></i>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -589,6 +656,20 @@
                   <h3>Velvet Taro Latte</h3>
                   <p>Minuman taro lembut dengan aroma khas yang menenangkan.</p>
                   <div class="menu-price" data-price="35000">Rp 35.000</div>
+                  <div class="menu-order-control">
+                    <div class="qty-control">
+                      <button
+                        class="qty-btn minus"
+                        onclick="updateQty(this, -1)"
+                      >
+                        <i class="bi bi-dash"></i>
+                      </button>
+                      <input type="text" class="qty-input" value="0" readonly />
+                      <button class="qty-btn plus" onclick="updateQty(this, 1)">
+                        <i class="bi bi-plus"></i>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -642,6 +723,20 @@
                     dari oven.
                   </p>
                   <div class="menu-price" data-price="28000">Rp 28.000</div>
+                  <div class="menu-order-control">
+                    <div class="qty-control">
+                      <button
+                        class="qty-btn minus"
+                        onclick="updateQty(this, -1)"
+                      >
+                        <i class="bi bi-dash"></i>
+                      </button>
+                      <input type="text" class="qty-input" value="0" readonly />
+                      <button class="qty-btn plus" onclick="updateQty(this, 1)">
+                        <i class="bi bi-plus"></i>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -661,6 +756,20 @@
                     keju, dan sayuran segar.
                   </p>
                   <div class="menu-price" data-price="40000">Rp 40.000</div>
+                  <div class="menu-order-control">
+                    <div class="qty-control">
+                      <button
+                        class="qty-btn minus"
+                        onclick="updateQty(this, -1)"
+                      >
+                        <i class="bi bi-dash"></i>
+                      </button>
+                      <input type="text" class="qty-input" value="0" readonly />
+                      <button class="qty-btn plus" onclick="updateQty(this, 1)">
+                        <i class="bi bi-plus"></i>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -680,6 +789,20 @@
                     cream.
                   </p>
                   <div class="menu-price" data-price="38000">Rp 38.000</div>
+                  <div class="menu-order-control">
+                    <div class="qty-control">
+                      <button
+                        class="qty-btn minus"
+                        onclick="updateQty(this, -1)"
+                      >
+                        <i class="bi bi-dash"></i>
+                      </button>
+                      <input type="text" class="qty-input" value="0" readonly />
+                      <button class="qty-btn plus" onclick="updateQty(this, 1)">
+                        <i class="bi bi-plus"></i>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -797,7 +920,58 @@
         </div>
       </section>
 
+      <!-- Checkout Bar -->
+      <div class="checkout-bar" id="checkoutBar">
+        <div class="container checkout-container">
+          <div class="checkout-info">
+            <h6>Total Pesanan</h6>
+            <p class="total-price" id="barTotalPrice">Rp 0</p>
+          </div>
+          <button class="btn-checkout" onclick="showCheckoutModal()">
+            Checkout <i class="bi bi-arrow-right"></i>
+          </button>
+        </div>
+      </div>
 
+      <!-- Checkout Modal -->
+      <div
+        class="modal fade checkout-modal"
+        id="checkoutModal"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="checkout-modal-header">
+              <button
+                type="button"
+                class="btn-close btn-close-white position-absolute"
+                style="top: 20px; right: 20px"
+                data-bs-dismiss="modal"
+              ></button>
+              <h4>Order Summary</h4>
+              <p class="mb-0 text-white-50 small">Selesaikan pesanan Anda</p>
+            </div>
+            <div class="order-summary-list" id="orderSummaryList">
+              <!-- Order items will be injected here -->
+            </div>
+            <div class="order-total-footer">
+              <div class="total-row">
+                <h5>Total Bayar</h5>
+                <h5 class="grand-total" id="modalGrandTotal">Rp 0</h5>
+              </div>
+              <a
+                href="#"
+                id="waConfirmBtn"
+                class="btn-confirm-wa"
+                target="_blank"
+              >
+                <i class="bi bi-whatsapp"></i> Konfirmasi ke Cabang
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- Footer -->
       <footer
@@ -897,7 +1071,6 @@
             </div>
           </div>
           <hr class="mt-5 mb-4 border-secondary opacity-25" />
-
 
           <p class="text-center text-white-50 mb-0 small letter-spacing-1">
             &copy; 2026 DE CAFÉ. ALL RIGHTS RESERVED.
