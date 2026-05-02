@@ -88,13 +88,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                  <a class="nav-link" href="#home">Beranda</a>
+                  <a class="nav-link" href="#home" onclick="switchPage('home')">Beranda</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#menu">Menu</a>
+                  <a class="nav-link" href="#about" onclick="switchPage('about')">About</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#contact">Kontak</a>
+                  <a class="nav-link" href="#menu" onclick="switchPage('menu')">Menu</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#contact" onclick="switchPage('contact')">Kontak</a>
                 </li>
 
                 <li class="nav-item ms-lg-2 mt-3 mt-lg-0">
@@ -207,7 +210,7 @@
                       alt="Espresso"
                       class="img-fluid"
                       style="
-                        filter: grayscale(100%) contrast(120%) sepia(20%);
+                        filter: grayscale(100%) contrast(110%) sepia(40%) brightness(95%);
                         width: 100%;
                         height: 150px;
                         object-fit: cover;
@@ -269,7 +272,12 @@
                       src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&q=80&w=400"
                       alt="Butter Croissant"
                       class="img-fluid"
-                      style="width: 100%; height: 150px; object-fit: cover"
+                      style="
+                        filter: grayscale(100%) contrast(110%) sepia(40%) brightness(95%);
+                        width: 100%;
+                        height: 150px;
+                        object-fit: cover;
+                      "
                     />
                   </div>
                   <p
@@ -426,43 +434,14 @@
 
       <!-- Hero Section -->
       <section id="home" class="hero-section page-section active p-0">
-        <div
-          id="heroCarousel"
-          class="carousel slide carousel-fade"
-          data-bs-ride="carousel"
-        >
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img
-                src="assets/carousel/onee.png"
-                alt="onee"
-                onerror="
-                  this.src =
-                    'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=1920'
-                "
-              />
-            </div>
-            <div class="carousel-item">
-              <img
-                src="assets/carousel/twoo.png"
-                alt="twoo"
-                onerror="
-                  this.src =
-                    'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&q=80&w=1920'
-                "
-              />
-            </div>
-            <div class="carousel-item">
-              <img
-                src="assets/carousel/three.png"
-                alt="three"
-                onerror="
-                  this.src =
-                    'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&q=80&w=1920'
-                "
-              />
-            </div>
-          </div>
+        <div class="hero-static-bg">
+          <img
+            src="assets/carousel/onee.png"
+            alt="Hero Background"
+            onerror="this.src = 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=1920'"
+            style="width: 100%; height: 100vh; object-fit: cover;"
+          />
+        </div>
           <div class="hero-overlay">
             <div class="container">
               <h4 class="hero-subtitle reveal-text">Est. 2026</h4>
@@ -473,6 +452,188 @@
                 onclick="switchPage('menu')"
                 >Lihat Menu</a
               >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Story & Best Seller Section (Inspired by Kopi Kenangan) -->
+      <section id="about" class="page-section py-0" style="background-color: var(--silk)">
+        <div class="container-fluid p-0">
+          <div class="row g-0 align-items-center position-relative">
+            <!-- Static Image Column -->
+            <div class="col-lg-7 col-md-12">
+              <div class="story-img-wrapper">
+                <img
+                  src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=800"
+                  alt="Cafe Atmosphere"
+                  class="story-main-img"
+                />
+              </div>
+            </div>
+
+            <!-- Sliding Text Column -->
+            <div class="col-lg-5 col-md-12">
+              <div id="storyCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+                <div class="carousel-inner">
+                  <!-- Slide 1: History/Founder -->
+                  <div class="carousel-item active">
+                    <div class="story-content-box">
+                      <div class="story-floating-card">
+                        <p class="quote-text">
+                          “Di DE CAFÉ, impian kami adalah menyajikan kopi
+                          berkualitas tinggi, dibuat dari bahan-bahan lokal
+                          tersegar untuk para penikmat kopi di seluruh
+                          Nusantara.”
+                        </p>
+                        <span class="quote-author"
+                          >— Kelompok 4 Sintak 2026, Founder</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Slide 2: Best Seller - Espresso -->
+                  <div class="carousel-item">
+                    <div class="story-content-box">
+                      <div class="story-floating-card">
+                        <span class="badge-recom">REKOMENDASI HARI INI</span>
+                        <h2 class="story-title">Artisan Espresso</h2>
+                        <p class="story-desc">
+                          Ekstraksi murni dengan rasa yang kuat dan berkarakter.
+                          Dibuat dengan biji kopi pilihan untuk mengawali hari
+                          Anda.
+                        </p>
+                        <button
+                          class="btn btn-outline-dark mt-3 px-4 py-2"
+                          onclick="switchPage('menu')"
+                        >
+                          Lihat Detail Menu
+                          <i class="bi bi-arrow-right ms-2"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Slide 3: Best Seller - Croissant -->
+                  <div class="carousel-item">
+                    <div class="story-content-box">
+                      <div class="story-floating-card">
+                        <span class="badge-recom">FAVORIT PELANGGAN</span>
+                        <h2 class="story-title">Butter Croissant</h2>
+                        <p class="story-desc">
+                          Renyah lapis mentega premium, hangat dan harum dari
+                          oven. Pendamping sempurna untuk secangkir kopi hangat.
+                        </p>
+                        <button
+                          class="btn btn-outline-dark mt-3 px-4 py-2"
+                          onclick="switchPage('menu')"
+                        >
+                          Lihat Detail Menu
+                          <i class="bi bi-arrow-right ms-2"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Slide 4: Filosofi Kami -->
+                  <div class="carousel-item">
+                    <div class="story-content-box">
+                      <div class="story-floating-card">
+                        <span class="badge-recom">FILOSOFI KAMI</span>
+                        <h2 class="story-title">Biji Lokal Pilihan</h2>
+                        <p class="story-desc">
+                          Kami bekerja sama langsung dengan petani lokal dari berbagai penjuru Nusantara untuk memastikan kualitas biji kopi terbaik di setiap cangkir Anda.
+                        </p>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Slide 5: Kualitas -->
+                  <div class="carousel-item">
+                    <div class="story-content-box">
+                      <div class="story-floating-card">
+                        <span class="badge-recom">KUALITAS PREMIUM</span>
+                        <h2 class="story-title">100% Arabica</h2>
+                        <p class="story-desc">
+                          Biji kopi Arabica pilihan yang disangrai secara artisanal dengan teknik presisi untuk mengeluarkan aroma dan profil rasa yang kaya.
+                        </p>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Slide 6: Fakta Unik -->
+                  <div class="carousel-item">
+                    <div class="story-content-box">
+                      <div class="story-floating-card">
+                        <span class="badge-recom">TAHUKAH ANDA?</span>
+                        <h2 class="story-title">Brewing Presisi</h2>
+                        <p class="story-desc">
+                          Setiap cangkir kopi diseduh dengan suhu dan rasio yang sangat presisi untuk mengekstrak rasa maksimal dan menjaga keseimbangan aromanya.
+                        </p>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Carousel Controls -->
+                <button
+                  class="carousel-control-prev custom-ctrl"
+                  type="button"
+                  data-bs-target="#storyCarousel"
+                  data-bs-slide="prev"
+                  style="left: 10px"
+                >
+                  <i class="bi bi-chevron-left"></i>
+                </button>
+                <button
+                  class="carousel-control-next custom-ctrl"
+                  type="button"
+                  data-bs-target="#storyCarousel"
+                  data-bs-slide="next"
+                  style="right: 10px"
+                >
+                  <i class="bi bi-chevron-right"></i>
+                </button>
+
+                <!-- Indicators -->
+                <div class="carousel-indicators custom-indicators">
+                  <button
+                    type="button"
+                    data-bs-target="#storyCarousel"
+                    data-bs-slide-to="0"
+                    class="active"
+                  ></button>
+                  <button
+                    type="button"
+                    data-bs-target="#storyCarousel"
+                    data-bs-slide-to="1"
+                  ></button>
+                  <button
+                    type="button"
+                    data-bs-target="#storyCarousel"
+                    data-bs-slide-to="2"
+                  ></button>
+                  <button
+                    type="button"
+                    data-bs-target="#storyCarousel"
+                    data-bs-slide-to="3"
+                  ></button>
+                  <button
+                    type="button"
+                    data-bs-target="#storyCarousel"
+                    data-bs-slide-to="4"
+                  ></button>
+                  <button
+                    type="button"
+                    data-bs-target="#storyCarousel"
+                    data-bs-slide-to="5"
+                  ></button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -711,7 +872,7 @@
                 >
                 <h3
                   style="
-                    font-family: 'Playfair Display', serif;
+                    font-family: &quot;Playfair Display&quot;, serif;
                     font-size: 1.8rem;
                     margin-top: 8px;
                     color: var(--espresso);
@@ -745,9 +906,16 @@
                   <div class="menu-price" data-price="38000">Rp 38.000</div>
                   <div class="menu-order-control">
                     <div class="qty-control">
-                      <button class="qty-btn minus" onclick="updateQty(this, -1)"><i class="bi bi-dash"></i></button>
+                      <button
+                        class="qty-btn minus"
+                        onclick="updateQty(this, -1)"
+                      >
+                        <i class="bi bi-dash"></i>
+                      </button>
                       <input type="text" class="qty-input" value="0" readonly />
-                      <button class="qty-btn plus" onclick="updateQty(this, 1)"><i class="bi bi-plus"></i></button>
+                      <button class="qty-btn plus" onclick="updateQty(this, 1)">
+                        <i class="bi bi-plus"></i>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -769,9 +937,16 @@
                   <div class="menu-price" data-price="32000">Rp 32.000</div>
                   <div class="menu-order-control">
                     <div class="qty-control">
-                      <button class="qty-btn minus" onclick="updateQty(this, -1)"><i class="bi bi-dash"></i></button>
+                      <button
+                        class="qty-btn minus"
+                        onclick="updateQty(this, -1)"
+                      >
+                        <i class="bi bi-dash"></i>
+                      </button>
                       <input type="text" class="qty-input" value="0" readonly />
-                      <button class="qty-btn plus" onclick="updateQty(this, 1)"><i class="bi bi-plus"></i></button>
+                      <button class="qty-btn plus" onclick="updateQty(this, 1)">
+                        <i class="bi bi-plus"></i>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -793,9 +968,16 @@
                   <div class="menu-price" data-price="40000">Rp 40.000</div>
                   <div class="menu-order-control">
                     <div class="qty-control">
-                      <button class="qty-btn minus" onclick="updateQty(this, -1)"><i class="bi bi-dash"></i></button>
+                      <button
+                        class="qty-btn minus"
+                        onclick="updateQty(this, -1)"
+                      >
+                        <i class="bi bi-dash"></i>
+                      </button>
                       <input type="text" class="qty-input" value="0" readonly />
-                      <button class="qty-btn plus" onclick="updateQty(this, 1)"><i class="bi bi-plus"></i></button>
+                      <button class="qty-btn plus" onclick="updateQty(this, 1)">
+                        <i class="bi bi-plus"></i>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -952,7 +1134,7 @@
                 >
                 <h3
                   style="
-                    font-family: 'Playfair Display', serif;
+                    font-family: &quot;Playfair Display&quot;, serif;
                     font-size: 1.8rem;
                     margin-top: 8px;
                     color: var(--espresso);
@@ -982,13 +1164,22 @@
                 </div>
                 <div class="menu-content">
                   <h3>Nasi Goreng Signature</h3>
-                  <p>Nasi goreng rempah khas De Café dengan telur dan sate ayam.</p>
+                  <p>
+                    Nasi goreng rempah khas De Café dengan telur dan sate ayam.
+                  </p>
                   <div class="menu-price" data-price="45000">Rp 45.000</div>
                   <div class="menu-order-control">
                     <div class="qty-control">
-                      <button class="qty-btn minus" onclick="updateQty(this, -1)"><i class="bi bi-dash"></i></button>
+                      <button
+                        class="qty-btn minus"
+                        onclick="updateQty(this, -1)"
+                      >
+                        <i class="bi bi-dash"></i>
+                      </button>
                       <input type="text" class="qty-input" value="0" readonly />
-                      <button class="qty-btn plus" onclick="updateQty(this, 1)"><i class="bi bi-plus"></i></button>
+                      <button class="qty-btn plus" onclick="updateQty(this, 1)">
+                        <i class="bi bi-plus"></i>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -1006,13 +1197,23 @@
                 </div>
                 <div class="menu-content">
                   <h3>Fettuccine Carbonara</h3>
-                  <p>Pasta fettuccine dengan saus krim telur, parmesan, dan beef bacon.</p>
+                  <p>
+                    Pasta fettuccine dengan saus krim telur, parmesan, dan beef
+                    bacon.
+                  </p>
                   <div class="menu-price" data-price="55000">Rp 55.000</div>
                   <div class="menu-order-control">
                     <div class="qty-control">
-                      <button class="qty-btn minus" onclick="updateQty(this, -1)"><i class="bi bi-dash"></i></button>
+                      <button
+                        class="qty-btn minus"
+                        onclick="updateQty(this, -1)"
+                      >
+                        <i class="bi bi-dash"></i>
+                      </button>
                       <input type="text" class="qty-input" value="0" readonly />
-                      <button class="qty-btn plus" onclick="updateQty(this, 1)"><i class="bi bi-plus"></i></button>
+                      <button class="qty-btn plus" onclick="updateQty(this, 1)">
+                        <i class="bi bi-plus"></i>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -1030,13 +1231,23 @@
                 </div>
                 <div class="menu-content">
                   <h3>Beef Burger Deluxe</h3>
-                  <p>Patty sapi pilihan dengan keju cheddar, sayur segar, dan fries.</p>
+                  <p>
+                    Patty sapi pilihan dengan keju cheddar, sayur segar, dan
+                    fries.
+                  </p>
                   <div class="menu-price" data-price="65000">Rp 65.000</div>
                   <div class="menu-order-control">
                     <div class="qty-control">
-                      <button class="qty-btn minus" onclick="updateQty(this, -1)"><i class="bi bi-dash"></i></button>
+                      <button
+                        class="qty-btn minus"
+                        onclick="updateQty(this, -1)"
+                      >
+                        <i class="bi bi-dash"></i>
+                      </button>
                       <input type="text" class="qty-input" value="0" readonly />
-                      <button class="qty-btn plus" onclick="updateQty(this, 1)"><i class="bi bi-plus"></i></button>
+                      <button class="qty-btn plus" onclick="updateQty(this, 1)">
+                        <i class="bi bi-plus"></i>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -1219,42 +1430,6 @@
         "
       >
         <div class="container">
-          <!-- Action Bar (Best Seller & Info Popup) -->
-          <div
-            class="footer-top-actions d-flex flex-column flex-md-row align-items-center justify-content-center gap-4 mb-5"
-          >
-            <!-- Best Seller Button -->
-            <div class="footer-bestseller-btn">
-              <a
-                class="btn-custom btn-promo pulse-btn"
-                href="#bestseller"
-                data-bs-toggle="modal"
-                data-bs-target="#infoModal"
-                style="padding: 12px 35px"
-              >
-                Best Seller
-              </a>
-            </div>
-
-            <!-- Running Toast (Informasi Otomatis) -->
-            <div id="runningToast" class="running-toast running-toast-footer">
-              <div
-                class="toast-img-wrapper"
-                id="toastImgWrapper"
-                style="display: none"
-              >
-                <img id="toastImage" src="" alt="Info" />
-              </div>
-              <div class="toast-icon" id="toastIcon">
-                <i class="bi bi-info-circle-fill"></i>
-              </div>
-              <div class="toast-content">
-                <h6 id="toastTitle">Info</h6>
-                <p id="toastMessage">Memuat info...</p>
-              </div>
-            </div>
-          </div>
-
           <div class="row g-4 text-center text-md-start">
             <div class="col-lg-4 col-md-6">
               <h3 class="footer-heading mb-4">DE CAFÉ</h3>
