@@ -438,4 +438,3 @@ setInterval(showNextToast, 7000);
 
 // Tampilkan toast pertama setelah intro selesai
 setTimeout(showNextToast, 4000);
-
