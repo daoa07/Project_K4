@@ -169,7 +169,7 @@ h3,
   background: transparent;
   border: 2px solid var(--espresso);
   color: var(--espresso);
-  padding: 10px 25px; /* Sesuai request untuk tombol navbar */
+  padding: 10px 25px;
 }
 
 .btn-outline-dark-custom:hover {
@@ -261,7 +261,7 @@ section {
   color: var(--gold);
   font-weight: 700;
   font-size: 1.3rem;
-  margin-bottom: 10px; /* Reduced margin */
+  margin-bottom: 10px;
 }
 
 .menu-order-control {
@@ -406,7 +406,7 @@ footer h5 {
   }
 }
 
-/* ================= INTRO ANIMATION (Adapted for TEST) ================= */
+/*INTRO ANIMATION (Adapted for TEST) */
 .intro {
   position: fixed;
   top: 0;
@@ -502,7 +502,7 @@ footer h5 {
   z-index: 10;
   pointer-events: none;
   transform-style: preserve-3d;
-  overflow: hidden; /* Biar garis tidak keluar */
+  overflow: hidden;
 }
 
 /* Garis-garis daun (Tulang Daun) */
@@ -545,7 +545,7 @@ footer h5 {
 
 .wind-line {
   position: absolute;
-  height: 2px; /* Lebih tipis */
+  height: 2px;
   background: linear-gradient(
     90deg,
     transparent,
@@ -556,7 +556,7 @@ footer h5 {
   left: -100vw;
   z-index: 5;
   pointer-events: none;
-  filter: blur(1px); /* Sedikit blur agar tidak terlalu tajam */
+  filter: blur(1px);
 }
 .line-1 {
   top: 35%;
@@ -600,23 +600,6 @@ footer h5 {
     opacity: 0.7;
     transform: translateY(0);
   }
-}
-
-/* ================= TOP ANNOUNCEMENT BAR & PROMO BTN ================= */
-.header-wrapper {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-
-
-/* Override Navbar fixed positioning since it's now wrapped */
-.header-wrapper .navbar {
-  position: relative;
-  top: 0;
 }
 
 /* PROMO BUTTON */
@@ -671,7 +654,7 @@ footer h5 {
   }
 }
 
-/* ================= SPA Page Sections ================= */
+/* SPA Page Sections */
 .page-section {
   display: none;
 }
@@ -710,7 +693,7 @@ footer h5 {
   transform: translateY(-3px);
 }
 
-/* ================= RUNNING TOAST (Popup Berjalan) ================= */
+/* RUNNING TOAST (Popup Berjalan) */
 .running-toast {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
@@ -772,7 +755,242 @@ footer h5 {
   }
 }
 
+/* CHECKOUT BAR */
+.checkout-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: white;
+  padding: 15px 0;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  transform: translateY(100%);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  border-top: 1px solid var(--soft-bg);
+}
 
+.checkout-bar.show {
+  transform: translateY(0);
+}
+
+.checkout-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.checkout-info h6 {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.checkout-info .total-price {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--espresso);
+  font-family: "Playfair Display", serif;
+}
+
+.btn-checkout {
+  background: var(--gold);
+  color: white;
+  border: none;
+  padding: 12px 35px;
+  border-radius: 50px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-checkout:hover {
+  background: var(--espresso);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* CHECKOUT MODAL CUSTOM  */
+.checkout-modal .modal-content {
+  border-radius: 30px;
+  border: none;
+  overflow: hidden;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+  background: #fdfaf5;
+}
+
+.checkout-modal-header {
+  background: var(--espresso);
+  color: white;
+  padding: 40px 30px;
+  text-align: center;
+  position: relative;
+}
+
+.checkout-modal-header h4 {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-size: 1.8rem;
+}
+
+.order-summary-list {
+  padding: 20px 30px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+}
+
+.order-item:last-child {
+  border-bottom: none;
+}
+
+.order-item-info h6 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.order-item-info span {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.order-item-price {
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.order-total-footer {
+  padding: 25px 30px;
+  background: var(--silk);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.total-row h5 {
+  margin: 0;
+  font-weight: 700;
+}
+
+.total-row .grand-total {
+  font-size: 1.5rem;
+  color: var(--gold);
+}
+
+.btn-confirm-wa {
+  width: 100%;
+  background: #25d366;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 16px;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.btn-confirm-wa:hover {
+  background: #1ebc5a;
+  transform: translateY(-2px);
+  color: white;
+}
+
+/* Modal Quantity Controls */
+.modal-qty-control {
+  display: flex;
+  align-items: center;
+  background: #f8f9fa;
+  padding: 4px 8px;
+  border-radius: 8px;
+  width: fit-content;
+}
+
+.qty-btn-sm {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.qty-btn-sm:hover {
+  background: var(--gold);
+  color: white;
+  border-color: var(--gold);
+}
+
+/* Quantity Control in Menu Cards */
+.menu-order-control {
+  margin-top: 15px;
+}
+
+.qty-control {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f8f9fa;
+  padding: 5px 12px;
+  border-radius: 50px;
+  width: fit-content;
+}
+
+.qty-btn {
+  background: white;
+  border: 1px solid #ddd;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.qty-btn:hover {
+  background: var(--gold);
+  color: white;
+  border-color: var(--gold);
+}
+
+.qty-input {
+  width: 30px;
+  border: none;
+  background: transparent;
+  text-align: center;
+  font-weight: 700;
+  color: var(--espresso);
+}
 
 /* baru */
 .contact-fixed-box {
@@ -803,7 +1021,7 @@ footer h5 {
   color: var(--gold);
 }
 
-/* ================= CONTACT SECTION ================= */
+/* CONTACT SECTION */
 .contact-card {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
