@@ -125,6 +125,10 @@
         onComplete: () => {
           introBox.style.display = "none";
           document.body.style.overflowY = "auto";
+
+          // Tampilkan about teaser karena home adalah halaman default
+          const teaserSection = document.getElementById("home-about-teaser");
+          if (teaserSection) teaserSection.style.display = "block";
           
           if (typeof ScrollTrigger !== "undefined") {
             ScrollTrigger.refresh();
@@ -382,6 +386,13 @@
         }
       }, 100); // Trigger scroll reveal
     }
+
+    // Tampilkan/sembunyikan about teaser di halaman home
+    const teaserSection = document.getElementById("home-about-teaser");
+    if (teaserSection) {
+      teaserSection.style.display = pageId === "home" ? "block" : "none";
+    }
+
     //   baru
     const footer = document.querySelector("footer");
     const waBtn = document.getElementById("floatingWA");
