@@ -211,15 +211,62 @@ section {
   overflow: hidden;
   border: none;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
-  transition: var(--transition);
+  /* Hanya transisi bayangan agar TIDAK bertabrakan dengan animasi GSAP transform */
+  transition: box-shadow 0.3s ease;
   height: 100%;
   display: flex;
   flex-direction: column;
+  will-change: transform, opacity;
 }
 
 .menu-card:hover {
-  transform: translateY(-15px);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.1);
+}
+
+.hot-pick-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 4px 10px rgba(255, 50, 50, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border: 2px solid #ff3232;
+  overflow: hidden;
+  animation: pulseFire 2s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.hot-pick-badge img {
+  width: 75%;
+  height: 75%;
+  object-fit: contain;
+  filter: grayscale(100%) opacity(0.15);
+  position: absolute;
+  top: 12.5%;
+  left: 12.5%;
+}
+
+.hot-text {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 0.9rem;
+  color: #ff2a2a;
+  z-index: 2;
+  position: relative;
+  text-shadow: 0 0 3px #ffeb3b, 0 0 8px #ff9800;
+  letter-spacing: 1px;
+}
+
+@keyframes pulseFire {
+  0% { transform: scale(1); opacity: 0.95; }
+  50% { transform: scale(1.08) rotate(3deg); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.95; }
 }
 
 .menu-img-wrapper {
@@ -1568,4 +1615,128 @@ footer h5 {
 @keyframes floatingText {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-15px); }
+}
+
+/* ================= NEW CHECKOUT UI ================= */
+.checkout-tabs {
+  display: flex;
+  background: #f8f9fa;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  border: 1px solid #e9ecef;
+}
+
+.checkout-tab {
+  flex: 1;
+  text-align: center;
+  padding: 12px 5px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  border-right: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+.checkout-tab:last-child {
+  border-right: none;
+}
+
+.checkout-tab h6 {
+  margin: 0;
+  font-weight: 700;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+.checkout-tab span {
+  font-size: 0.65rem;
+  color: #adb5bd;
+  display: block;
+  margin-top: 2px;
+}
+
+.checkout-tab.active {
+  background: white;
+  border-top: 3px solid #66c0b7;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+.checkout-tab.active h6 {
+  color: #66c0b7;
+}
+.checkout-tab.active span {
+  color: #66c0b7;
+}
+
+.input-modern {
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  padding: 10px 15px;
+  font-size: 0.9rem;
+}
+.input-modern:focus {
+  border-color: #66c0b7;
+  box-shadow: 0 0 0 0.2rem rgba(102, 192, 183, 0.25);
+  outline: none;
+}
+
+.select-modern {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23333' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  padding: 8px 32px 8px 12px;
+  font-size: 0.85rem;
+  color: #333;
+  width: 100%;
+}
+
+.select-modern:focus {
+  border-color: #66c0b7;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(102, 192, 183, 0.25);
+}
+
+.btn-trash {
+  background: transparent;
+  border: none;
+  color: #dc3545;
+  font-size: 1.1rem;
+  padding: 0 5px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.btn-trash:hover {
+  color: #a71d2a;
+}
+.clear-all-btn {
+  color: #dc3545;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+.clear-all-btn:hover {
+  text-decoration: underline;
+}
+
+.payment-modal-body {
+  text-align: center;
+  padding: 30px;
+}
+.payment-qr {
+  width: 200px;
+  height: 200px;
+  margin: 20px auto;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 10px;
+}
+.tf-box {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px dashed #ccc;
+  margin: 15px 0;
 }
