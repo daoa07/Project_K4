@@ -1,4 +1,4 @@
-﻿// ================= 1. INTRO ANIMATION =================
+// ================= 1. INTRO ANIMATION =================
 // Daftarkan ScrollTrigger untuk GSAP
 gsap.registerPlugin(ScrollTrigger);
 
@@ -356,8 +356,7 @@ introBox.addEventListener("click", () => {
     if (termsEl) termsEl.innerHTML = selectedPromo.terms;
   }
 
-  // Jalankan saat dokumen siap
-  document.addEventListener("DOMContentLoaded", initDynamicPromo);
+  // Jalankan saat dokumen siap (Digantikan oleh listener di akhir file)
 
 
   // SPA Logic
@@ -383,24 +382,9 @@ introBox.addEventListener("click", () => {
       teaserSection.style.display = pageId === "home" ? "block" : "none";
     }
 
-    //   baru
     const footer = document.querySelector("footer");
-    const waBtn = document.getElementById("floatingWA");
-
-    if (pageId === "contact") {
-      if (footer) footer.style.display = "none";
-      // Tampilkan tombol WA dengan animasi slide dari kanan
-      if (waBtn) {
-        waBtn.classList.remove("wa-visible");
-        void waBtn.offsetWidth; // reset animasi
-        setTimeout(() => waBtn.classList.add("wa-visible"), 100);
-      }
-    } else {
-      if (footer) footer.style.display = "block";
-      // Sembunyikan tombol WA
-      if (waBtn) {
-        waBtn.classList.remove("wa-visible");
-      }
+    if (footer) {
+      footer.style.display = "block";
     }
 
     // Perbarui visibilitas keranjang
@@ -865,5 +849,52 @@ introBox.addEventListener("click", () => {
     // Bersihkan keranjang
     clearCart();
   }
+
+
+
+  // realtime operational status
+  function updateOperationalStatus() {
+    const badge = document.getElementById("statusBadge");
+    if (!badge) return;
+
+    const now = new Date();
+    const day = now.getDay(); // 0 (Sun) - 6 (Sat)
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const currentTime = hours + minutes / 60;
+
+    let isOpen = false;
+    let openTime, closeTime;
+
+    if (day >= 1 && day <= 5) {
+      // Senin - Jumat (08:00 - 22:00)
+      openTime = 8;
+      closeTime = 22;
+    } else {
+      // Sabtu - Minggu (09:00 - 23:00)
+      openTime = 9;
+      closeTime = 23;
+    }
+
+    if (currentTime >= openTime && currentTime < closeTime) {
+      isOpen = true;
+    }
+
+    if (isOpen) {
+      badge.innerHTML = '<i class="bi bi-check-circle-fill"></i> Buka Sekarang';
+      badge.classList.remove("closed");
+    } else {
+      badge.innerHTML = '<i class="bi bi-x-circle-fill"></i> Tutup Sekarang';
+      badge.classList.add("closed");
+    }
+  }
+
+  // Jalankan saat dokumen siap
+  document.addEventListener("DOMContentLoaded", () => {
+    initDynamicPromo();
+    updateOperationalStatus();
+    // Cek status setiap 1 menit
+    setInterval(updateOperationalStatus, 60000);
+  });
 
 

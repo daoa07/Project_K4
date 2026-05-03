@@ -1356,8 +1356,17 @@
                 </div>
                 <h5>Lokasi Kami</h5>
                 <p class="text-muted">
-                  Jl. Sungai Sahang <br />palembang, Indonesia
+                  Jl. Sungai Sahang No.3654, Lorok Pakjo, Kec. Ilir Bar. I, <br />
+                  Kota Palembang, Sumatera Selatan 30151
                 </p>
+                <div class="qr-code-wrapper" style="margin: 15px auto; border: 1px solid #eee; padding: 10px; display: inline-block; background: white; border-radius: 8px;">
+                  <img
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://maps.app.goo.gl/hvKguRStKSc94kS76"
+                    alt="QR Code Lokasi"
+                    style="width: 120px; height: 120px;"
+                  />
+                </div>
+                <br>
                 <a
                   href="https://maps.app.goo.gl/hvKguRStKSc94kS76"
                   target="_blank"
@@ -1384,9 +1393,9 @@
                     <span><i class="bi bi-calendar-heart"></i> Sab – Min</span>
                     <span class="hours-time">09:00 – 23:00</span>
                   </div>
-                  <div class="hours-badge">
-                    <i class="bi bi-check-circle-fill"></i> Buka Hari Ini
-                  </div>
+                </div>
+                <div class="hours-badge" id="statusBadge">
+                  <i class="bi bi-check-circle-fill"></i> Buka Hari Ini
                 </div>
               </div>
             </div>
@@ -1416,11 +1425,12 @@
                     <span>@de.cafe.official</span>
                   </a>
                   <a
-                    href="mailto:hello@decafe.id"
+                    href="https://mail.google.com/mail/?view=cm&fs=1&to=decafe340@gmail.com"
+                    target="_blank"
                     class="contact-social-btn mail"
                   >
                     <i class="bi bi-envelope-fill"></i>
-                    <span>hello@decafe.id</span>
+                    <span>decafe340@gmail.com</span>
                   </a>
                 </div>
               </div>
@@ -1429,9 +1439,7 @@
 
           <!-- Dekorasi bawah -->
           <div class="contact-divider reveal">
-            <i class="bi bi-cup-hot-fill"></i>
             <span>Mari berkunjung dan nikmati kopi terbaik bersama kami</span>
-            <i class="bi bi-cup-hot-fill"></i>
           </div>
         </div>
       </section>
@@ -1584,59 +1592,6 @@
         "
       >
         <div class="container">
-          <div class="row g-4 text-center text-md-start">
-            <div class="col-lg-4 col-md-6">
-              <h3 class="footer-heading mb-4">DE CAFÉ</h3>
-              <p class="text-white-50 lh-lg">
-                Menyatukan orang-orang melalui kopi terbaik dunia sejak 2026.
-                Nikmati suasana premium dan cita rasa autentik di setiap
-                cangkir.
-              </p>
-            </div>
-            <div class="col-lg-4 col-md-6">
-              <h5 class="footer-heading mb-4">Jam Operasional</h5>
-              <div class="d-flex flex-column gap-2 text-white-50">
-                <div
-                  class="d-flex justify-content-between border-bottom border-secondary pb-2"
-                >
-                  <span>Senin - Jumat</span>
-                  <span class="text-white">08:00 - 22:00</span>
-                </div>
-                <div class="d-flex justify-content-between pt-1">
-                  <span>Sabtu - Minggu</span>
-                  <span class="text-white">09:00 - 23:00</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-12">
-              <h5 class="footer-heading mb-4">Ikuti Kami</h5>
-              <p class="text-white-50 mb-3">
-                Dapatkan update terbaru dan promo menarik.
-              </p>
-              <div
-                class="d-flex gap-3 footer-socials justify-content-center justify-content-md-start"
-              >
-                <a
-                  href="https://www.instagram.com/de.cafe.official"
-                  target="_blank"
-                  class="footer-social-link"
-                >
-                  <i class="bi bi-instagram"></i>
-                </a>
-                <a href="#" class="footer-social-link">
-                  <i class="bi bi-facebook"></i>
-                </a>
-                <a href="#" class="footer-social-link">
-                  <i class="bi bi-twitter-x"></i>
-                </a>
-                <a href="#" class="footer-social-link">
-                  <i class="bi bi-tiktok"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-          <hr class="mt-5 mb-4 border-secondary opacity-25" />
-
           <p class="text-center text-white-50 mb-0 small letter-spacing-1">
             &copy; 2026 DE CAFÉ. ALL RIGHTS RESERVED.
           </p>
@@ -1667,17 +1622,6 @@
       </div>
     </div>
 
-    <!-- Floating WhatsApp -->
-    <div class="floating-wa-wrapper" id="floatingWA">
-      <!-- Direct WhatsApp button -->
-      <a
-        href="https://wa.me/6285180785177?text=Halo%20min%20saya%20mau%20reservasi%20"
-        class="floating-wa-btn"
-        target="_blank"
-        aria-label="Chat WhatsApp"
-      >
-        <i class="bi bi-whatsapp"></i>
-      </a>
-    </div>
+
   </body>
 </html>

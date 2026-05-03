@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   /* High Contrast Palette */
   --espresso: #1a0f0a; /* Slightly lighter than pure black for better texture */
   --gold: #9d561a; /* Deeper gold for better contrast on silk */
@@ -1109,7 +1109,9 @@ section {
 }
 
 .hours-badge {
-  margin-top: 12px;
+  margin-top: 35px;
+  margin-left: auto;
+  margin-right: auto;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -1119,6 +1121,11 @@ section {
   padding: 5px 14px;
   font-size: 0.82rem;
   font-weight: 600;
+}
+
+.hours-badge.closed {
+  background: #fde8e8;
+  color: #9e1a1a;
 }
 
 /* Social buttons */
@@ -1857,4 +1864,3 @@ footer h5 {
     font-size: 1.1rem;
   }
 }
-
