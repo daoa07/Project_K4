@@ -20,6 +20,15 @@ body {
   margin: 0;
   scroll-behavior: smooth;
   font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 h1,
@@ -782,6 +791,7 @@ section {
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.1);
 }
 
+/* HOT PICK BADGE - Removed pulse and hover */
 .hot-pick-badge {
   position: absolute;
   top: -10px;
@@ -797,8 +807,16 @@ section {
   z-index: 10;
   border: 1px solid #eee;
   overflow: hidden;
-  animation: pulseBadge 2s ease-in-out infinite;
+  pointer-events: none;
   will-change: transform;
+  animation: badgeJiggle 3s ease-in-out infinite;
+}
+
+@keyframes badgeJiggle {
+  0%, 100% { transform: rotate(0deg); }
+  10%, 20% { transform: rotate(-8deg); }
+  15%, 25% { transform: rotate(8deg); }
+  30% { transform: rotate(0deg); }
 }
 
 .hot-pick-badge img {
@@ -836,14 +854,14 @@ section {
   border-radius: 28px 28px 0 0; /* Menjaga sudut melengkung pada gambar */
 }
 
-.menu-card img {
+.menu-card .menu-img-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: var(--transition);
 }
 
-.menu-card:hover img {
+.menu-card:hover .menu-img-wrapper img {
   transform: scale(1.1);
 }
 
@@ -1533,6 +1551,22 @@ section {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
+@media (max-width: 576px) {
+  .checkout-container {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 15px;
+  }
+  .checkout-info .total-price {
+    font-size: 1.2rem;
+  }
+  .btn-checkout {
+    padding: 10px 20px;
+    font-size: 0.8rem;
+    gap: 8px;
+  }
+}
+
 
 /* ================= NEW CHECKOUT UI ================= */
 .checkout-tabs {
@@ -1792,6 +1826,10 @@ section {
 
 
 /* Footer */
+footer {
+  margin-top: auto;
+}
+
 footer h3 {
   font-size: 2rem;
 }
@@ -1860,7 +1898,117 @@ footer h5 {
   footer h3 {
     font-size: 1.5rem;
   }
-  footer h5 {
-    font-size: 1.1rem;
-  }
+}
+
+/* Custom Utility Classes to replace Inline Styles */
+.bg-silk { background-color: var(--silk); }
+.bg-cream { background-color: #fdf7f2; }
+.text-gold { color: var(--gold); }
+.text-espresso { color: var(--espresso); }
+
+.modal-custom-receipt {
+  background-color: #f9f7f1;
+  border: none;
+  border-radius: 0;
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.8);
+}
+
+.modal-receipt-body {
+  border: 2px solid #111;
+  margin: 15px;
+}
+
+.modal-receipt-header-line {
+  border-bottom: 3px double #111;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.font-serif { font-family: "Playfair Display", serif; }
+.font-mono { font-family: "Courier New", Courier, monospace; }
+
+.promo-modal-content {
+  background-color: #f9f7f1;
+  border: none;
+  border-radius: 0;
+  box-shadow: 8px 8px 0px rgba(188, 108, 37, 0.8);
+}
+
+.promo-modal-body {
+  border: 2px solid var(--gold);
+  margin: 15px;
+}
+
+.promo-header-line {
+  border-bottom: 3px double var(--gold);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.promo-discount-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gold);
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 900;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  font-family: "Playfair Display", serif;
+  box-shadow: 0 4px 20px rgba(188, 108, 37, 0.4);
+}
+
+.promo-terms-box {
+  background: #fdf7f2;
+  border: 1px dashed var(--gold);
+  padding: 14px 20px;
+  text-align: left;
+  margin-bottom: 20px;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  color: #333;
+}
+
+.section-divider {
+  width: 60px;
+  height: 3px;
+  background: var(--gold);
+  margin: 10px auto 0;
+}
+
+.label-gold {
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.fs-14 { font-size: 14px; }
+.fs-1-8 { font-size: 1.8rem; }
+.py-70 { padding-top: 70px; padding-bottom: 70px; }
+.letter-spacing-1 { letter-spacing: 1px; }
+.letter-spacing-2 { letter-spacing: 2px; }
+
+.footer-custom {
+  background-color: var(--espresso);
+  color: white;
+  border-top: 5px solid var(--gold);
+}
+
+.btn-close-custom {
+  top: 15px;
+  right: 15px;
+  z-index: 10;
+  font-size: 0.75rem;
+}
+
+.toast-wrapper {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1050;
 }
