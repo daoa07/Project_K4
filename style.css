@@ -208,7 +208,7 @@ section {
 .menu-card {
   background: white;
   border-radius: 28px;
-  overflow: hidden;
+  overflow: visible; /* Diubah agar logo HOTS bisa nongol keluar */
   border: none;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
   /* Hanya transisi bayangan agar TIDAK bertabrakan dengan animasi GSAP transform */
@@ -230,48 +230,51 @@ section {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: white;
-  box-shadow: 0 4px 10px rgba(255, 50, 50, 0.3);
+  background: #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 10;
-  border: 2px solid #ff3232;
+  border: 1px solid #eee;
   overflow: hidden;
-  animation: pulseFire 2s ease-in-out infinite;
-  will-change: transform, opacity;
+  animation: pulseBadge 2s ease-in-out infinite;
+  will-change: transform;
 }
 
 .hot-pick-badge img {
-  width: 75%;
-  height: 75%;
+  width: 60%;
+  height: 60%;
   object-fit: contain;
-  filter: grayscale(100%) opacity(0.15);
+  filter: grayscale(100%);
   position: absolute;
-  top: 12.5%;
-  left: 12.5%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  opacity: 0.2;
 }
 
 .hot-text {
   font-family: 'Playfair Display', serif;
   font-weight: 900;
-  font-size: 0.9rem;
-  color: #ff2a2a;
-  z-index: 2;
+  font-size: 0.8rem;
+  color: #333;
+  z-index: 3;
   position: relative;
-  text-shadow: 0 0 3px #ffeb3b, 0 0 8px #ff9800;
   letter-spacing: 1px;
 }
 
-@keyframes pulseFire {
-  0% { transform: scale(1); opacity: 0.95; }
-  50% { transform: scale(1.08) rotate(3deg); opacity: 1; }
-  100% { transform: scale(1); opacity: 0.95; }
+@keyframes pulseBadge {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
 }
 
 .menu-img-wrapper {
   height: 280px;
   overflow: hidden;
+  border-radius: 28px 28px 0 0; /* Menjaga sudut melengkung pada gambar */
 }
 
 .menu-card img {
