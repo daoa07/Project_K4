@@ -1,190 +1,165 @@
-  // Daftarkan ScrollTrigger untuk GSAP
-  gsap.registerPlugin(ScrollTrigger);
+﻿// ================= 1. INTRO ANIMATION =================
+// Daftarkan ScrollTrigger untuk GSAP
+gsap.registerPlugin(ScrollTrigger);
 
-  const brandText = document.getElementById("brandText");
-  const introBox = document.getElementById("introBox");
-  const contentWrapper = document.querySelector(".content-wrapper");
-  const navLogo = document.querySelector(".navbar-brand");
-  const leaf = document.querySelector(".leaf");
+const brandText = document.getElementById("brandText");
+const introBox = document.getElementById("introBox");
+const contentWrapper = document.querySelector(".content-wrapper");
+const navLogo = document.querySelector(".navbar-brand");
+const leaf = document.querySelector(".leaf");
 
-  // Pecah teks brand agar bisa dianimasikan huruf per huruf
-  const text = brandText.textContent;
-  brandText.innerHTML = "";
-  const letters = text.split("");
+// Pecah teks brand agar bisa dianimasikan huruf per huruf
+const text = brandText.textContent;
+brandText.innerHTML = "";
+const letters = text.split("");
 
-  letters.forEach((letter) => {
-    const span = document.createElement("span");
-    span.textContent = letter === " " ? "\u00A0" : letter; // Handle spasi
-    brandText.appendChild(span);
-  });
+letters.forEach((letter) => {
+  const span = document.createElement("span");
+  span.textContent = letter === " " ? "\u00A0" : letter; // Handle spasi
+  brandText.appendChild(span);
+});
 
-  const spans = document.querySelectorAll(".brand-intro span");
+const spans = document.querySelectorAll(".brand-intro span");
 
-  function cinematicEffect() {
-    // Fungsi ini sekarang dipanggil dari onUpdate untuk sinkronisasi posisi
-    // Tidak lagi menggunakan stagger otomatis
-  }
 
-  // Fungsi pembantu untuk menerangi huruf berdasarkan posisi daun
-  function revealLetter(index) {
+function cinematicEffect() {
+  // Fungsi ini sekarang dipanggil dari onUpdate untuk sinkronisasi posisi
+  // Tidak lagi menggunakan stagger otomatis
+}
+
+// Fungsi pembantu untuk menerangi huruf berdasarkan posisi daun
+function revealLetter(index) {
     const span = spans[index];
-    if (span && !span.classList.contains("revealed")) {
-      span.classList.add("revealed");
-      span.classList.add("shimmer");
-      gsap.to(span, {
-        opacity: 1,
-        scale: 1,
-        filter: "blur(0px)",
-        backgroundPosition: "0% 0%",
-        duration: 0.5,
-        ease: "back.out(1.7)",
-      });
+    if (span && !span.classList.contains('revealed')) {
+        span.classList.add('revealed');
+        span.classList.add('shimmer');
+        gsap.to(span, {
+            opacity: 1,
+            scale: 1,
+            filter: "blur(0px)",
+            backgroundPosition: "0% 0%",
+            duration: 0.5,
+            ease: "back.out(1.7)"
+        });
     }
-  }
+}
 
-  let isFinished = false;
+let isFinished = false;
 
-  function finishIntro() {
-    if (isFinished) return;
-    isFinished = true;
-    const tl = gsap.timeline();
+function finishIntro() {
+  if (isFinished) return;
+  isFinished = true;
+  const tl = gsap.timeline();
 
-    // 1. Semua huruf menjadi menyala terang
-    tl.to(spans, {
-      opacity: 1,
-      backgroundPosition: "0% 0%",
-      duration: 0.4,
-      stagger: 0.03,
-      ease: "power2.inOut",
+  // 1. Semua huruf menjadi menyala terang
+  tl.to(spans, {
+    opacity: 1,
+    backgroundPosition: "0% 0%",
+    duration: 0.4,
+    stagger: 0.03,
+    ease: "power2.inOut",
+  })
+
+    // 2. Transisi: Logo dan teks memudar dengan halus (Fade Out)
+    .to(
+      ["#introLogo", brandText],
+      {
+        opacity: 0,
+        scale: 0.9,
+        duration: 0.8,
+        ease: "power2.inOut",
+      },
+      "+=0.2"
+    )
+
+    // Background intro memudar (Fade Out)
+    .to(
+      introBox,
+      {
+        opacity: 0,
+        duration: 1,
+        ease: "power2.inOut",
+      },
+      "<", // Mulai bersamaan dengan pergerakan teks
+    )
+
+    // Background warna body berubah
+    .to(
+      "body",
+      {
+        backgroundColor: "#fdf5e6",
+        duration: 0.6,
+      },
+      "<",
+    )
+
+    // Pastikan konten utama muncul
+    .to(
+      contentWrapper,
+      {
+        opacity: 1,
+        duration: 0.5,
+      },
+      "<",
+    )
+
+    // Selesaikan pembersihan
+    .to(introBox, {
+      opacity: 0,
+      duration: 0.2,
+      onComplete: () => {
+        introBox.style.display = "none";
+        document.body.style.overflowY = "auto";
+        var infoModal = new bootstrap.Modal(document.getElementById("infoModal"));
+        infoModal.show();
+      },
     })
 
-      // 2. Transisi: Huruf mengecil, pindah ke posisi Navbar
-      .to("#introLogo", { opacity: 0, duration: 0.4 })
-      .to(
-        brandText,
-        {
-          x: () => {
-            const navImg = document.querySelector(".navbar-brand img");
-            return navImg
-              ? navImg.getBoundingClientRect().left -
-                  brandText.getBoundingClientRect().left +
-                  40
-              : -window.innerWidth / 2 + 100;
-          },
-          y: () => {
-            const navImg = document.querySelector(".navbar-brand img");
-            return navImg
-              ? navImg.getBoundingClientRect().top -
-                  brandText.getBoundingClientRect().top
-              : -window.innerHeight / 2 + 50;
-          },
-          scale: 0.4,
-          transformOrigin: "top left",
-          opacity: 0,
-          duration: 0.8,
-          ease: "power3.inOut",
-        },
-        "+=0.1",
-      )
-
-      // Background intro pudar dari bawah (Reveal)
-      .to(
-        introBox,
-        {
-          clipPath: "inset(0 0 100% 0)",
-          duration: 1,
-          ease: "power2.inOut",
-        },
-        "<", // Mulai bersamaan dengan pergerakan teks
-      )
-
-      // Background warna body berubah
-      .to(
-        "body",
-        {
-          backgroundColor: "#fdf5e6",
-          duration: 0.6,
-        },
-        "<",
-      )
-
-      // Pastikan konten utama muncul
-      .to(
-        contentWrapper,
-        {
-          opacity: 1,
-          duration: 0.5,
-        },
-        "<",
-      )
-
-      // Selesaikan pembersihan
-      .to(introBox, {
+    // 4. Logo Navbar & Link Menu Fade-in
+    .to(
+      navLogo,
+      {
+        opacity: 1,
+        duration: 0.3,
+      },
+      "-=0.3",
+    )
+    .fromTo(
+      ".nav-item",
+      {
         opacity: 0,
-        duration: 0.2,
-        onComplete: () => {
-          introBox.style.display = "none";
-          document.body.style.overflowY = "auto";
+        y: -10,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.3,
+      },
+      "-=0.3",
+    )
 
-          // Tampilkan about teaser karena home adalah halaman default
-          const teaserSection = document.getElementById("home-about-teaser");
-          if (teaserSection) teaserSection.style.display = "block";
-          
-          if (typeof ScrollTrigger !== "undefined") {
-            ScrollTrigger.refresh();
-          }
 
-          // Tampilkan modal hanya sekali
-          if (!sessionStorage.getItem("infoModalShown")) {
-            var infoModal = new bootstrap.Modal(
-              document.getElementById("infoModal"),
-            );
-            infoModal.show();
-            sessionStorage.setItem("infoModalShown", "true");
-          }
-        },
-      })
+    // 5. Animasi teks Hero muncul dari bawah
+    .fromTo(
+      ".reveal-text",
+      {
+        opacity: 0,
+        y: 20,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power3.out",
+      },
+      "-=0.3",
+    );
+}
 
-      // 4. Logo Navbar & Link Menu Fade-in
-      .to(
-        navLogo,
-        {
-          opacity: 1,
-          duration: 0.3,
-        },
-        "-=0.3",
-      )
-      .fromTo(
-        ".nav-item",
-        {
-          opacity: 0,
-          y: -10,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.3,
-        },
-        "-=0.3",
-      )
-
-      // 5. Animasi teks Hero muncul dari bawah
-      .fromTo(
-        ".reveal-text",
-        {
-          opacity: 0,
-          y: 20,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          stagger: 0.1,
-          ease: "power3.out",
-        },
-        "-=0.3",
-      );
-  }
+// Cek session storage untuk mengetahui apakah ini kunjungan pertama
+if (!sessionStorage.getItem("introSeen")) {
+  sessionStorage.setItem("introSeen", "true");
 
   // Animasi angin (garis lurus bergerak)
   const windLines = document.querySelectorAll(".wind-line");
@@ -195,181 +170,196 @@
     y: window.innerHeight / 2,
     rotation: -45,
     opacity: 0,
-    scale: 0.8,
+    scale: 0.8
   });
 
   const leafTL = gsap.timeline();
 
-  // Cache posisi huruf untuk performa tinggi (menghindari getBoundingClientRect tiap frame)
-  let spanPositions = [];
-  function updateSpanPositions() {
-    spanPositions = Array.from(spans).map(span => span.getBoundingClientRect().left);
-  }
-  // Panggil pertama kali
-  setTimeout(updateSpanPositions, 100);
-
   // 1. Animasi Angin (Muncul 2 kali dengan jeda sama)
-  leafTL.fromTo(
-    windLines,
-    {
-      x: "-100vw",
-    },
-    {
-      x: "200vw", // Lebih jauh agar tidak "nyangkut"
-      duration: 1.5,
-      ease: "power1.inOut",
-      stagger: 0.15,
-      repeat: 1, // Total 2 kali muncul
-      repeatDelay: 0.8,
-    },
-    0,
-  );
+  leafTL.fromTo(windLines, {
+    x: "-100vw"
+  }, {
+    x: "200vw", // Lebih jauh agar tidak "nyangkut"
+    duration: 1.5,
+    ease: "power1.inOut",
+    stagger: 0.15,
+    repeat: 1, // Total 2 kali muncul
+    repeatDelay: 0.8
+  }, 0);
 
   // 2. Gerakan Horizontal (X) - Konstan agar smooth
-  leafTL.to(
-    leaf,
-    {
-      x: window.innerWidth + 500,
-      duration: 5,
-      ease: "none",
-      opacity: 1,
-      onUpdate: function () {
-        const currentX = gsap.getProperty(leaf, "x");
-        const leafCenter = currentX + 90; // Titik tengah daun (setengah dari 180px)
-
-        // Cek setiap huruf menggunakan posisi cache (sangat ringan)
-        spans.forEach((span, index) => {
-          if (leafCenter > spanPositions[index]) {
-            revealLetter(index);
+  leafTL.to(leaf, {
+    x: window.innerWidth + 500,
+    duration: 5,
+    ease: "none",
+    opacity: 1,
+    onUpdate: function() {
+      const currentX = gsap.getProperty(leaf, "x");
+      const leafCenter = currentX + 90; // Titik tengah daun (setengah dari 180px)
+      
+      // Cek setiap huruf
+      spans.forEach((span, index) => {
+          const rect = span.getBoundingClientRect();
+          // Jika daun melewati posisi kiri huruf
+          if (leafCenter > rect.left) {
+              revealLetter(index);
           }
-        });
+      });
 
-        // Cek jika semua huruf sudah muncul, beri jedah lalu selesai
-        const revealedCount = document.querySelectorAll(
-          ".brand-intro span.revealed",
-        ).length;
-        if (revealedCount === spans.length && !leaf.dataset.finishedTriggered) {
+      // Cek jika semua huruf sudah muncul, beri jedah lalu selesai
+      const revealedCount = document.querySelectorAll('.brand-intro span.revealed').length;
+      if (revealedCount === spans.length && !leaf.dataset.finishedTriggered) {
           leaf.dataset.finishedTriggered = "true";
           setTimeout(finishIntro, 1500);
-        }
-      },
-    },
-    0,
-  );
+      }
+    }
+  }, 0);
 
   // 3. Gerakan Vertikal (Y) - SESUAI REQUEST (Tengah -> Tengah Atas -> Tengah Bawah -> Tengah)
   leafTL
-    .to(
-      leaf,
-      {
-        y: window.innerHeight * 0.35, // Tengah Atas
-        duration: 1.65,
-        ease: "sine.inOut",
-      },
-      0,
-    )
-    .to(
-      leaf,
-      {
-        y: window.innerHeight * 0.65, // Tengah Bawah
-        duration: 1.7,
-        ease: "sine.inOut",
-      },
-      1.65,
-    )
-    .to(
-      leaf,
-      {
-        y: window.innerHeight / 2, // Kembali ke Tengah
-        duration: 1.65,
-        ease: "sine.inOut",
-      },
-      3.35,
-    );
+    .to(leaf, {
+      y: window.innerHeight * 0.35, // Tengah Atas
+      duration: 1.65,
+      ease: "sine.inOut"
+    }, 0)
+    .to(leaf, {
+      y: window.innerHeight * 0.65, // Tengah Bawah
+      duration: 1.7,
+      ease: "sine.inOut"
+    }, 1.65)
+    .to(leaf, {
+      y: window.innerHeight / 2, // Kembali ke Tengah
+      duration: 1.65,
+      ease: "sine.inOut"
+    }, 3.35);
 
   // 4. Extra Juice: Polished 3D Motion
-  leafTL.to(
-    leaf,
-    {
-      rotationY: 720,
-      rotation: 180,
-      scale: 1.2, // Sedikit membesar saat di tengah
-      duration: 2.5,
-      yoyo: true,
-      repeat: 1,
-      ease: "power1.inOut",
-    },
-    0,
-  );
+  leafTL.to(leaf, {
+    rotationY: 720,
+    rotation: 180,
+    scale: 1.2, // Sedikit membesar saat di tengah
+    duration: 2.5,
+    yoyo: true,
+    repeat: 1,
+    ease: "power1.inOut"
+  }, 0);
 
   // Fade out halus di ujung layar
-  leafTL.to(
-    leaf,
+  leafTL.to(leaf, {
+    opacity: 0,
+    scale: 0.5,
+    duration: 0.8
+  }, 4.2);
+
+} else {
+  // Jika sudah pernah membuka web (SKIP INTRO INSTAN)
+  isFinished = true;
+  introBox.style.display = "none";
+  document.body.style.overflowY = "auto";
+  document.body.style.backgroundColor = "#fdf5e6"; 
+  contentWrapper.style.opacity = 1;
+  navLogo.style.opacity = 1;
+  
+  // Langsung tampilkan modal setelah web dimuat
+  setTimeout(() => {
+    var infoModal = new bootstrap.Modal(document.getElementById("infoModal"));
+    infoModal.show();
+  }, 500);
+}
+
+
+
+introBox.addEventListener("click", () => {
+  if (isFinished) return;
+  isFinished = true;
+  
+  // Hentikan animasi yang sedang berjalan
+  gsap.killTweensOf(leaf);
+  gsap.killTweensOf(spans);
+  gsap.killTweensOf(".wind-line");
+  
+  // Skip instan tanpa delay
+  introBox.style.display = "none";
+  document.body.style.overflowY = "auto";
+  document.body.style.backgroundColor = "#fdf5e6"; 
+  contentWrapper.style.opacity = 1;
+  navLogo.style.opacity = 1;
+  
+  // Kembalikan elemen navbar dan hero ke posisi akhir
+  document.querySelectorAll(".nav-item").forEach(item => {
+    item.style.opacity = 1;
+    item.style.transform = "translateY(0)";
+  });
+  document.querySelectorAll(".reveal-text").forEach(item => {
+    item.style.opacity = 1;
+    item.style.transform = "translateY(0)";
+  });
+  
+  // Tampilkan modal promo langsung
+  setTimeout(() => {
+    var infoModal = new bootstrap.Modal(document.getElementById("infoModal"));
+    infoModal.show();
+  }, 100);
+});
+
+
+
+
+  // ================= DYNAMIC PROMO LOGIC =================
+  const promoOptions = [
     {
-      opacity: 0,
-      scale: 0.5,
-      duration: 0.8,
+      discount: "5%",
+      title: "Diskon 5% Paket Hemat!",
+      description:
+        "Beli kombinasi <strong>makanan & minuman</strong> apa saja, dapatkan potongan langsung <strong>5%</strong> di kasir.",
+      terms:
+        '<p style="margin: 0 0 6px">Min. 1 makanan + 1 minuman</p><p style="margin: 0 0 6px">Berlaku setiap hari</p><p style="margin: 0">Hanya untuk makan di tempat</p>',
     },
-    4.2,
-  );
+    {
+      discount: "10%",
+      title: "Diskon 10% Pelajar & Mahasiswa!",
+      description:
+        "Tunjukkan <strong>kartu identitas</strong> pelajar/mahasiswa Anda untuk mendapatkan potongan <strong>10%</strong>.",
+      terms:
+        '<p style="margin: 0 0 6px">Wajib menunjukkan kartu identitas</p><p style="margin: 0 0 6px">Hanya berlaku hari Senin-Jumat</p><p style="margin: 0">Maks. 1x transaksi per hari</p>',
+    },
+    {
+      discount: "15%",
+      title: "Diskon 15% Weekend Seru!",
+      description:
+        "Nikmati akhir pekan Anda dengan diskon spesial <strong>15%</strong> untuk semua menu favorit.",
+      terms:
+        '<p style="margin: 0 0 6px">Berlaku Sabtu & Minggu</p><p style="margin: 0 0 6px">Min. transaksi Rp 100.000</p><p style="margin: 0">Berlaku untuk semua menu</p>',
+    },
+  ];
 
-  // Animasi Scroll (GSAP ScrollTrigger) untuk Card Menu
-  gsap.set(".menu-card", { y: 50, opacity: 0 });
+  function initDynamicPromo() {
+    let promoIndex = sessionStorage.getItem("selectedPromoIndex");
 
-  ScrollTrigger.batch(".menu-card", {
-    onEnter: (batch) => gsap.to(batch, { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: "power3.out", overwrite: true }),
-    onLeave: (batch) => gsap.set(batch, { opacity: 0, y: -50, overwrite: true }),
-    onEnterBack: (batch) => gsap.to(batch, { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: "power3.out", overwrite: true }),
-    onLeaveBack: (batch) => gsap.set(batch, { opacity: 0, y: 50, overwrite: true }),
-    start: "top 85%",
-  });
-
-  introBox.addEventListener("click", () => {
-    if (isFinished) return;
-    finishIntro();
-  });
-
-  // Navbar Scroll Effect
-  window.addEventListener("scroll", function () {
-    const navbar = document.querySelector(".navbar");
-
-    if (window.scrollY > 50) {
-      if (navbar) navbar.classList.add("scrolled");
-    } else {
-      if (navbar) navbar.classList.remove("scrolled");
+    if (promoIndex === null) {
+      // Pilih random jika belum ada di session
+      promoIndex = Math.floor(Math.random() * promoOptions.length);
+      sessionStorage.setItem("selectedPromoIndex", promoIndex);
     }
-  });
 
-  // Scroll Reveal Animation (Modern Intersection Observer)
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("active");
-      }
-    });
-  }, {
-    rootMargin: "0px 0px -100px 0px"
-  });
+    const selectedPromo = promoOptions[parseInt(promoIndex)];
 
-  function reveal() {
-    document.querySelectorAll(".reveal").forEach((el) => {
-      revealObserver.observe(el);
-    });
+    // Apply ke DOM
+    const discountCircle = document.getElementById("promoDiscountCircle");
+    const titleEl = document.getElementById("promoTitle");
+    const descEl = document.getElementById("promoDescription");
+    const termsEl = document.getElementById("promoTerms");
+
+    if (discountCircle) discountCircle.textContent = selectedPromo.discount;
+    if (titleEl) titleEl.textContent = selectedPromo.title;
+    if (descEl) descEl.innerHTML = selectedPromo.description;
+    if (termsEl) termsEl.innerHTML = selectedPromo.terms;
   }
 
-  let resizeTimeout;
-  window.addEventListener("resize", () => {
-    if (!isFinished) updateSpanPositions();
-    
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      reveal();
-      if (typeof ScrollTrigger !== "undefined") {
-        ScrollTrigger.refresh();
-      }
-    }, 250); // Debounce untuk mencegah frame drop ekstrim saat di-resize
-  });
-  reveal();
+  // Jalankan saat dokumen siap
+  document.addEventListener("DOMContentLoaded", initDynamicPromo);
+
+
   // SPA Logic
   function switchPage(pageId) {
     document.querySelectorAll(".page-section").forEach((section) => {
@@ -429,10 +419,65 @@
     });
   });
 
+
+// ================= SCROLL EFFECTS & OBSERVERS =================
+  // Navbar Scroll Effect
+  window.addEventListener("scroll", function () {
+    const navbar = document.querySelector(".navbar");
+
+    if (window.scrollY > 50) {
+      if (navbar) navbar.classList.add("scrolled");
+    } else {
+      if (navbar) navbar.classList.remove("scrolled");
+    }
+  });
+
+  // Scroll Reveal Animation (Modern Intersection Observer)
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("active");
+      }
+    });
+  }, {
+    rootMargin: "0px 0px -100px 0px"
+  });
+
+  function reveal() {
+    document.querySelectorAll(".reveal").forEach((el) => {
+      revealObserver.observe(el);
+    });
+  }
+
+  let resizeTimeout;
+  window.addEventListener("resize", () => {
+    if (!isFinished) updateSpanPositions();
+    
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      reveal();
+      if (typeof ScrollTrigger !== "undefined") {
+        ScrollTrigger.refresh();
+      }
+    }, 250); // Debounce untuk mencegah frame drop ekstrim saat di-resize
+  });
+  reveal();
+
+  gsap.set(".menu-card", { y: 50, opacity: 0 });
+
+  ScrollTrigger.batch(".menu-card", {
+    onEnter: (batch) => gsap.to(batch, { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: "power3.out", overwrite: true }),
+    onLeave: (batch) => gsap.set(batch, { opacity: 0, y: -50, overwrite: true }),
+    onEnterBack: (batch) => gsap.to(batch, { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: "power3.out", overwrite: true }),
+    onLeaveBack: (batch) => gsap.set(batch, { opacity: 0, y: 50, overwrite: true }),
+    start: "top 85%",
+  });
+
+
   // ================= RUNNING TOAST LOGIC =================
   const toastData = [
     {
-      title: "Sejarah De Café",
+      title: "Sejarah De CafÃ©",
       message:
         "Didirikan pada tahun 2026 oleh Kelompok 4 Sintak 2026 dengan visi menyatukan pecinta kopi.",
       image:
@@ -510,6 +555,8 @@
 
   // Tampilkan toast pertama setelah intro selesai
   setTimeout(showNextToast, 4000);
+
+
 
   // ================= ORDERING SYSTEM LOGIC =================
   let cart = {};
@@ -706,8 +753,8 @@
     const orderNo = generateOrderNo();
     
     let total = 0;
-    let waText = `Halo DE CAFÉ, saya ingin memesan:\n\n*No. Pesanan:* ${orderNo}\n*Nama:* ${customerName}\n*Tipe Pesanan:* ${orderType}\n*Pembayaran:* ${paymentMethod}\n*Catatan:* ${customerNote || "-"}\n\n*Detail Pesanan:*\n`;
-    let receiptText = `================================\n           DE CAFÉ\n      STRUK PEMBELIAN\n================================\nNo. Pesanan : ${orderNo}\nTanggal     : ${new Date().toLocaleString('id-ID')}\nNama Pemesan: ${customerName}\nTipe Pesanan: ${orderType}\nPembayaran  : ${paymentMethod}\nCatatan     : ${customerNote || "-"}\n--------------------------------\n`;
+    let waText = `Halo DE CAFÃ‰, saya ingin memesan:\n\n*No. Pesanan:* ${orderNo}\n*Nama:* ${customerName}\n*Tipe Pesanan:* ${orderType}\n*Pembayaran:* ${paymentMethod}\n*Catatan:* ${customerNote || "-"}\n\n*Detail Pesanan:*\n`;
+    let receiptText = `================================\n           DE CAFÃ‰\n      STRUK PEMBELIAN\n================================\nNo. Pesanan : ${orderNo}\nTanggal     : ${new Date().toLocaleString('id-ID')}\nNama Pemesan: ${customerName}\nTipe Pesanan: ${orderType}\nPembayaran  : ${paymentMethod}\nCatatan     : ${customerNote || "-"}\n--------------------------------\n`;
     
     const receiptItems = [];
 
@@ -819,56 +866,4 @@
     clearCart();
   }
 
-  // ================= DYNAMIC PROMO LOGIC =================
-  const promoOptions = [
-    {
-      discount: "5%",
-      title: "Diskon 5% Paket Hemat!",
-      description:
-        "Beli kombinasi <strong>makanan & minuman</strong> apa saja, dapatkan potongan langsung <strong>5%</strong> di kasir.",
-      terms:
-        '<p style="margin: 0 0 6px">Min. 1 makanan + 1 minuman</p><p style="margin: 0 0 6px">Berlaku setiap hari</p><p style="margin: 0">Hanya untuk makan di tempat</p>',
-    },
-    {
-      discount: "10%",
-      title: "Diskon 10% Pelajar & Mahasiswa!",
-      description:
-        "Tunjukkan <strong>kartu identitas</strong> pelajar/mahasiswa Anda untuk mendapatkan potongan <strong>10%</strong>.",
-      terms:
-        '<p style="margin: 0 0 6px">Wajib menunjukkan kartu identitas</p><p style="margin: 0 0 6px">Hanya berlaku hari Senin-Jumat</p><p style="margin: 0">Maks. 1x transaksi per hari</p>',
-    },
-    {
-      discount: "15%",
-      title: "Diskon 15% Weekend Seru!",
-      description:
-        "Nikmati akhir pekan Anda dengan diskon spesial <strong>15%</strong> untuk semua menu favorit.",
-      terms:
-        '<p style="margin: 0 0 6px">Berlaku Sabtu & Minggu</p><p style="margin: 0 0 6px">Min. transaksi Rp 100.000</p><p style="margin: 0">Berlaku untuk semua menu</p>',
-    },
-  ];
 
-  function initDynamicPromo() {
-    let promoIndex = sessionStorage.getItem("selectedPromoIndex");
-
-    if (promoIndex === null) {
-      // Pilih random jika belum ada di session
-      promoIndex = Math.floor(Math.random() * promoOptions.length);
-      sessionStorage.setItem("selectedPromoIndex", promoIndex);
-    }
-
-    const selectedPromo = promoOptions[parseInt(promoIndex)];
-
-    // Apply ke DOM
-    const discountCircle = document.getElementById("promoDiscountCircle");
-    const titleEl = document.getElementById("promoTitle");
-    const descEl = document.getElementById("promoDescription");
-    const termsEl = document.getElementById("promoTerms");
-
-    if (discountCircle) discountCircle.textContent = selectedPromo.discount;
-    if (titleEl) titleEl.textContent = selectedPromo.title;
-    if (descEl) descEl.innerHTML = selectedPromo.description;
-    if (termsEl) termsEl.innerHTML = selectedPromo.terms;
-  }
-
-  // Jalankan saat dokumen siap
-  document.addEventListener("DOMContentLoaded", initDynamicPromo);

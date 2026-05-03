@@ -44,10 +44,13 @@
       <div class="leaf"></div>
       <div class="brand-intro-wrapper" id="brandWrapper">
         <img
-          src="https://cdn-icons-png.flaticon.com/512/924/924514.png"
+          src="assets/brand/navbar.png"
           id="introLogo"
           class="brand-intro-logo"
           alt="De Café"
+          onerror="
+            this.src = 'https://cdn-icons-png.flaticon.com/512/924/924514.png'
+          "
         />
         <h1 class="brand-intro" id="brandText">DE CAFÉ</h1>
       </div>
@@ -468,7 +471,7 @@
       </section>
 
       <!-- About Teaser Section (only shown in home) -->
-      <section id="home-about-teaser" class="home-teaser-section" style="display:none; background: var(--silk); padding: 70px 0;">
+      <section id="home-about-teaser" class="home-teaser-section" style="background: var(--silk); padding: 70px 0;">
         <div class="container">
           <div class="row align-items-center g-4">
             <!-- Kiri: Kutipan -->
