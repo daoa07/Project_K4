@@ -21,7 +21,6 @@ letters.forEach((letter) => {
 
 const spans = document.querySelectorAll(".brand-intro span");
 
-
 function cinematicEffect() {
   // Fungsi ini sekarang dipanggil dari onUpdate untuk sinkronisasi posisi
   // Tidak lagi menggunakan stagger otomatis
@@ -29,19 +28,19 @@ function cinematicEffect() {
 
 // Fungsi pembantu untuk menerangi huruf berdasarkan posisi daun
 function revealLetter(index) {
-    const span = spans[index];
-    if (span && !span.classList.contains('revealed')) {
-        span.classList.add('revealed');
-        span.classList.add('shimmer');
-        gsap.to(span, {
-            opacity: 1,
-            scale: 1,
-            filter: "blur(0px)",
-            backgroundPosition: "0% 0%",
-            duration: 0.5,
-            ease: "back.out(1.7)"
-        });
-    }
+  const span = spans[index];
+  if (span && !span.classList.contains("revealed")) {
+    span.classList.add("revealed");
+    span.classList.add("shimmer");
+    gsap.to(span, {
+      opacity: 1,
+      scale: 1,
+      filter: "blur(0px)",
+      backgroundPosition: "0% 0%",
+      duration: 0.5,
+      ease: "back.out(1.7)",
+    });
+  }
 }
 
 let isFinished = false;
@@ -69,7 +68,7 @@ function finishIntro() {
         duration: 0.8,
         ease: "power2.inOut",
       },
-      "+=0.2"
+      "+=0.2",
     )
 
     // Background intro memudar (Fade Out)
@@ -110,8 +109,13 @@ function finishIntro() {
       onComplete: () => {
         introBox.style.display = "none";
         document.body.style.overflowY = "auto";
-        var infoModal = new bootstrap.Modal(document.getElementById("infoModal"));
-        infoModal.show();
+        if (!sessionStorage.getItem("promoSeen")) {
+          var infoModal = new bootstrap.Modal(
+            document.getElementById("infoModal"),
+          );
+          infoModal.show();
+          sessionStorage.setItem("promoSeen", "true");
+        }
       },
     })
 
@@ -137,7 +141,6 @@ function finishIntro() {
       },
       "-=0.3",
     )
-
 
     // 5. Animasi teks Hero muncul dari bawah
     .fromTo(
@@ -170,521 +173,618 @@ if (!sessionStorage.getItem("introSeen")) {
     y: window.innerHeight / 2,
     rotation: -45,
     opacity: 0,
-    scale: 0.8
+    scale: 0.8,
   });
 
   const leafTL = gsap.timeline();
 
   // 1. Animasi Angin (Muncul 2 kali dengan jeda sama)
-  leafTL.fromTo(windLines, {
-    x: "-100vw"
-  }, {
-    x: "200vw", // Lebih jauh agar tidak "nyangkut"
-    duration: 1.5,
-    ease: "power1.inOut",
-    stagger: 0.15,
-    repeat: 1, // Total 2 kali muncul
-    repeatDelay: 0.8
-  }, 0);
+  leafTL.fromTo(
+    windLines,
+    {
+      x: "-100vw",
+    },
+    {
+      x: "200vw", // Lebih jauh agar tidak "nyangkut"
+      duration: 1.5,
+      ease: "power1.inOut",
+      stagger: 0.15,
+      repeat: 1, // Total 2 kali muncul
+      repeatDelay: 0.8,
+    },
+    0,
+  );
 
   // 2. Gerakan Horizontal (X) - Konstan agar smooth
-  leafTL.to(leaf, {
-    x: window.innerWidth + 500,
-    duration: 5,
-    ease: "none",
-    opacity: 1,
-    onUpdate: function() {
-      const currentX = gsap.getProperty(leaf, "x");
-      const leafCenter = currentX + 90; // Titik tengah daun (setengah dari 180px)
-      
-      // Cek setiap huruf
-      spans.forEach((span, index) => {
+  leafTL.to(
+    leaf,
+    {
+      x: window.innerWidth + 500,
+      duration: 5,
+      ease: "none",
+      opacity: 1,
+      onUpdate: function () {
+        const currentX = gsap.getProperty(leaf, "x");
+        const leafCenter = currentX + 90; // Titik tengah daun (setengah dari 180px)
+
+        // Cek setiap huruf
+        spans.forEach((span, index) => {
           const rect = span.getBoundingClientRect();
           // Jika daun melewati posisi kiri huruf
           if (leafCenter > rect.left) {
-              revealLetter(index);
+            revealLetter(index);
           }
-      });
+        });
 
-      // Cek jika semua huruf sudah muncul, beri jedah lalu selesai
-      const revealedCount = document.querySelectorAll('.brand-intro span.revealed').length;
-      if (revealedCount === spans.length && !leaf.dataset.finishedTriggered) {
+        // Cek jika semua huruf sudah muncul, beri jedah lalu selesai
+        const revealedCount = document.querySelectorAll(
+          ".brand-intro span.revealed",
+        ).length;
+        if (revealedCount === spans.length && !leaf.dataset.finishedTriggered) {
           leaf.dataset.finishedTriggered = "true";
           setTimeout(finishIntro, 1500);
-      }
-    }
-  }, 0);
+        }
+      },
+    },
+    0,
+  );
 
   // 3. Gerakan Vertikal (Y) - SESUAI REQUEST (Tengah -> Tengah Atas -> Tengah Bawah -> Tengah)
   leafTL
-    .to(leaf, {
-      y: window.innerHeight * 0.35, // Tengah Atas
-      duration: 1.65,
-      ease: "sine.inOut"
-    }, 0)
-    .to(leaf, {
-      y: window.innerHeight * 0.65, // Tengah Bawah
-      duration: 1.7,
-      ease: "sine.inOut"
-    }, 1.65)
-    .to(leaf, {
-      y: window.innerHeight / 2, // Kembali ke Tengah
-      duration: 1.65,
-      ease: "sine.inOut"
-    }, 3.35);
+    .to(
+      leaf,
+      {
+        y: window.innerHeight * 0.35, // Tengah Atas
+        duration: 1.65,
+        ease: "sine.inOut",
+      },
+      0,
+    )
+    .to(
+      leaf,
+      {
+        y: window.innerHeight * 0.65, // Tengah Bawah
+        duration: 1.7,
+        ease: "sine.inOut",
+      },
+      1.65,
+    )
+    .to(
+      leaf,
+      {
+        y: window.innerHeight / 2, // Kembali ke Tengah
+        duration: 1.65,
+        ease: "sine.inOut",
+      },
+      3.35,
+    );
 
   // 4. Extra Juice: Polished 3D Motion
-  leafTL.to(leaf, {
-    rotationY: 720,
-    rotation: 180,
-    scale: 1.2, // Sedikit membesar saat di tengah
-    duration: 2.5,
-    yoyo: true,
-    repeat: 1,
-    ease: "power1.inOut"
-  }, 0);
+  leafTL.to(
+    leaf,
+    {
+      rotationY: 720,
+      rotation: 180,
+      scale: 1.2, // Sedikit membesar saat di tengah
+      duration: 2.5,
+      yoyo: true,
+      repeat: 1,
+      ease: "power1.inOut",
+    },
+    0,
+  );
 
   // Fade out halus di ujung layar
-  leafTL.to(leaf, {
-    opacity: 0,
-    scale: 0.5,
-    duration: 0.8
-  }, 4.2);
-
+  leafTL.to(
+    leaf,
+    {
+      opacity: 0,
+      scale: 0.5,
+      duration: 0.8,
+    },
+    4.2,
+  );
 } else {
   // Jika sudah pernah membuka web (SKIP INTRO INSTAN)
   isFinished = true;
   introBox.style.display = "none";
   document.body.style.overflowY = "auto";
-  document.body.style.backgroundColor = "#fdf5e6"; 
+  document.body.style.backgroundColor = "#fdf5e6";
   contentWrapper.style.opacity = 1;
   navLogo.style.opacity = 1;
-  
-  // Langsung tampilkan modal setelah web dimuat
+
+  // Langsung tampilkan modal setelah web dimuat jika belum pernah lihat promo
   setTimeout(() => {
-    var infoModal = new bootstrap.Modal(document.getElementById("infoModal"));
-    infoModal.show();
+    if (!sessionStorage.getItem("promoSeen")) {
+      var infoModal = new bootstrap.Modal(document.getElementById("infoModal"));
+      infoModal.show();
+      sessionStorage.setItem("promoSeen", "true");
+    }
   }, 500);
 }
-
-
 
 introBox.addEventListener("click", () => {
   if (isFinished) return;
   isFinished = true;
-  
+
   // Hentikan animasi yang sedang berjalan
   gsap.killTweensOf(leaf);
   gsap.killTweensOf(spans);
   gsap.killTweensOf(".wind-line");
-  
+
   // Skip instan tanpa delay
   introBox.style.display = "none";
   document.body.style.overflowY = "auto";
-  document.body.style.backgroundColor = "#fdf5e6"; 
+  document.body.style.backgroundColor = "#fdf5e6";
   contentWrapper.style.opacity = 1;
   navLogo.style.opacity = 1;
-  
+
   // Kembalikan elemen navbar dan hero ke posisi akhir
-  document.querySelectorAll(".nav-item").forEach(item => {
+  document.querySelectorAll(".nav-item").forEach((item) => {
     item.style.opacity = 1;
     item.style.transform = "translateY(0)";
   });
-  document.querySelectorAll(".reveal-text").forEach(item => {
+  document.querySelectorAll(".reveal-text").forEach((item) => {
     item.style.opacity = 1;
     item.style.transform = "translateY(0)";
   });
-  
-  // Tampilkan modal promo langsung
+
+  // Tampilkan modal promo langsung jika belum pernah lihat
   setTimeout(() => {
-    var infoModal = new bootstrap.Modal(document.getElementById("infoModal"));
-    infoModal.show();
+    if (!sessionStorage.getItem("promoSeen")) {
+      var infoModal = new bootstrap.Modal(document.getElementById("infoModal"));
+      infoModal.show();
+      sessionStorage.setItem("promoSeen", "true");
+    }
   }, 100);
 });
 
+// ================= DYNAMIC PROMO LOGIC =================
+const promoOptions = [
+  {
+    discount: "5%",
+    title: "Diskon 5% Paket Hemat!",
+    description:
+      "Beli kombinasi <strong>makanan & minuman</strong> apa saja, dapatkan potongan langsung <strong>5%</strong> di kasir.",
+    terms:
+      '<p style="margin: 0 0 6px">Min. 1 makanan + 1 minuman</p><p style="margin: 0 0 6px">Berlaku setiap hari</p><p style="margin: 0">Hanya untuk makan di tempat</p>',
+  },
+  {
+    discount: "10%",
+    title: "Diskon 10% Pelajar & Mahasiswa!",
+    description:
+      "Tunjukkan <strong>kartu identitas</strong> pelajar/mahasiswa Anda untuk mendapatkan potongan <strong>10%</strong>.",
+    terms:
+      '<p style="margin: 0 0 6px">Wajib menunjukkan kartu identitas</p><p style="margin: 0 0 6px">Hanya berlaku hari Senin-Jumat</p><p style="margin: 0">Maks. 1x transaksi per hari</p>',
+  },
+  {
+    discount: "15%",
+    title: "Diskon 15% Weekend Seru!",
+    description:
+      "Nikmati akhir pekan Anda dengan diskon spesial <strong>15%</strong> untuk semua menu favorit.",
+    terms:
+      '<p style="margin: 0 0 6px">Berlaku Sabtu & Minggu</p><p style="margin: 0 0 6px">Min. transaksi Rp 100.000</p><p style="margin: 0">Berlaku untuk semua menu</p>',
+  },
+];
 
+function initDynamicPromo() {
+  let promoIndex = sessionStorage.getItem("selectedPromoIndex");
 
-
-  // ================= DYNAMIC PROMO LOGIC =================
-  const promoOptions = [
-    {
-      discount: "5%",
-      title: "Diskon 5% Paket Hemat!",
-      description:
-        "Beli kombinasi <strong>makanan & minuman</strong> apa saja, dapatkan potongan langsung <strong>5%</strong> di kasir.",
-      terms:
-        '<p style="margin: 0 0 6px">Min. 1 makanan + 1 minuman</p><p style="margin: 0 0 6px">Berlaku setiap hari</p><p style="margin: 0">Hanya untuk makan di tempat</p>',
-    },
-    {
-      discount: "10%",
-      title: "Diskon 10% Pelajar & Mahasiswa!",
-      description:
-        "Tunjukkan <strong>kartu identitas</strong> pelajar/mahasiswa Anda untuk mendapatkan potongan <strong>10%</strong>.",
-      terms:
-        '<p style="margin: 0 0 6px">Wajib menunjukkan kartu identitas</p><p style="margin: 0 0 6px">Hanya berlaku hari Senin-Jumat</p><p style="margin: 0">Maks. 1x transaksi per hari</p>',
-    },
-    {
-      discount: "15%",
-      title: "Diskon 15% Weekend Seru!",
-      description:
-        "Nikmati akhir pekan Anda dengan diskon spesial <strong>15%</strong> untuk semua menu favorit.",
-      terms:
-        '<p style="margin: 0 0 6px">Berlaku Sabtu & Minggu</p><p style="margin: 0 0 6px">Min. transaksi Rp 100.000</p><p style="margin: 0">Berlaku untuk semua menu</p>',
-    },
-  ];
-
-  function initDynamicPromo() {
-    let promoIndex = sessionStorage.getItem("selectedPromoIndex");
-
-    if (promoIndex === null) {
-      // Pilih random jika belum ada di session
-      promoIndex = Math.floor(Math.random() * promoOptions.length);
-      sessionStorage.setItem("selectedPromoIndex", promoIndex);
-    }
-
-    const selectedPromo = promoOptions[parseInt(promoIndex)];
-
-    // Apply ke DOM
-    const discountCircle = document.getElementById("promoDiscountCircle");
-    const titleEl = document.getElementById("promoTitle");
-    const descEl = document.getElementById("promoDescription");
-    const termsEl = document.getElementById("promoTerms");
-
-    if (discountCircle) discountCircle.textContent = selectedPromo.discount;
-    if (titleEl) titleEl.textContent = selectedPromo.title;
-    if (descEl) descEl.innerHTML = selectedPromo.description;
-    if (termsEl) termsEl.innerHTML = selectedPromo.terms;
+  if (promoIndex === null) {
+    // Pilih random jika belum ada di session
+    promoIndex = Math.floor(Math.random() * promoOptions.length);
+    sessionStorage.setItem("selectedPromoIndex", promoIndex);
   }
 
-  // Jalankan saat dokumen siap (Digantikan oleh listener di akhir file)
+  const selectedPromo = promoOptions[parseInt(promoIndex)];
 
+  // Apply ke DOM
+  const discountCircle = document.getElementById("promoDiscountCircle");
+  const titleEl = document.getElementById("promoTitle");
+  const descEl = document.getElementById("promoDescription");
+  const termsEl = document.getElementById("promoTerms");
 
-  // SPA Logic
-  function switchPage(pageId) {
-    document.querySelectorAll(".page-section").forEach((section) => {
-      section.classList.remove("active");
-    });
-    const target = document.getElementById(pageId);
-    if (target) {
-      target.classList.add("active");
-      window.scrollTo(0, 0); // Scroll to top when switching pages
-      setTimeout(() => {
-        reveal();
-        if (typeof ScrollTrigger !== "undefined") {
-          ScrollTrigger.refresh();
-        }
-      }, 100); // Trigger scroll reveal
-    }
+  if (discountCircle) discountCircle.textContent = selectedPromo.discount;
+  if (titleEl) titleEl.textContent = selectedPromo.title;
+  if (descEl) descEl.innerHTML = selectedPromo.description;
+  if (termsEl) termsEl.innerHTML = selectedPromo.terms;
+}
 
-    // Tampilkan/sembunyikan about teaser di halaman home
-    const teaserSection = document.getElementById("home-about-teaser");
-    if (teaserSection) {
-      teaserSection.style.display = pageId === "home" ? "block" : "none";
-    }
+// Jalankan saat dokumen siap (Digantikan oleh listener di akhir file)
 
-    const footer = document.querySelector("footer");
-    if (footer) {
-      footer.style.display = "block";
-    }
-
-    // Perbarui visibilitas keranjang
-    if (typeof updateCheckoutBar === "function") {
-      updateCheckoutBar();
-    }
-  }
-
-  document.querySelectorAll(".nav-link").forEach((link) => {
-    link.addEventListener("click", function (e) {
-      const href = this.getAttribute("href");
-      if (href && href.startsWith("#")) {
-        e.preventDefault();
-        switchPage(href.substring(1));
-      }
-    });
+// SPA Logic
+function switchPage(pageId) {
+  document.querySelectorAll(".page-section").forEach((section) => {
+    section.classList.remove("active");
   });
+  const target = document.getElementById(pageId);
+  if (target) {
+    target.classList.add("active");
+    window.scrollTo(0, 0); // Scroll to top when switching pages
+    setTimeout(() => {
+      reveal();
+      if (typeof ScrollTrigger !== "undefined") {
+        ScrollTrigger.refresh();
+      }
+    }, 100); // Trigger scroll reveal
+  }
 
+  // Tampilkan/sembunyikan about teaser di halaman home
+  const teaserSection = document.getElementById("home-about-teaser");
+  if (teaserSection) {
+    teaserSection.style.display = pageId === "home" ? "block" : "none";
+  }
+
+  const footer = document.querySelector("footer");
+  if (footer) {
+    footer.style.display = "block";
+  }
+
+  // Perbarui visibilitas keranjang
+  if (typeof updateCheckoutBar === "function") {
+    updateCheckoutBar();
+  }
+}
+
+document.querySelectorAll(".nav-link").forEach((link) => {
+  link.addEventListener("click", function (e) {
+    const href = this.getAttribute("href");
+    if (href && href.startsWith("#")) {
+      e.preventDefault();
+      switchPage(href.substring(1));
+    }
+  });
+});
 
 // ================= SCROLL EFFECTS & OBSERVERS =================
-  // Navbar Scroll Effect
-  window.addEventListener("scroll", function () {
-    const navbar = document.querySelector(".navbar");
+// Navbar Scroll Effect
+window.addEventListener("scroll", function () {
+  const navbar = document.querySelector(".navbar");
 
-    if (window.scrollY > 50) {
-      if (navbar) navbar.classList.add("scrolled");
-    } else {
-      if (navbar) navbar.classList.remove("scrolled");
-    }
-  });
+  if (window.scrollY > 50) {
+    if (navbar) navbar.classList.add("scrolled");
+  } else {
+    if (navbar) navbar.classList.remove("scrolled");
+  }
+});
 
-  // Scroll Reveal Animation (Modern Intersection Observer)
-  const revealObserver = new IntersectionObserver((entries) => {
+// Scroll Reveal Animation (Modern Intersection Observer)
+const revealObserver = new IntersectionObserver(
+  (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("active");
       }
     });
-  }, {
-    rootMargin: "0px 0px -100px 0px"
+  },
+  {
+    rootMargin: "0px 0px -100px 0px",
+  },
+);
+
+function reveal() {
+  document.querySelectorAll(".reveal").forEach((el) => {
+    revealObserver.observe(el);
   });
+}
 
-  function reveal() {
-    document.querySelectorAll(".reveal").forEach((el) => {
-      revealObserver.observe(el);
-    });
-  }
+let resizeTimeout;
+window.addEventListener("resize", () => {
+  if (!isFinished) updateSpanPositions();
 
-  let resizeTimeout;
-  window.addEventListener("resize", () => {
-    if (!isFinished) updateSpanPositions();
-    
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      reveal();
-      if (typeof ScrollTrigger !== "undefined") {
-        ScrollTrigger.refresh();
-      }
-    }, 250); // Debounce untuk mencegah frame drop ekstrim saat di-resize
-  });
-  reveal();
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(() => {
+    reveal();
+    if (typeof ScrollTrigger !== "undefined") {
+      ScrollTrigger.refresh();
+    }
+  }, 250); // Debounce untuk mencegah frame drop ekstrim saat di-resize
+});
+reveal();
 
-  gsap.set(".menu-card", { y: 50, opacity: 0 });
+gsap.set(".menu-card", { y: 50, opacity: 0 });
 
-  ScrollTrigger.batch(".menu-card", {
-    onEnter: (batch) => gsap.to(batch, { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: "power3.out", overwrite: true }),
-    onLeave: (batch) => gsap.set(batch, { opacity: 0, y: -50, overwrite: true }),
-    onEnterBack: (batch) => gsap.to(batch, { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: "power3.out", overwrite: true }),
-    onLeaveBack: (batch) => gsap.set(batch, { opacity: 0, y: 50, overwrite: true }),
-    start: "top 85%",
-  });
+ScrollTrigger.batch(".menu-card", {
+  onEnter: (batch) =>
+    gsap.to(batch, {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: "power3.out",
+      overwrite: true,
+    }),
+  onLeave: (batch) => gsap.set(batch, { opacity: 0, y: -50, overwrite: true }),
+  onEnterBack: (batch) =>
+    gsap.to(batch, {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: "power3.out",
+      overwrite: true,
+    }),
+  onLeaveBack: (batch) =>
+    gsap.set(batch, { opacity: 0, y: 50, overwrite: true }),
+  start: "top 85%",
+});
 
+// ================= RUNNING TOAST LOGIC =================
+const toastData = [
+  {
+    title: "Sejarah De CafÃ©",
+    message:
+      "Didirikan pada tahun 2026 oleh Kelompok 4 Sintak 2026 dengan visi menyatukan pecinta kopi.",
+    image:
+      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=150",
+  },
+  {
+    title: "Filosofi Kami",
+    message:
+      "Menggunakan biji kopi pilihan terbaik langsung dari petani lokal Nusantara.",
+    image:
+      "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&q=80&w=150",
+  },
+  {
+    title: "Biji Kopi Premium",
+    message:
+      "100% Arabica berkualitas tinggi yang disangrai dengan teknik artisanal.",
+    image:
+      "https://images.unsplash.com/photo-1559525839-b184a4d698c7?auto=format&fit=crop&q=80&w=150",
+  },
+  {
+    title: "Fakta Unik",
+    message:
+      "Setiap cangkir kopi diseduh dengan suhu presisi untuk mengekstrak rasa maksimal.",
+    image:
+      "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=150",
+  },
+];
 
-  // ================= RUNNING TOAST LOGIC =================
-  const toastData = [
-    {
-      title: "Sejarah De CafÃ©",
-      message:
-        "Didirikan pada tahun 2026 oleh Kelompok 4 Sintak 2026 dengan visi menyatukan pecinta kopi.",
-      image:
-        "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=150",
-    },
-    {
-      title: "Filosofi Kami",
-      message:
-        "Menggunakan biji kopi pilihan terbaik langsung dari petani lokal Nusantara.",
-      image:
-        "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&q=80&w=150",
-    },
-    {
-      title: "Biji Kopi Premium",
-      message:
-        "100% Arabica berkualitas tinggi yang disangrai dengan teknik artisanal.",
-      image:
-        "https://images.unsplash.com/photo-1559525839-b184a4d698c7?auto=format&fit=crop&q=80&w=150",
-    },
-    {
-      title: "Fakta Unik",
-      message:
-        "Setiap cangkir kopi diseduh dengan suhu presisi untuk mengekstrak rasa maksimal.",
-      image:
-        "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=150",
-    },
-  ];
+let currentToastIndex = 0;
+const runningToast = document.getElementById("runningToast");
+const toastTitle = document.getElementById("toastTitle");
+const toastMessage = document.getElementById("toastMessage");
+const toastImage = document.getElementById("toastImage");
+const toastImgWrapper = document.getElementById("toastImgWrapper");
+const toastIcon = document.getElementById("toastIcon");
 
-  let currentToastIndex = 0;
-  const runningToast = document.getElementById("runningToast");
-  const toastTitle = document.getElementById("toastTitle");
-  const toastMessage = document.getElementById("toastMessage");
-  const toastImage = document.getElementById("toastImage");
-  const toastImgWrapper = document.getElementById("toastImgWrapper");
-  const toastIcon = document.getElementById("toastIcon");
+function showNextToast() {
+  if (!runningToast) return;
 
-  function showNextToast() {
-    if (!runningToast) return;
+  // Sekarang toast fixed, bisa muncul di mana saja
 
-    // Sekarang toast fixed, bisa muncul di mana saja
+  // Sembunyikan toast sebelumnya
+  runningToast.classList.remove("show");
 
-    // Sembunyikan toast sebelumnya
-    runningToast.classList.remove("show");
+  setTimeout(() => {
+    // Update konten
+    const data = toastData[currentToastIndex];
+    toastTitle.textContent = data.title;
+    toastMessage.textContent = data.message;
 
-    setTimeout(() => {
-      // Update konten
-      const data = toastData[currentToastIndex];
-      toastTitle.textContent = data.title;
-      toastMessage.textContent = data.message;
-
-      // Menampilkan gambar
-      if (data.image) {
-        if (toastImage) toastImage.src = data.image;
-        if (toastImgWrapper) toastImgWrapper.style.display = "block";
-        if (toastIcon) toastIcon.style.display = "none";
-      } else {
-        if (toastImgWrapper) toastImgWrapper.style.display = "none";
-        if (toastIcon) toastIcon.style.display = "flex";
-      }
-
-      // Tampilkan toast
-      runningToast.classList.add("show");
-
-      currentToastIndex = (currentToastIndex + 1) % toastData.length;
-
-      // Sembunyikan setelah 5 detik
-      setTimeout(() => {
-        runningToast.classList.remove("show");
-      }, 5000);
-    }, 1000);
-  }
-
-  // Mulai loop toast tiap 7 detik
-  setInterval(showNextToast, 7000);
-
-  // Tampilkan toast pertama setelah intro selesai
-  setTimeout(showNextToast, 4000);
-
-
-
-  // ================= ORDERING SYSTEM LOGIC =================
-  let cart = {};
-
-  function updateQty(btn, delta) {
-    const card = btn.closest(".menu-card");
-    const name = card.querySelector("h3").textContent;
-    const price = parseInt(
-      card.querySelector(".menu-price").getAttribute("data-price"),
-    );
-    const input = card.querySelector(".qty-input");
-
-    let val = parseInt(input.value) + delta;
-    if (val < 0) val = 0;
-    input.value = val;
-
-    if (val > 0) {
-      cart[name] = { price, qty: val };
+    // Menampilkan gambar
+    if (data.image) {
+      if (toastImage) toastImage.src = data.image;
+      if (toastImgWrapper) toastImgWrapper.style.display = "block";
+      if (toastIcon) toastIcon.style.display = "none";
     } else {
+      if (toastImgWrapper) toastImgWrapper.style.display = "none";
+      if (toastIcon) toastIcon.style.display = "flex";
+    }
+
+    // Tampilkan toast
+    runningToast.classList.add("show");
+
+    currentToastIndex = (currentToastIndex + 1) % toastData.length;
+
+    // Sembunyikan setelah 5 detik
+    setTimeout(() => {
+      runningToast.classList.remove("show");
+    }, 5000);
+  }, 1000);
+}
+
+// Mulai loop toast tiap 7 detik
+setInterval(showNextToast, 7000);
+
+// Tampilkan toast pertama setelah intro selesai
+setTimeout(showNextToast, 4000);
+
+// ================= ORDERING SYSTEM LOGIC =================
+let cart = {};
+
+function updateQty(btn, delta) {
+  const card = btn.closest(".menu-card");
+  const name = card.querySelector("h3").textContent;
+  const price = parseInt(
+    card.querySelector(".menu-price").getAttribute("data-price"),
+  );
+  const input = card.querySelector(".qty-input");
+
+  let val = parseInt(input.value) + delta;
+  if (val < 0) val = 0;
+  input.value = val;
+
+  if (val > 0) {
+    cart[name] = { price, qty: val };
+  } else {
+    delete cart[name];
+  }
+
+  updateCheckoutBar();
+}
+
+function updateCartQty(name, delta) {
+  if (cart[name]) {
+    cart[name].qty += delta;
+    if (cart[name].qty <= 0) {
       delete cart[name];
     }
 
-    updateCheckoutBar();
-  }
-
-  function updateCartQty(name, delta) {
-    if (cart[name]) {
-      cart[name].qty += delta;
-      if (cart[name].qty <= 0) {
-        delete cart[name];
-      }
-
-      // Update input in menu section too
-      document.querySelectorAll(".menu-card").forEach((card) => {
-        if (card.querySelector("h3").textContent === name) {
-          card.querySelector(".qty-input").value = cart[name]
-            ? cart[name].qty
-            : 0;
-        }
-      });
-
-      updateCheckoutBar();
-      showCheckoutModal(true); // Refresh modal without creating new instance
-    }
-  }
-
-  function updateCheckoutBar() {
-    const bar = document.getElementById("checkoutBar");
-    const totalPriceEl = document.getElementById("barTotalPrice");
-
-    // Hanya muncul di halaman Menu
-    const activePage = document.querySelector(".page-section.active")?.id;
-
-    let total = 0;
-    let hasItems = false;
-
-    for (const item in cart) {
-      total += cart[item].price * cart[item].qty;
-      hasItems = true;
-    }
-
-    if (hasItems && activePage === "menu") {
-      totalPriceEl.textContent = `Rp ${total.toLocaleString("id-ID")}`;
-      bar.classList.add("show");
-    } else {
-      bar.classList.remove("show");
-      // Also close modal if it's open and cart becomes empty
-      const modalEl = document.getElementById("checkoutModal");
-      const modal = bootstrap.Modal.getInstance(modalEl);
-      if (modal && !hasItems) modal.hide();
-    }
-  }
-
-  let pendingOrderData = null;
-
-  function setOrderType(type, btnEl) {
-    document.getElementById('orderType').value = type;
-    document.querySelectorAll('.checkout-tab').forEach(tab => tab.classList.remove('active'));
-    btnEl.classList.add('active');
-  }
-
-  function removeFromCart(name) {
-    delete cart[name];
-    
-    // Reset input value in menu UI
+    // Update input in menu section too
     document.querySelectorAll(".menu-card").forEach((card) => {
       if (card.querySelector("h3").textContent === name) {
-        card.querySelector(".qty-input").value = 0;
+        card.querySelector(".qty-input").value = cart[name]
+          ? cart[name].qty
+          : 0;
       }
     });
-    
+
     updateCheckoutBar();
-    showCheckoutModal(true);
+    showCheckoutModal(true); // Refresh modal without creating new instance
+  }
+}
+
+function updateCheckoutBar() {
+  const bar = document.getElementById("checkoutBar");
+  const totalPriceEl = document.getElementById("barTotalPrice");
+
+  // Hanya muncul di halaman Menu
+  const activePage = document.querySelector(".page-section.active")?.id;
+
+  let total = 0;
+  let hasItems = false;
+
+  for (const item in cart) {
+    total += cart[item].price * cart[item].qty;
+    hasItems = true;
   }
 
-  function clearCart(event) {
-    if (event) event.preventDefault();
-    cart = {};
-    document.querySelectorAll(".qty-input").forEach(input => input.value = 0);
-    updateCheckoutBar();
+  if (hasItems && activePage === "menu") {
+    totalPriceEl.textContent = `Rp ${total.toLocaleString("id-ID")}`;
+    bar.classList.add("show");
+  } else {
+    bar.classList.remove("show");
+    // Also close modal if it's open and cart becomes empty
     const modalEl = document.getElementById("checkoutModal");
     const modal = bootstrap.Modal.getInstance(modalEl);
-    if (modal) modal.hide();
+    if (modal && !hasItems) modal.hide();
   }
+}
 
-  function showCheckoutModal(isRefresh = false) {
-    const listEl = document.getElementById("orderSummaryList");
-    const totalEl = document.getElementById("modalGrandTotal");
+let pendingOrderData = null;
 
-    listEl.innerHTML = "";
-    let total = 0;
-    let hasItems = false;
+function setOrderType(type, btnEl) {
+  document.getElementById("orderType").value = type;
+  document
+    .querySelectorAll(".checkout-tab")
+    .forEach((tab) => tab.classList.remove("active"));
+  btnEl.classList.add("active");
 
-    for (const name in cart) {
-      const item = cart[name];
-      const subtotal = item.price * item.qty;
-      total += subtotal;
-      hasItems = true;
+  // Tampilkan/sembunyikan input alamat jika delivery
+  const addressWrapper = document.getElementById("addressWrapper");
+  if (addressWrapper) {
+    if (type === "Delivery") {
+      addressWrapper.classList.remove("d-none");
+    } else {
+      addressWrapper.classList.add("d-none");
+    }
+  }
+}
 
-      // Check if it's a coffee (basic check)
-      const isCoffee = name.toLowerCase().includes("espresso") || name.toLowerCase().includes("latte") || name.toLowerCase().includes("cappuccino") || name.toLowerCase().includes("frap") || name.toLowerCase().includes("con panna") || name.toLowerCase().includes("mocca") || name.toLowerCase().includes("dalgona") || name.toLowerCase().includes("americano") || name.toLowerCase().includes("macchiato");
+function removeFromCart(name) {
+  delete cart[name];
 
-      let addOnHtml = "";
-      if (isCoffee) {
-        addOnHtml = `
+  // Reset input value in menu UI
+  document.querySelectorAll(".menu-card").forEach((card) => {
+    if (card.querySelector("h3").textContent === name) {
+      card.querySelector(".qty-input").value = 0;
+    }
+  });
+
+  updateCheckoutBar();
+  showCheckoutModal(true);
+}
+
+function clearCart(event) {
+  if (event) event.preventDefault();
+  cart = {};
+  document.querySelectorAll(".qty-input").forEach((input) => (input.value = 0));
+  updateCheckoutBar();
+  const modalEl = document.getElementById("checkoutModal");
+  const modal = bootstrap.Modal.getInstance(modalEl);
+  if (modal) modal.hide();
+}
+
+function showCheckoutModal(isRefresh = false) {
+  const listEl = document.getElementById("orderSummaryList");
+  const totalEl = document.getElementById("modalGrandTotal");
+
+  listEl.innerHTML = "";
+  let total = 0;
+  let hasItems = false;
+
+  for (const name in cart) {
+    const item = cart[name];
+    const subtotal = item.price * item.qty;
+    total += subtotal;
+    hasItems = true;
+
+    // Categorize items for better additional options
+    const isCoffee =
+      name.toLowerCase().includes("espresso") ||
+      name.toLowerCase().includes("latte") ||
+      name.toLowerCase().includes("cappuccino") ||
+      name.toLowerCase().includes("frap") ||
+      name.toLowerCase().includes("con panna") ||
+      name.toLowerCase().includes("mocca") ||
+      name.toLowerCase().includes("dalgona") ||
+      name.toLowerCase().includes("americano") ||
+      name.toLowerCase().includes("macchiato");
+    const isFood =
+      name.toLowerCase().includes("nasi") ||
+      name.toLowerCase().includes("pasta") ||
+      name.toLowerCase().includes("burger") ||
+      name.toLowerCase().includes("fettuccine") ||
+      name.toLowerCase().includes("sandwich") ||
+      name.toLowerCase().includes("mie");
+    const isPastry =
+      name.toLowerCase().includes("croissant") ||
+      name.toLowerCase().includes("waffle") ||
+      name.toLowerCase().includes("cake") ||
+      name.toLowerCase().includes("muffin") ||
+      name.toLowerCase().includes("pancake");
+
+    let addOnHtml = "";
+    if (isCoffee) {
+      addOnHtml = `
           <select class="form-select select-modern mt-2 add-on-select" data-item-name="${name}">
             <option value="Normal">Normal</option>
-            <option value="Decaf">Decaf (+Rp 5.000)</option>
+            <option value="Decaf (+Rp 5.000)">Decaf (+Rp 5.000)</option>
             <option value="Less Sugar">Less Sugar</option>
-            <option value="Oat Milk">Oat Milk (+Rp 10.000)</option>
-            <option value="Extra Shot">Extra Shot (+Rp 5.000)</option>
+            <option value="Oat Milk (+Rp 10.000)">Oat Milk (+Rp 10.000)</option>
+            <option value="Extra Shot (+Rp 5.000)">Extra Shot (+Rp 5.000)</option>
           </select>
         `;
-      } else {
-        addOnHtml = `
+    } else if (isFood) {
+      addOnHtml = `
           <select class="form-select select-modern mt-2 add-on-select" data-item-name="${name}">
-            <option value="Normal">Normal</option>
+            <option value="Normal">Normal (Sedang)</option>
             <option value="Pedas">Pedas</option>
+            <option value="Extra Pedas">Extra Pedas</option>
             <option value="Tidak Pedas">Tidak Pedas</option>
           </select>
         `;
-      }
+    } else if (isPastry) {
+      addOnHtml = `
+          <select class="form-select select-modern mt-2 add-on-select" data-item-name="${name}">
+            <option value="Normal">Normal</option>
+            <option value="Extra Topping (+Rp 5.000)">Extra Topping (+Rp 5.000)</option>
+            <option value="Hangat">Hangat (Re-heat)</option>
+          </select>
+        `;
+    } else {
+      addOnHtml = `
+          <select class="form-select select-modern mt-2 add-on-select" data-item-name="${name}">
+            <option value="Normal">Normal</option>
+            <option value="Less Ice">Less Ice</option>
+            <option value="Extra Sugar">Extra Sugar</option>
+          </select>
+        `;
+    }
 
-      listEl.innerHTML += `
+    listEl.innerHTML += `
         <div class="order-item align-items-start border-bottom pb-3 mb-3">
           <div class="order-item-info w-100 me-3">
             <div class="d-flex justify-content-between align-items-center">
@@ -702,199 +802,229 @@ introBox.addEventListener("click", () => {
           <div class="order-item-price align-self-end fw-bold text-success">Rp ${subtotal.toLocaleString("id-ID")}</div>
         </div>
       `;
-    }
-
-    if (!hasItems) {
-      listEl.innerHTML =
-        '<p class="text-center text-muted py-4">Keranjang Anda kosong.</p>';
-    }
-
-    totalEl.textContent = `Rp ${total.toLocaleString("id-ID")}`;
-
-    if (!isRefresh) {
-      const modal = new bootstrap.Modal(document.getElementById("checkoutModal"));
-      modal.show();
-    }
   }
 
-  function generateOrderNo() {
-    const rand = Math.floor(1000 + Math.random() * 9000);
-    return `ORD-${rand}`;
+  if (!hasItems) {
+    listEl.innerHTML =
+      '<p class="text-center text-muted py-4">Keranjang Anda kosong.</p>';
   }
 
-  function confirmOrder(event) {
-    event.preventDefault();
-    
-    const customerName = document.getElementById("customerName").value.trim();
-    if (!customerName) {
-      alert("Mohon masukkan Nama Pemesan terlebih dahulu!");
-      return;
-    }
-    
-    const orderType = document.getElementById("orderType").value;
-    const paymentMethod = document.getElementById("paymentMethod").value;
-    const customerNote = document.getElementById("customerNote").value.trim();
-    const orderNo = generateOrderNo();
-    
-    let total = 0;
-    let waText = `Halo DE CAFÃ‰, saya ingin memesan:\n\n*No. Pesanan:* ${orderNo}\n*Nama:* ${customerName}\n*Tipe Pesanan:* ${orderType}\n*Pembayaran:* ${paymentMethod}\n*Catatan:* ${customerNote || "-"}\n\n*Detail Pesanan:*\n`;
-    let receiptText = `================================\n           DE CAFÃ‰\n      STRUK PEMBELIAN\n================================\nNo. Pesanan : ${orderNo}\nTanggal     : ${new Date().toLocaleString('id-ID')}\nNama Pemesan: ${customerName}\nTipe Pesanan: ${orderType}\nPembayaran  : ${paymentMethod}\nCatatan     : ${customerNote || "-"}\n--------------------------------\n`;
-    
-    const receiptItems = [];
+  totalEl.textContent = `Rp ${total.toLocaleString("id-ID")}`;
 
-    const addOnSelects = document.querySelectorAll(".add-on-select");
-    const itemAddOns = {};
-    addOnSelects.forEach(select => {
-      itemAddOns[select.getAttribute("data-item-name")] = select.value;
-    });
+  if (!isRefresh) {
+    const modal = new bootstrap.Modal(document.getElementById("checkoutModal"));
+    modal.show();
+  }
+}
 
-    for (const name in cart) {
-      const item = cart[name];
-      let price = item.price;
-      const addOn = itemAddOns[name] || "Normal";
-      
-      let addOnPrice = 0;
-      if (addOn.includes("+Rp 5.000")) addOnPrice = 5000;
-      if (addOn.includes("+Rp 10.000")) addOnPrice = 10000;
-      
-      const subtotal = (price + addOnPrice) * item.qty;
-      total += subtotal;
-      
-      const addOnText = addOn !== "Normal" ? ` [${addOn}]` : "";
-      
-      waText += `- ${name}${addOnText} (${item.qty}x) = Rp ${subtotal.toLocaleString("id-ID")}\n`;
-      receiptText += `${name}${addOnText}\n${item.qty} x Rp ${(price + addOnPrice).toLocaleString("id-ID")} = Rp ${subtotal.toLocaleString("id-ID")}\n`;
-      
-      receiptItems.push({
-        name: name,
-        qty: item.qty,
-        addOn: addOn,
-        price: price + addOnPrice,
-        subtotal: subtotal
-      });
-    }
+function generateOrderNo() {
+  const rand = Math.floor(1000 + Math.random() * 9000);
+  return `ORD-${rand}`;
+}
 
-    waText += `\n*Total Bayar: Rp ${total.toLocaleString("id-ID")}*`;
-    receiptText += `--------------------------------\nTotal Bayar: Rp ${total.toLocaleString("id-ID")}\n================================\nTerima kasih atas kunjungan Anda!`;
+function confirmOrder(event) {
+  event.preventDefault();
 
-    pendingOrderData = {
-      orderNo,
-      customerName,
-      date: new Date().toISOString(),
-      orderType,
-      paymentMethod,
-      items: receiptItems,
-      total,
-      receiptText,
-      waText
-    };
-
-    if (paymentMethod === "Cash") {
-      // Jika cash, konfirmasi native lalu buka WA tanpa download struk otomatis
-      if (confirm("Apakah pesanan Anda sudah benar?")) {
-        saveOrderAndRedirectWA(false);
-      }
-    } else {
-      // Jika QRIS atau TF, tampilkan paymentModal
-      const checkoutModal = bootstrap.Modal.getInstance(document.getElementById("checkoutModal"));
-      checkoutModal.hide();
-      
-      document.getElementById("paymentTotal").textContent = `Rp ${total.toLocaleString("id-ID")}`;
-      document.getElementById("paymentModalTitle").textContent = `Pembayaran ${paymentMethod}`;
-      
-      if (paymentMethod === "QRIS") {
-        document.getElementById("qrisBox").classList.remove("d-none");
-        document.getElementById("tfBox").classList.add("d-none");
-      } else {
-        document.getElementById("qrisBox").classList.add("d-none");
-        document.getElementById("tfBox").classList.remove("d-none");
-      }
-      
-      const paymentModal = new bootstrap.Modal(document.getElementById("paymentModal"));
-      paymentModal.show();
-    }
+  const customerName = document.getElementById("customerName").value.trim();
+  if (!customerName) {
+    alert("Mohon masukkan Nama Pemesan terlebih dahulu!");
+    return;
   }
 
-  function finishPayment() {
-    saveOrderAndRedirectWA(true);
-    const paymentModal = bootstrap.Modal.getInstance(document.getElementById("paymentModal"));
-    if (paymentModal) paymentModal.hide();
+  const orderType = document.getElementById("orderType").value;
+  const customerAddress = document
+    .getElementById("customerAddress")
+    .value.trim();
+
+  if (orderType === "Delivery" && !customerAddress) {
+    alert("Mohon masukkan Alamat Pengiriman untuk pilihan Delivery!");
+    return;
   }
 
-  function saveOrderAndRedirectWA(downloadReceipt) {
-    if (!pendingOrderData) return;
-    
-    // Simpan ke Local Storage
-    const existingOrders = JSON.parse(localStorage.getItem("deCafeOrders") || "[]");
-    existingOrders.push(pendingOrderData);
-    localStorage.setItem("deCafeOrders", JSON.stringify(existingOrders));
+  const paymentMethod = document.getElementById("paymentMethod").value;
+  const customerNote = document.getElementById("customerNote").value.trim();
+  const orderNo = generateOrderNo();
 
-    if (downloadReceipt) {
-      // Buat dan download file struk.txt
-      const blob = new Blob([pendingOrderData.receiptText], { type: "text/plain" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `struk_de_cafe_${pendingOrderData.orderNo}.txt`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
+  let total = 0;
+  let waText = `Halo DE CAFÉ, saya ingin menkonfirmasi pesanan saya:\n\n*No. Pesanan:* ${orderNo}\n*Nama:* ${customerName}\n*Tipe Pesanan:* ${orderType}\n`;
 
-    // Buka WhatsApp
-    const waUrl = `https://wa.me/6285180785177?text=${encodeURIComponent(pendingOrderData.waText)}`;
-    window.open(waUrl, "_blank");
-    
-    // Bersihkan keranjang
-    clearCart();
+  if (orderType === "Delivery") {
+    waText += `*Alamat:* ${customerAddress}\n`;
   }
 
+  waText += `*Pembayaran:* ${paymentMethod}\n*Catatan:* ${customerNote || "-"}\n\n*Detail Pesanan:*\n`;
 
+  let receiptText = `================================\n           DE CAFÉ\n      STRUK PEMBELIAN\n================================\nNo. Pesanan : ${orderNo}\nTanggal     : ${new Date().toLocaleString("id-ID")}\nNama Pemesan: ${customerName}\nTipe Pesanan: ${orderType}\n`;
 
-  // realtime operational status
-  function updateOperationalStatus() {
-    const badge = document.getElementById("statusBadge");
-    if (!badge) return;
-
-    const now = new Date();
-    const day = now.getDay(); // 0 (Sun) - 6 (Sat)
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    const currentTime = hours + minutes / 60;
-
-    let isOpen = false;
-    let openTime, closeTime;
-
-    if (day >= 1 && day <= 5) {
-      // Senin - Jumat (08:00 - 22:00)
-      openTime = 8;
-      closeTime = 22;
-    } else {
-      // Sabtu - Minggu (09:00 - 23:00)
-      openTime = 9;
-      closeTime = 23;
-    }
-
-    if (currentTime >= openTime && currentTime < closeTime) {
-      isOpen = true;
-    }
-
-    if (isOpen) {
-      badge.innerHTML = '<i class="bi bi-check-circle-fill"></i> Buka Sekarang';
-      badge.classList.remove("closed");
-    } else {
-      badge.innerHTML = '<i class="bi bi-x-circle-fill"></i> Tutup Sekarang';
-      badge.classList.add("closed");
-    }
+  if (orderType === "Delivery") {
+    receiptText += `Alamat      : ${customerAddress}\n`;
   }
 
-  // Jalankan saat dokumen siap
-  document.addEventListener("DOMContentLoaded", () => {
-    initDynamicPromo();
-    updateOperationalStatus();
-    // Cek status setiap 1 menit
-    setInterval(updateOperationalStatus, 60000);
+  receiptText += `Pembayaran  : ${paymentMethod}\nCatatan     : ${customerNote || "-"}\n--------------------------------\n`;
+
+  const receiptItems = [];
+
+  const addOnSelects = document.querySelectorAll(".add-on-select");
+  const itemAddOns = {};
+  addOnSelects.forEach((select) => {
+    itemAddOns[select.getAttribute("data-item-name")] = select.value;
   });
 
+  for (const name in cart) {
+    const item = cart[name];
+    let price = item.price;
+    const addOn = itemAddOns[name] || "Normal";
 
+    let addOnPrice = 0;
+    if (addOn.includes("+Rp 5.000")) addOnPrice = 5000;
+    if (addOn.includes("+Rp 10.000")) addOnPrice = 10000;
+
+    const subtotal = (price + addOnPrice) * item.qty;
+    total += subtotal;
+
+    const addOnText = addOn !== "Normal" ? ` [${addOn}]` : "";
+
+    waText += `- ${name}${addOnText} (${item.qty}x) = Rp ${subtotal.toLocaleString("id-ID")}\n`;
+    receiptText += `${name}${addOnText}\n${item.qty} x Rp ${(price + addOnPrice).toLocaleString("id-ID")} = Rp ${subtotal.toLocaleString("id-ID")}\n`;
+
+    receiptItems.push({
+      name: name,
+      qty: item.qty,
+      addOn: addOn,
+      price: price + addOnPrice,
+      subtotal: subtotal,
+    });
+  }
+
+  waText += `\n*Total Bayar: Rp ${total.toLocaleString("id-ID")}*`;
+  receiptText += `--------------------------------\nTotal Bayar: Rp ${total.toLocaleString("id-ID")}\n================================\nTerima kasih atas kunjungan Anda!`;
+
+  pendingOrderData = {
+    orderNo,
+    customerName,
+    date: new Date().toISOString(),
+    orderType,
+    paymentMethod,
+    items: receiptItems,
+    total,
+    receiptText,
+    waText,
+  };
+
+  if (paymentMethod === "Cash") {
+    // Jika cash, konfirmasi native lalu buka WA tanpa download struk otomatis
+    if (confirm("Apakah pesanan Anda sudah benar?")) {
+      saveOrderAndRedirectWA(false);
+    }
+  } else {
+    // Jika QRIS atau TF, tampilkan paymentModal
+    const checkoutModal = bootstrap.Modal.getInstance(
+      document.getElementById("checkoutModal"),
+    );
+    checkoutModal.hide();
+
+    document.getElementById("paymentTotal").textContent =
+      `Rp ${total.toLocaleString("id-ID")}`;
+    document.getElementById("paymentModalTitle").textContent =
+      `Pembayaran ${paymentMethod}`;
+
+    if (paymentMethod === "QRIS") {
+      document.getElementById("qrisBox").classList.remove("d-none");
+      document.getElementById("tfBox").classList.add("d-none");
+    } else {
+      document.getElementById("qrisBox").classList.add("d-none");
+      document.getElementById("tfBox").classList.remove("d-none");
+    }
+
+    const paymentModal = new bootstrap.Modal(
+      document.getElementById("paymentModal"),
+    );
+    paymentModal.show();
+  }
+}
+
+function finishPayment() {
+  saveOrderAndRedirectWA(true);
+  const paymentModal = bootstrap.Modal.getInstance(
+    document.getElementById("paymentModal"),
+  );
+  if (paymentModal) paymentModal.hide();
+}
+
+function saveOrderAndRedirectWA(downloadReceipt) {
+  if (!pendingOrderData) return;
+
+  // Simpan ke Local Storage
+  const existingOrders = JSON.parse(
+    localStorage.getItem("deCafeOrders") || "[]",
+  );
+  existingOrders.push(pendingOrderData);
+  localStorage.setItem("deCafeOrders", JSON.stringify(existingOrders));
+
+  if (downloadReceipt) {
+    // Buat dan download file struk.txt
+    const blob = new Blob([pendingOrderData.receiptText], {
+      type: "text/plain",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `struk_de_cafe_${pendingOrderData.orderNo}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  // Buka WhatsApp
+  const waUrl = `https://wa.me/6285180785177?text=${encodeURIComponent(pendingOrderData.waText)}`;
+  window.open(waUrl, "_blank");
+
+  // Bersihkan keranjang
+  clearCart();
+}
+
+// realtime operational status
+function updateOperationalStatus() {
+  const badge = document.getElementById("statusBadge");
+  if (!badge) return;
+
+  const now = new Date();
+  const day = now.getDay(); // 0 (Sun) - 6 (Sat)
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  const currentTime = hours + minutes / 60;
+
+  let isOpen = false;
+  let openTime, closeTime;
+
+  if (day >= 1 && day <= 5) {
+    // Senin - Jumat (08:00 - 22:00)
+    openTime = 8;
+    closeTime = 22;
+  } else {
+    // Sabtu - Minggu (09:00 - 23:00)
+    openTime = 9;
+    closeTime = 23;
+  }
+
+  if (currentTime >= openTime && currentTime < closeTime) {
+    isOpen = true;
+  }
+
+  if (isOpen) {
+    badge.innerHTML = '<i class="bi bi-check-circle-fill"></i> Buka Sekarang';
+    badge.classList.remove("closed");
+  } else {
+    badge.innerHTML = '<i class="bi bi-x-circle-fill"></i> Tutup Sekarang';
+    badge.classList.add("closed");
+  }
+}
+
+// Jalankan saat dokumen siap
+document.addEventListener("DOMContentLoaded", () => {
+  initDynamicPromo();
+  updateOperationalStatus();
+  // Cek status setiap 1 menit
+  setInterval(updateOperationalStatus, 60000);
+});
