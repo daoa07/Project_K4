@@ -2012,3 +2012,24 @@ footer h5 {
   left: 20px;
   z-index: 1050;
 }
+
+/* Footer Additional Styles */
+.footer-heading {
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  color: white;
+}
+
+.footer-social-link {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.2rem;
+  transition: var(--transition);
+}
+
+.footer-social-link:hover {
+  color: var(--gold);
+}
+
+.footer-socials {
+  gap: 1rem;
+}
