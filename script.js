@@ -415,9 +415,15 @@ function switchPage(pageId) {
     teaserSection.style.display = pageId === "home" ? "block" : "none";
   }
 
-  const footer = document.querySelector("footer");
-  if (footer) {
-    footer.style.display = "block";
+  const mainFooter = document.getElementById("mainFooter");
+  const contactFooter = document.getElementById("contactFooter");
+  
+  if (pageId === "contact") {
+    if (mainFooter) mainFooter.style.display = "none";
+    if (contactFooter) contactFooter.style.display = "block";
+  } else {
+    if (mainFooter) mainFooter.style.display = "block";
+    if (contactFooter) contactFooter.style.display = "none";
   }
 
   // Perbarui visibilitas keranjang
